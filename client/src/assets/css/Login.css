@@ -1,0 +1,23 @@
+/* src/assets/css/Login.css */
+
+.login-card {
+    background-color: #b3d9ff; /* Light blue background */
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light blue shadow */
+    padding: 20px;
+    text-align: center;
+    max-width: 400px;
+    margin: auto;
+    margin-top: 50px;
+  }
+  
+  .login-logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+  }
+  
+  .login-button {
+    margin-top: 20px;
+  }
+  

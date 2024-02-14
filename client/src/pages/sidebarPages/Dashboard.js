@@ -3,7 +3,7 @@
 import React from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
 import { BsPerson, BsBriefcase, BsGeoAlt, BsEnvelope, BsPhone } from 'react-icons/bs';
-import profileImg from '../assets/images/profileImg.jpg';
+import profileImg from '../../assets/images/profileImg.jpg';
 
 const DashboardPage = () => {
   return (

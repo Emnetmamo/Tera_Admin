@@ -19,40 +19,40 @@ const Sidebar = () => {
           {/* <p className="user-department">Transport Routing Department</p> */}
         </div>
       </div>
-      <Link to="/" className="nav-link">
+      <Link to="/dashboard" className="nav-link">
         <BsHouseDoorFill /> Dashboard
       </Link>
-      <Link to="/register-supervisors" className="nav-link">
+      <Link to="/dashboard/register-supervisors" className="nav-link">
         <BsPerson /> Register Supervisors
       </Link>
-      <Link to="/register-transport-employees" className="nav-link" >
+      <Link to="/dashboard/register-transport-employees" className="nav-link" >
         <BsPeople /> Register Transport Employees
       </Link>
-      <Link to="/new-drivers-data" className="nav-link">
+      <Link to="/dashboard/new-drivers-data" className="nav-link">
         <BsPersonPlus /> New Drivers Data
       </Link>
-      <Link to="/assign-supervisors" className="nav-link" >
+      <Link to="/dashboard/assign-supervisors" className="nav-link" >
         <BsPeopleFill /> Assign Supervisors
       </Link>
-      <Link to="/assign-employees" className="nav-link" >
+      <Link to="/dashboard/assign-employees" className="nav-link" >
         <BsBoxArrowUpRight /> Assign Transport Employees
       </Link>
-      <Link to="/activate-deactivate-accounts" className="nav-link" >
+      <Link to="/dashboard/activate-deactivate-accounts" className="nav-link" >
         <BsCardList /> Activate/Deactivate Accounts
       </Link>
-      <Link to="/tapela-change" className="nav-link" >
+      <Link to="/dashboard/tapela-change" className="nav-link" >
         <BsBell /> Tapela Change Notice
       </Link>
-      <Link to="/notifications" className="nav-link" >
+      <Link to="/dashboard/notifications" className="nav-link" >
         <BsBell /> Send Notifications
       </Link>
-      <Link to="/verify-payments" className="nav-link" >
+      <Link to="/dashboard/verify-payments" className="nav-link" >
         <BsCreditCard /> Verify Payments
       </Link>
-      <Link to="/weekly-reports" className="nav-link" >
+      <Link to="/dashboard/weekly-reports" className="nav-link" >
         <BsFileText /> Review Weekly Reports
       </Link>
-      <Link to="/complaints" className="nav-link" >
+      <Link to="/dashboard/complaints" className="nav-link" >
         <BsChatSquareDots /> View Complaints
       </Link>
     </Nav>
