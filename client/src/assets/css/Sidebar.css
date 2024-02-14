@@ -1,0 +1,65 @@
+/* src/assets/css/Sidebar.css */
+
+.sidebar {
+    background: linear-gradient(white, rgba(49, 152, 175,0.9));
+    color: #f6f2f2 !important; /* Text color (white) */
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 15px;
+    margin-left: -15px;
+    font-size: large;
+    /* margin-top: 50px; */
+    /* border-radius: 15px; */
+}
+
+.user-info {
+    display: inline;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-left: 15px;
+}
+
+.user-photo {
+    margin-left: 90px;
+}
+
+.user-details {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.user-name {
+    color: #171717;
+    margin: 0;
+    font-weight: bold;
+}
+
+.user-department {
+    color: #212122;
+    margin: 0;
+}
+
+.nav-link {
+    color: #113535 !important;  /* Text color for each link (white) */
+    border-radius: 10px;
+    border: black;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    padding: 5px !important; 
+    /* font-weight: bold !important; */
+    background-color: #fff !important ;
+    display: inline-block; /* Ensures padding works correctly */
+}
+
+.nav-link:hover {
+    background-color: #106271 !important;
+    color: #ffffff !important;
+}
+
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link.active:hover {
+    background-color: #09aa9c !important;
+    color: #fff !important; 
+}

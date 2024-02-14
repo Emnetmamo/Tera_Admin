@@ -1,0 +1,50 @@
+/* src/components/Header.css */
+
+.header {
+    background-color: #fff;  /* Header background color (light blue) */
+    color: #000 !important; /* Text color (white) */
+    padding: 15px 20px;
+    height: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for a modern look */
+    /* position: fixed !important; */
+  }
+  
+  .navbar-brand img {
+    height: 200px;
+    width: 200px;
+    border-radius: 50;
+    margin-left: 0px;
+  }
+  
+  /* .nav-link {
+    color: #ffffff !important; 
+    margin-right: 15px; 
+    font-weight: bold;
+  }
+  
+  .nav-link:hover {
+    color: #ffffff !important; 
+  } */
+  
+  .notification-icon {
+    color: #ffffff !important; /* Notification icon color (yellow) */
+    background-color: rgb(49, 152, 175) !important;
+    padding: 10px !important;
+    font-size: larger !important;
+  }
+  .notification-icon:hover{
+    color: rgb(49, 152, 175) !important ;
+    background-color: #fff !important;
+    border-color:  rgb(49, 152, 175) !important ;
+    border-width: 2px !important;
+  }
+
+  .profile-dropdown {
+    color: #3498db !important; /* Dropdown menu text color (light blue) */
+  }
+  
+  .profile-dropdown:hover {
+    background-color: #ffffff; /* Background color on hover */
+    color: #3498db !important; /* Change text color on hover */
+  }
+  
