@@ -1,46 +1,57 @@
 // src/components/LoginPage.js
 
 import React from 'react';
-import { Card, Form, Button } from 'react-bootstrap';
+import { Card, Form, Button, Col, Row } from 'react-bootstrap';
 import { BsPerson, BsLock } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate
-import logo from '../assets/images/logo2.jpg';
-import '../assets/css/Login.css'; // Import the CSS file for styling
+import { useNavigate } from 'react-router-dom';
+import logo from '../assets/images/logoo.png';
+import '../assets/css/Login.css';
+import LogVid from "../assets/videos/AdminLogin.mp4";
 
 const LoginPage = () => {
-  const navigate = useNavigate();  // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     // Perform your login logic here
-
     // Navigate to the dashboard after successful login
     navigate('/dashboard');
   };
 
   return (
     <Card className="login-card">
-      <Card.Body>
-        <Card.Img src={logo} alt="Logo" className="login-logo" />
-        <Form>
-          <Form.Group controlId="username">
-            <Form.Label>
-              <BsPerson /> Username
-            </Form.Label>
-            <Form.Control type="text" placeholder="Enter your username" />
-          </Form.Group>
+      <Row className="card-content">
+        <Col xs={6} className="login-video-section">
+          <video autoPlay muted loop className="login-video">
+            <source src={LogVid} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </Col>
+        <Col xs={6} className="login-form-section">
+          <Card.Body className="modern-form">
+            <Card.Img src={logo} alt="Logo" className="login-logo" />
+            <Form className="login-form">
+              <h1 style={{textAlign: "center", marginBottom: "30px"}}>Admin Login</h1>
+              <Form.Group controlId="username" style={{marginBottom: "10px"}}>
+                <Form.Label>
+                  <BsPerson /> Username
+                </Form.Label>
+                <Form.Control type="text" placeholder="Enter your username" />
+              </Form.Group>
 
-          <Form.Group controlId="password">
-            <Form.Label>
-              <BsLock /> Password
-            </Form.Label>
-            <Form.Control type="password" placeholder="Enter your password" />
-          </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label>
+                  <BsLock /> Password
+                </Form.Label>
+                <Form.Control type="password" placeholder="Enter your password" />
+              </Form.Group>
 
-          <Button variant="primary" type="button" className="login-button" onClick={handleLogin}>
-            Login
-          </Button>
-        </Form>
-      </Card.Body>
+              <Button type="button" className="login-button" onClick={handleLogin}>
+                Login
+              </Button>
+            </Form>
+          </Card.Body>
+        </Col>
+      </Row>
     </Card>
   );
 };
