@@ -17,6 +17,11 @@ const LoginPage = () => {
     navigate('/dashboard');
   };
 
+  const handleRegister = () => {
+    // Navigate to the registration page
+    navigate('/register');
+  };
+
   return (
     <Card className="login-card">
       <Row className="card-content">
@@ -48,6 +53,10 @@ const LoginPage = () => {
               <Button type="button" className="login-button" onClick={handleLogin}>
                 Login
               </Button>
+
+              <p style={{ marginTop: '15px', textAlign: 'center' }}>
+                Don't have an account? <span className="register-link" onClick={handleRegister}>Register</span>
+              </p>
             </Form>
           </Card.Body>
         </Col>
@@ -57,3 +66,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+

@@ -53,7 +53,7 @@
     display: inline-block; /* Ensures padding works correctly */
 }
 
-.nav-link:hover {
+.nav-link:hover  {
     background-color: #106271 !important;
     color: #ffffff !important;
 }

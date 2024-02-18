@@ -10,7 +10,7 @@ const DashboardPage = () => {
  
         <Row>
           <Col md={3}>
-            <Image src={profileImg} alt="Profile" roundedCircle fluid />
+            <Image src={profileImg} alt="Profile"  fluid />
           </Col>
           <Col md={9}>
             <h2>Welcome to Admin's Dashboard</h2>

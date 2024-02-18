@@ -7,10 +7,11 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import './assets/css/Dashboard.css';
 import LoginPage from './pages/Login';
+import RegistrationPage from './pages/Register'
 import DashboardPage from './pages/sidebarPages/Dashboard';
 import RegisterSupervisorsPage from './pages/sidebarPages/RegisterSupervisors';
 import RegisterTransportEmployeesPage from './pages/sidebarPages/RegisterTransportEmployees';
-import NewDriversDataPage from './pages/sidebarPages/NewDriversData';
+import TaxiDriversDataPage from './pages/sidebarPages/TaxiDriversData';
 import AssignSupervisorsPage from './pages/sidebarPages/AssignSupervisors';
 import AssignEmployeesPage from './pages/sidebarPages/AssignEmployees';
 import ActivateDeactivateAccountsPage from './pages/sidebarPages/ActivateDeactivateAccounts';
@@ -32,7 +33,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-
+          <Route path="/register" element={<RegistrationPage />} />
           <Route
             path="/dashboard/*"
             element={
@@ -49,7 +50,7 @@ function App() {
                         <Route index element={<CardWrapper element={<DashboardPage />} />} />
                         <Route path="/register-supervisors" element={<CardWrapper element={<RegisterSupervisorsPage />} />} />
                         <Route path="/register-transport-employees" element={<CardWrapper element={<RegisterTransportEmployeesPage />} />} />
-                        <Route path="/new-drivers-data" element={<CardWrapper element={<NewDriversDataPage />} />} />
+                        <Route path="/taxi-drivers-data" element={<CardWrapper element={<TaxiDriversDataPage />} />} />
                         <Route path="/assign-supervisors" element={<CardWrapper element={<AssignSupervisorsPage />} />} />
                         <Route path="/assign-employees" element={<CardWrapper element={<AssignEmployeesPage />} />} />
                         <Route path="/activate-deactivate-accounts" element={<CardWrapper element={<ActivateDeactivateAccountsPage />} />} />
@@ -65,6 +66,7 @@ function App() {
               </>
             }
           />
+       
         </Routes>
       </Router>
     </div>

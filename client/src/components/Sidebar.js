@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Nav, Image } from 'react-bootstrap';
-import { BsHouseDoorFill, BsPerson, BsPeople, BsPersonPlus, BsCardList, BsBoxArrowUpRight, BsPeopleFill, BsBell, BsCreditCard, BsFileText, BsChatSquareDots } from 'react-icons/bs';
+import { BsHouseDoorFill, BsPersonPlus, BsPeople,BsBusFront, BsCardList, BsBoxArrowUpRight, BsPeopleFill, BsBell, BsCreditCard, BsFileText, BsChatSquareDots } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import '../assets/css/Sidebar.css'; // Import the CSS file for styling
 import profileImg from "../assets/images/profileImg.jpg"; // Replace with the path to the user's photo
@@ -23,13 +23,13 @@ const Sidebar = () => {
         <BsHouseDoorFill /> Dashboard
       </Link>
       <Link to="/dashboard/register-supervisors" className="nav-link">
-        <BsPerson /> Register Supervisors
+        <BsPersonPlus /> Register Supervisors
       </Link>
       <Link to="/dashboard/register-transport-employees" className="nav-link" >
         <BsPeople /> Register Transport Employees
       </Link>
-      <Link to="/dashboard/new-drivers-data" className="nav-link">
-        <BsPersonPlus /> New Drivers Data
+      <Link to="/dashboard/taxi-drivers-data" className="nav-link">
+        <BsBusFront /> Taxi Drivers Data
       </Link>
       <Link to="/dashboard/assign-supervisors" className="nav-link" >
         <BsPeopleFill /> Assign Supervisors

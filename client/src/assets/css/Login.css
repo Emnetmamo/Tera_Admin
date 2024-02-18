@@ -64,6 +64,11 @@
   font-weight: 500;
 }
 
+.form-control{
+  border-color: #b8f1f3 !important;
+}
+
+
 .login-button {
   width: 100%;
   margin-top:50px ;
@@ -72,4 +77,15 @@
   color: #fff !important;
   font-size: large !important;
   border: none !important;
+}
+
+
+.register-link {
+  color: #07a0a0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.register-link:hover {
+  text-decoration: none;
 }
