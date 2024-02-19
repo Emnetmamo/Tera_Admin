@@ -1,0 +1,19 @@
+.weekly-reports-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .report-section {
+    margin-bottom: 20px;
+  }
+  
+  .report-section h3 {
+    margin-bottom: 10px;
+  }
+  
+  .report-section p,
+  .report-section ul {
+    margin-left: 20px;
+  }
+  
