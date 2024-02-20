@@ -10,6 +10,7 @@ const path = require('path');
 const adminRoutes = require('./Admin/routes/registerRoutes');
 const authRoutes = require('./Admin/routes/authRoutes');
 const sidebarRoutes = require('./Admin/routes/sidebarRoutes');
+const dashboardRoutes = require('./Admin/routes/dashboardRoutes');
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -42,8 +43,9 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/admin', adminRoutes); // Register routes 
 app.use('/api/auth', authRoutes); // Login routes
 app.use('/api/sidebar', sidebarRoutes);  //sidebar routes
+app.use('/api/dashboard', dashboardRoutes); //dashboard routes
 
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log('Server is running on port ${PORT}');
 });
