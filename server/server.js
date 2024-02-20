@@ -45,5 +45,5 @@ app.use('/api/sidebar', sidebarRoutes);  //sidebar routes
 
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log('Server is running on port ${PORT}');
 });

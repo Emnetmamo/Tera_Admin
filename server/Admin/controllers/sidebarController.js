@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // Import necessary modules and dependencies
+=======
+>>>>>>> 904cbe449a1c86518a9e9b6734eff50270b42c95
 const Admin = require('../models/Admin');
 
 const getUserDetails = async (req, res) => {
@@ -24,4 +27,8 @@ const getUserDetails = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 module.exports = { getUserDetails };
+=======
+module.exports = { getUserDetails };
+>>>>>>> 904cbe449a1c86518a9e9b6734eff50270b42c95

@@ -1,0 +1,45 @@
+.verify-payments-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .payments-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .payments-table th,
+  .payments-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+  }
+  
+  .payments-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .payments-table .paid {
+    color: green;
+  }
+  
+  .payments-table .not-paid {
+    color: red;
+  }
+  
+  .payments-table button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .payments-table button:hover {
+    background-color: #0056b3;
+  }
+  

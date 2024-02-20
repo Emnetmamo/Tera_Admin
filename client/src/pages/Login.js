@@ -1,21 +1,21 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
+=======
+// src/components/LoginPage.js
+
+import React from 'react';
+>>>>>>> 904cbe449a1c86518a9e9b6734eff50270b42c95
 import { Card, Form, Button, Col, Row } from 'react-bootstrap';
 import { BsPerson, BsLock } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import logo from '../assets/images/logoo.png';
 import '../assets/css/Login.css';
 import LogVid from "../assets/videos/AdminLogin.mp4";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
 
+<<<<<<< HEAD
   const notifySuccess = (message) => toast.success(message);
   const notifyError = (message) => toast.error(message);
 
@@ -51,62 +51,52 @@ const LoginPage = () => {
 
   const handleRegister = () => {
     navigate('/register');
+=======
+  const handleLogin = () => {
+    // Perform your login logic here
+    // Navigate to the dashboard after successful login
+    navigate('/dashboard');
+>>>>>>> 904cbe449a1c86518a9e9b6734eff50270b42c95
   };
 
   return (
-    <>
-      <ToastContainer />
-      <Card className="login-card">
-        <Row className="card-content">
-          <Col xs={6} className="login-video-section">
-            <video autoPlay muted loop className="login-video">
-              <source src={LogVid} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </Col>
-          <Col xs={6} className="login-form-section">
-            <Card.Body className="modern-form">
-              <Card.Img src={logo} alt="Logo" className="login-logo" />
-              <Form className="login-form">
-                <h1 style={{ textAlign: "center", marginBottom: "30px" }}>Admin Login</h1>
-                <Form.Group controlId="username" style={{ marginBottom: "10px" }}>
-                  <Form.Label>
-                    <BsPerson /> Username
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your username"
-                    onChange={handleInputChange}
-                    value={formData.username}
-                  />
-                </Form.Group>
+    <Card className="login-card">
+      <Row className="card-content">
+        <Col xs={6} className="login-video-section">
+          <video autoPlay muted loop className="login-video">
+            <source src={LogVid} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </Col>
+        <Col xs={6} className="login-form-section">
+          <Card.Body className="modern-form">
+            <Card.Img src={logo} alt="Logo" className="login-logo" />
+            <Form className="login-form">
+              <h1 style={{textAlign: "center", marginBottom: "30px"}}>Admin Login</h1>
+              <Form.Group controlId="username" style={{marginBottom: "10px"}}>
+                <Form.Label>
+                  <BsPerson /> Username
+                </Form.Label>
+                <Form.Control type="text" placeholder="Enter your username" />
+              </Form.Group>
 
-                <Form.Group controlId="password">
-                  <Form.Label>
-                    <BsLock /> Password
-                  </Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Enter your password"
-                    onChange={handleInputChange}
-                    value={formData.password}
-                  />
-                </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label>
+                  <BsLock /> Password
+                </Form.Label>
+                <Form.Control type="password" placeholder="Enter your password" />
+              </Form.Group>
 
-                <Button type="button" className="login-button" onClick={handleLogin}>
-                  Login
-                </Button>
-
-                <p style={{ marginTop: '15px', textAlign: 'center' }}>
-                  Don't have an account? <span className="register-link" onClick={handleRegister}>Register</span>
-                </p>
-              </Form>
-            </Card.Body>
-          </Col>
-        </Row>
-      </Card>
-    </>
+              <Button type="button" className="login-button" onClick={handleLogin}>
+                Login
+              </Button>
+            </Form>
+          </Card.Body>
+        </Col>
+      </Row>
+    </Card>
   );
 };
+
 
 export default LoginPage;
