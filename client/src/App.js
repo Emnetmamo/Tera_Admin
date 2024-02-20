@@ -7,7 +7,7 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import './assets/css/Dashboard.css';
 import LoginPage from './pages/Login';
-import RegistrationPage from './pages/Register'
+import RegistrationPage from './pages/Register';
 import DashboardPage from './pages/sidebarPages/Dashboard';
 import RegisterSupervisorsPage from './pages/sidebarPages/RegisterSupervisors';
 import RegisterTransportEmployeesPage from './pages/sidebarPages/RegisterTransportEmployees';
@@ -35,7 +35,7 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegistrationPage />} />
           <Route
-            path="/dashboard/*"
+            path="/dashboard/:userId/*"
             element={
               <>
                 <Header />
@@ -66,7 +66,6 @@ function App() {
               </>
             }
           />
-       
         </Routes>
       </Router>
     </div>

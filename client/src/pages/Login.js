@@ -1,5 +1,3 @@
-// src/pages/LoginPage.js
-
 import React, { useState } from 'react';
 import { Card, Form, Button, Col, Row } from 'react-bootstrap';
 import { BsPerson, BsLock } from 'react-icons/bs';
@@ -18,24 +16,29 @@ const LoginPage = () => {
     password: '',
   });
 
+  const notifySuccess = (message) => toast.success(message);
+  const notifyError = (message) => toast.error(message);
+
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-
-  const notifySuccess = (message) => toast.success(message);
-  const notifyError = (message) => toast.error(message);
 
   const handleLogin = async () => {
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', formData);
 
       if (response.status === 200) {
-        // Login successful, navigate to the dashboard
-        
+        // Login successful, extract userId from the response
+        const { userId } = response.data;
+
         notifySuccess('Login successful!');
+
+        // Redirect to the user-specific dashboard based on userId
+     
         setTimeout(() => {
-          navigate('/dashboard');
+          navigate(`/dashboard/${userId}`);
         }, 2000); 
+  
       } else {
         console.error('Login failed:', response.data.message);
         notifyError('Incorrect username or password');

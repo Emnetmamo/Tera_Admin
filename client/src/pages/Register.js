@@ -32,6 +32,7 @@ const AdminsRegistrationPage = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  
   const checkExistingUser = async (field, value) => {
     try {
       const response = await axios.get(`http://localhost:5000/api/admin/check-existing?field=${field}&value=${value}`);

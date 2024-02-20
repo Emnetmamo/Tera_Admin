@@ -1,8 +1,7 @@
 const Admin = require('../models/Admin');
 const bcrypt = require('bcrypt');
 
-// Logic for Admin registration //
-
+// Logic for Admin registration with file uploads //
 const registerAdmin = async (req, res) => {
   try {
     const adminData = req.body;
@@ -22,6 +21,10 @@ const registerAdmin = async (req, res) => {
     // Hash the password before saving it to the database
     const saltRounds = 10;
     adminData.password = await bcrypt.hash(adminData.password, saltRounds);
+
+    // Add file paths to adminData
+    adminData.idUpload = req.files['idUpload'][0].path;
+    adminData.photoUpload = req.files['photoUpload'][0].path;
 
     const newAdmin = new Admin(adminData);
     await newAdmin.save();

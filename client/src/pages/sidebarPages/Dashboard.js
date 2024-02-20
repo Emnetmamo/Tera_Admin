@@ -1,4 +1,4 @@
-// src/components/DashboardPage.js
+// src/pages/sidebarpages/DashboardPage.js
 
 import React from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
@@ -6,6 +6,7 @@ import { BsPerson, BsBriefcase, BsGeoAlt, BsEnvelope, BsPhone } from 'react-icon
 import profileImg from '../../assets/images/profileImg.jpg';
 
 const DashboardPage = () => {
+  
   return (
  
         <Row>

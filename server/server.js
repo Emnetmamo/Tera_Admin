@@ -3,9 +3,13 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const path = require('path');
+
+
+//route imports 
 const adminRoutes = require('./Admin/routes/registerRoutes');
 const authRoutes = require('./Admin/routes/authRoutes');
-
+const sidebarRoutes = require('./Admin/routes/sidebarRoutes');
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -30,10 +34,14 @@ db.once('open', () => {
 });
 
 
+// Set up static directory for uploads
+app.use('/uploads', express.static('uploads'));
+
+
  //Admin Routes 
 app.use('/api/admin', adminRoutes); // Register routes 
 app.use('/api/auth', authRoutes); // Login routes
-
+app.use('/api/sidebar', sidebarRoutes);  //sidebar routes
 
 
 app.listen(PORT, () => {
