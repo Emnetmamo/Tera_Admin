@@ -29,9 +29,13 @@ const AdminsRegistrationPage = () => {
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    if (e.target.type === 'file') {
+      setFormData({ ...formData, [e.target.id]: e.target.files });
+    } else {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
   };
-
+  
   
   const checkExistingUser = async (field, value) => {
     try {
@@ -78,16 +82,35 @@ const AdminsRegistrationPage = () => {
       }
 
       // Continue with registration if username and email are unique
-      const response = await axios.post('http://localhost:5000/api/admin/register', formData);
+      const formDataToSend = new FormData();
+
+        for (const key in formData) {
+          if (key === 'photoUpload' || key === 'idUpload') {
+            const files = formData[key];
+
+            for (let i = 0; i < files.length; i++) {
+              formDataToSend.append(key, files[i]);
+            }
+          } else {
+            formDataToSend.append(key, formData[key]);
+          }
+        }
+
+  
+      const response = await axios.post('http://localhost:5000/api/admin/register', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       setLoading(false);
-
+  
       notify(response.data.message, 'success');
-
+  
       setTimeout(() => {
         navigate('/');
-      }, 2000); 
-
+      }, 2000);
+  
     } catch (error) {
       console.error(error);
       setLoading(false);
@@ -217,14 +240,14 @@ const AdminsRegistrationPage = () => {
           <Form.Label>
             <BsImage /> Upload ID
           </Form.Label>
-          <Form.Control type="file" onChange={handleInputChange} required />
+          <Form.Control type="file" name='idUpload' onChange={handleInputChange} required />
         </Form.Group>
 
         <Form.Group controlId="photoUpload">
           <Form.Label>
             <BsImage /> Upload Photo
           </Form.Label>
-          <Form.Control type="file" onChange={handleInputChange} required />
+          <Form.Control type="file" name='photoUpload' onChange={handleInputChange} required />
         </Form.Group>
 
         <Button type="button" className="register-button" onClick={handleRegister} disabled={loading}>

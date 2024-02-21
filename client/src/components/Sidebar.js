@@ -42,7 +42,10 @@ const Sidebar = () => {
   return (
     <Nav className="flex-column sidebar">
       <div className="user-info">
-        <Image className="user-photo" src={userInfo.photoUpload || profileImg} roundedCircle width="100" height="100" />
+        {/* <Image className="user-photo" src={userInfo.photoUpload || profileImg} roundedCircle width="100" height="100" /> */}
+        <Image className="user-photo" src={`http://localhost:5000/${userInfo.photoUpload}` || profileImg} roundedCircle width="100" height="100" alt="Admin Photo"/>
+
+
         <div className="user-details">
           <p className="user-name">{`${userInfo.firstName} ${userInfo.fatherName}`}</p>
         </div>

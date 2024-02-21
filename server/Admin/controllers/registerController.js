@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 // Logic for Admin registration with file uploads //
 const registerAdmin = async (req, res) => {
+  console.log(req.files);
   try {
     const adminData = req.body;
 
@@ -22,9 +23,20 @@ const registerAdmin = async (req, res) => {
     const saltRounds = 10;
     adminData.password = await bcrypt.hash(adminData.password, saltRounds);
 
-    // Add file paths to adminData
-    adminData.idUpload = req.files['idUpload'][0].path;
-    adminData.photoUpload = req.files['photoUpload'][0].path;
+
+    // Add file paths to adminData if files are available
+    const idUploadFile = req.files['idUpload'];
+    const photoUploadFile = req.files['photoUpload'];
+
+    if (idUploadFile) {
+      adminData.idUpload = idUploadFile[0].path; // Save the file path
+    }
+
+    if (photoUploadFile) {
+      adminData.photoUpload = photoUploadFile[0].path; // Save the file path
+    }
+    
+    
 
     const newAdmin = new Admin(adminData);
     await newAdmin.save();
@@ -34,6 +46,7 @@ const registerAdmin = async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
 
 
 // Logic for existing user checks //
