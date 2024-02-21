@@ -12,7 +12,7 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(http://localhost:5000/api/dashboard/dashboard-data/${userId});
+        const response = await axios.get(`http://localhost:5000/api/dashboard/dashboard-data/${userId}`);
 
         if (response.status === 200) {
           setDashboardData(response.data);
@@ -30,7 +30,7 @@ const DashboardPage = () => {
   return (
     <Row>
       <Col md={3}>
-        <Image  src={http://localhost:5000/${dashboardData.profileImage } || profileImg} alt="Profile" fluid />
+        <Image  src={`http://localhost:5000/${dashboardData.profileImage }` || profileImg} alt="Profile" fluid />
        
       </Col>
       <Col md={9}>
@@ -40,7 +40,7 @@ const DashboardPage = () => {
             <BsPerson />
           </Col>
           <Col>
-            <p>{${dashboardData.firstName} ${dashboardData.lastName}}</p>
+            <p>{`${dashboardData.firstName} ${dashboardData.lastName}`}</p>
           </Col>
         </Row>
         <Row className="mb-3">
