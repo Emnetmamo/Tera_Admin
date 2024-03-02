@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Nav, Image } from 'react-bootstrap';
-import { BsHouseDoorFill, BsPersonPlus, BsPeople, BsBusFront, BsCardList, BsBoxArrowUpRight, BsPeopleFill, BsBell, BsCreditCard, BsFileText, BsChatSquareDots } from 'react-icons/bs';
+import { BsHouseDoorFill, BsPersonPlus, BsBusFront, BsCardList, BsBoxArrowUpRight, BsBell, BsCreditCard, BsFileText, BsChatSquareDots } from 'react-icons/bs';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../assets/css/Sidebar.css';
@@ -53,17 +53,11 @@ const Sidebar = () => {
       <Link to={`${baseRoute}`} className={`nav-link ${selectedMenuItem === 'dashboard' ? 'active' : ''}`} onClick={() => handleItemClick('dashboard')}>
         <BsHouseDoorFill /> Dashboard
       </Link>
-      <Link to={`${baseRoute}/register-supervisors`} className={`nav-link ${selectedMenuItem === 'register-supervisors' ? 'active' : ''}`} onClick={() => handleItemClick('register-supervisors')}>
-        <BsPersonPlus /> Register Supervisors
-      </Link>
       <Link to={`${baseRoute}/register-transport-employees`} className={`nav-link ${selectedMenuItem === 'register-transport-employees' ? 'active' : ''}`} onClick={() => handleItemClick('register-transport-employees')}>
-        <BsPeople /> Register Transport Employees
+        <BsPersonPlus /> Register Transport Employees
       </Link>
       <Link to={`${baseRoute}/taxi-drivers-data`} className={`nav-link ${selectedMenuItem === 'taxi-drivers-data' ? 'active' : ''}`} onClick={() => handleItemClick('taxi-drivers-data')}>
         <BsBusFront /> Taxi Drivers Data
-      </Link>
-      <Link to={`${baseRoute}/assign-supervisors`} className={`nav-link ${selectedMenuItem === 'assign-supervisors' ? 'active' : ''}`} onClick={() => handleItemClick('assign-supervisors')}>
-        <BsPeopleFill /> Assign Supervisors
       </Link>
       <Link to={`${baseRoute}/assign-employees`} className={`nav-link ${selectedMenuItem === 'assign-employees' ? 'active' : ''}`} onClick={() => handleItemClick('assign-employees')}>
         <BsBoxArrowUpRight /> Assign Transport Employees

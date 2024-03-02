@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col,Spinner } from 'react-bootstrap';
-import { BsPerson, BsEnvelope, BsGenderAmbiguous, BsCalendar, BsPhone, BsHouse, BsGeoAlt } from 'react-icons/bs';
+import { BsPerson, BsEnvelope, BsGenderAmbiguous, BsFillPersonFill, BsPhone, BsHouse, BsGeoAlt } from 'react-icons/bs';
 import '../../assets/css/RegisterTransportEmployees.css';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
@@ -26,8 +26,8 @@ const RegisterTransportEmployeesPage = () => {
     fullName: '',
     email: '',
     sex: '',
-    dateOfBirth: '',
     phoneNumber: '',
+    employeeId: '',
     address: '',
   });
   const [isRegistering, setIsRegistering] = useState(false);
@@ -57,8 +57,8 @@ const RegisterTransportEmployeesPage = () => {
       fullName: formData.fullName,
       email: formData.email,
       sex: formData.sex || '',
-      dateOfBirth: formData.dateOfBirth,
       phoneNumber: formData.phoneNumber,
+      employeeId: formData.employeeId,
       address: formData.address,
       cityDistrict: selectedDistrict,
       assignedRoute: selectedRoute,
@@ -73,8 +73,8 @@ const RegisterTransportEmployeesPage = () => {
         fullName: '',
         email: '',
         sex: '',
-        dateOfBirth: '',
         phoneNumber: '',
+        employeeId: '',
         address: '',
       });
       setSelectedDistrict('Choose District');
@@ -126,19 +126,19 @@ const RegisterTransportEmployeesPage = () => {
 
         <Row>
           <Col>
-            <Form.Group controlId="dateOfBirth">
-              <Form.Label>
-                <BsCalendar /> Date of Birth
-              </Form.Label>
-              <Form.Control type="date" onChange={handleInputChange} value={formData.dateOfBirth} />
-            </Form.Group>
-          </Col>
-          <Col>
             <Form.Group controlId="phoneNumber">
               <Form.Label>
                 <BsPhone /> Phone Number
               </Form.Label>
               <Form.Control type="tel" placeholder="Enter phone number" onChange={handleInputChange} value={formData.phoneNumber} />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="employeeId">
+              <Form.Label>
+                <BsFillPersonFill /> Employee Id
+              </Form.Label>
+              <Form.Control type="text" placeholder="Enter Employees identification"  onChange={handleInputChange} value={formData.employeeId} />
             </Form.Group>
           </Col>
         </Row>

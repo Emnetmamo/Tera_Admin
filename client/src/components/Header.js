@@ -4,25 +4,25 @@ import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { BsFillPersonFill, BsGlobe, BsGear, BsQuestionSquare, BsBell, BsBoxArrowRight } from 'react-icons/bs';
 import demoLogo from "../assets/images/logoo.png";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { useNavigate,useParams } from 'react-router-dom'; 
 
-import '../assets/css/Header.css'; // Import the CSS file for styling
+import '../assets/css/Header.css'; 
 
 const Header = () => {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const { userId } = useParams();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Perform any additional logout actions if needed
-    // For now, just navigate to the Login page
+ 
     navigate('/'); // Redirect to the Login page
   };
 
   return (
     <Navbar className="header" variant="light">
-      <Navbar.Brand href="/dashboard">
+     <Navbar.Brand href={`/dashboard/${userId}`}>
         <img
           alt=""
-          src={demoLogo}  // replace with your logo path
+          src={demoLogo}  
           width="90"
           height="90"
           className="d-inline-block align-top"

@@ -3,6 +3,7 @@
 const { body } = require('express-validator');
 const TransportEmployee = require('../models/TransportEmployee');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
 
 const generateRandomCredentials = () => {
   //  generate a random username and password to be sent via email
@@ -29,9 +30,12 @@ const registerTransportEmployees = async (req, res) => {
     // Generate random credentials
     const { username, password } = generateRandomCredentials();
 
-    // Add generated username and password to TransportEmployees data
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Add generated username and hashed password to TransportEmployees data
     TransportEmployeesData.username = username;
-    TransportEmployeesData.password = password;
+    TransportEmployeesData.password = hashedPassword;
 
 
     // Save TransportEmployees data to the database
@@ -73,7 +77,12 @@ const sendCredentialsEmail = (email, fullName, username, password) => {
       from: 'addisababatransportoffice@gmail.com', //email we created to pose as the transport office sent the email
       to: email,
       subject: 'Transport Employee Registration Successful!',
-      text: `Dear ${fullName}, you have been registered as a Transport Employee of Tera successfully. Your username is ${username} and your password is: ${password}. Please download the app and log in to your account using the given credentials. If you have any trouble, contact us on +251975649898 or +251941727332.`,
+      text: `Dear ${fullName}, 
+
+          You have been registered as a Transport Employee of Tera successfully.Your username is ${username} and your password is:${password}. Please download the app and log in to your account using the given credentials.If you have any trouble, contact us on +251975649898 or +251941727332.
+                
+          Best regards,
+          Addis Ababa Transport Office` ,
     };
 
   // Send email

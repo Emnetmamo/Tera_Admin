@@ -7,10 +7,8 @@ import './assets/css/Dashboard.css';
 import LoginPage from './pages/Login';
 import RegistrationPage from './pages/Register';
 import DashboardPage from './pages/sidebarPages/Dashboard';
-import RegisterSupervisorsPage from './pages/sidebarPages/RegisterSupervisors';
 import RegisterTransportEmployeesPage from './pages/sidebarPages/RegisterTransportEmployees';
 import TaxiDriversDataPage from './pages/sidebarPages/TaxiDriversData';
-import AssignSupervisorsPage from './pages/sidebarPages/AssignSupervisors';
 import AssignEmployeesPage from './pages/sidebarPages/AssignEmployees';
 import ActivateDeactivateAccountsPage from './pages/sidebarPages/ActivateDeactivateAccounts';
 import TapelaChangePage from './pages/sidebarPages/TapelaChange';
@@ -46,10 +44,8 @@ function App() {
                     <Col sm={9} className="main-content">
                       <Routes>
                         <Route index element={<CardWrapper element={<DashboardPage />} />} />
-                        <Route path="/register-supervisors" element={<CardWrapper element={<RegisterSupervisorsPage />} />} />
                         <Route path="/register-transport-employees" element={<CardWrapper element={<RegisterTransportEmployeesPage />} />} />
                         <Route path="/taxi-drivers-data" element={<CardWrapper element={<TaxiDriversDataPage />} />} />
-                        <Route path="/assign-supervisors" element={<CardWrapper element={<AssignSupervisorsPage />} />} />
                         <Route path="/assign-employees" element={<CardWrapper element={<AssignEmployeesPage />} />} />
                         <Route path="/activate-deactivate-accounts" element={<CardWrapper element={<ActivateDeactivateAccountsPage />} />} />
                         <Route path="/tapela-change" element={<CardWrapper element={<TapelaChangePage />} />} />
