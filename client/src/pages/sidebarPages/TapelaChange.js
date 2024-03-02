@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import '../../assets/css/TapelaChangePage.css';
 
-
 const TapelaChangePage = () => {
-
+  
   const [drivers, setDrivers] = useState([
     { id: 1, name: 'Micki', licensePlate: 'ABC123', supervisor: 'Emnet Mamo', route: 'Route 1', tapela: 'Tapela 1' },
     { id: 2, name: 'Jelalo', licensePlate: 'DEF456', supervisor: 'Nahom Biniyam', route: 'Route 2', tapela: 'Tapela 2' },

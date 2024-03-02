@@ -22,6 +22,48 @@ const generateRandomString = (length) => {
   return result;
 };
 
+// Activate a transport employee account
+const activateTransportEmployee = async (req, res) => {
+  try {
+    const transportEmployee = await TransportEmployee.findByIdAndUpdate(req.params.id, { isActive: true });
+    res.json({ message: 'Transport employee account activated successfully' });
+  } catch (error) {
+    console.error('Error activating transport employee account:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+// Deactivate a transport employee account
+const deactivateTransportEmployee = async (req, res) => {
+  try {
+    const transportEmployee = await TransportEmployee.findByIdAndUpdate(req.params.id, { isActive: false });
+    res.json({ message: 'Transport employee account deactivated successfully' });
+  } catch (error) {
+    console.error('Error deactivating transport employee account:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+const getActiveAccounts = async (req, res) => {
+  try {
+    const activeAccounts = await TransportEmployee.find({ isActive: true });
+    res.json(activeAccounts);
+  } catch (error) {
+    console.error('Error fetching active accounts:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+// Controller to get deactivated transport employee accounts
+const getDeactivatedAccounts = async (req, res) => {
+  try {
+    const deactivatedAccounts = await TransportEmployee.find({ isActive: false });
+    res.json(deactivatedAccounts);
+  } catch (error) {
+    console.error('Error fetching deactivated accounts:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 const registerTransportEmployees = async (req, res) => {
   try {
     // Extract TransportEmployees data from request body
@@ -36,7 +78,6 @@ const registerTransportEmployees = async (req, res) => {
     // Add generated username and hashed password to TransportEmployees data
     TransportEmployeesData.username = username;
     TransportEmployeesData.password = hashedPassword;
-
 
     // Save TransportEmployees data to the database
     const newTransportEmployee = new TransportEmployee(TransportEmployeesData);
@@ -54,36 +95,35 @@ const registerTransportEmployees = async (req, res) => {
 
 const sendCredentialsEmail = (email, fullName, username, password) => {
   // Logic to send email with username and password using nodemailer
- 
-    // Send email notification
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        port : 465,
-        secure: true,
-        logger: true,
-        debug: true,
-        secureconnection: false,
-        auth: {
-          user: 'addisababatransportoffice@gmail.com',
-          pass: 'csst jisc cfze rqgc',
-        },
-        tls: {
-          rejectUnauthorized: true,
-        },
-      });
+  // Send email notification
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    port : 465,
+    secure: true,
+    logger: true,
+    debug: true,
+    secureconnection: false,
+    auth: {
+      user: 'addisababatransportoffice@gmail.com',
+      pass: 'csst jisc cfze rqgc',
+    },
+    tls: {
+      rejectUnauthorized: true,
+    },
+  });
 
-    // email body 
-    const mailOptions = {
-      from: 'addisababatransportoffice@gmail.com', //email we created to pose as the transport office sent the email
-      to: email,
-      subject: 'Transport Employee Registration Successful!',
-      text: `Dear ${fullName}, 
+  // email body 
+  const mailOptions = {
+    from: 'addisababatransportoffice@gmail.com', //email we created to pose as the transport office sent the email
+    to: email,
+    subject: 'Transport Employee Registration Successful!',
+    text: `Dear ${fullName}, 
 
-          You have been registered as a Transport Employee of Tera successfully.Your username is ${username} and your password is:${password}. Please download the app and log in to your account using the given credentials.If you have any trouble, contact us on +251975649898 or +251941727332.
-                
-          Best regards,
-          Addis Ababa Transport Office` ,
-    };
+        You have been registered as a Transport Employee of Tera successfully.Your username is ${username} and your password is:${password}. Please download the app and log in to your account using the given credentials.If you have any trouble, contact us on +251975649898 or +251941727332.
+              
+        Best regards,
+        Addis Ababa Transport Office` ,
+  };
 
   // Send email
   transporter.sendMail(mailOptions, (error, info) => {
@@ -95,4 +135,4 @@ const sendCredentialsEmail = (email, fullName, username, password) => {
   });
 };
 
-module.exports = { registerTransportEmployees };
+module.exports = { registerTransportEmployees, activateTransportEmployee, deactivateTransportEmployee ,getActiveAccounts, getDeactivatedAccounts};
