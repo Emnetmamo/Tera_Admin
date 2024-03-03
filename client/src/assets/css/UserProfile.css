@@ -1,0 +1,26 @@
+.user-profile-card {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .update-profile-btn {
+    margin-top: 20px;
+  }
+  .back-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+  .common-link {
+    color: #333; /* Example color */
+    margin-left: 15px; /* Example margin */
+  }
+  
+  .common-link:hover {
+    color: #555; /* Example color on hover */
+    text-decoration: none;
+  }
+  

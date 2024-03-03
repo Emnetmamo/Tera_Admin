@@ -8,7 +8,6 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const RegisterTransportEmployeesPage = () => {
   // Sample data for city administration districts and routes
   const sampleData = {

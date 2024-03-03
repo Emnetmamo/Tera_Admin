@@ -15,6 +15,8 @@ const transportEmployeeSchema = new mongoose.Schema({
   password: String, // randomly generated on the server side
   photoUpload: { type: String, default: '' }, //to be filled by the supervisor later on
   assignedDrivers: { type: [String], default: [] }, // to be assigned by the admin 
+  isActive: { type: Boolean, 
+    default: true },
   
 });
 

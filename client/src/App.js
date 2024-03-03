@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
+import UserProfile from './pages/header/UserProfile'; // Import UserProfile component
 import './assets/css/Dashboard.css';
 import LoginPage from './pages/Login';
 import RegistrationPage from './pages/Register';
@@ -14,7 +15,7 @@ import ActivateDeactivateAccountsPage from './pages/sidebarPages/ActivateDeactiv
 import TapelaChangePage from './pages/sidebarPages/TapelaChange';
 import NotificationsPage from './pages/sidebarPages/Notifications';
 import VerifyPaymentsPage from './pages/sidebarPages/VerifyPayments';
-import WeeklyReportsPage from './pages/sidebarPages/WeeklyReports';
+import WeeklyReportsPage from './pages/sidebarPages/Reports';
 import ComplaintsPage from './pages/sidebarPages/Complaints';
 
 const CardWrapper = ({ element }) => (
@@ -30,6 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route
             path="/dashboard/:userId/*"
             element={
@@ -52,7 +54,7 @@ function App() {
                         <Route path="/notifications" element={<CardWrapper element={<NotificationsPage />} />} />
                         <Route path="/verify-payments" element={<CardWrapper element={<VerifyPaymentsPage />} />} />
                         <Route path="/weekly-reports" element={<CardWrapper element={<WeeklyReportsPage />} />} />
-                        <Route path="/complaints" element={<CardWrapper element={<ComplaintsPage />} />} />
+                        <Route path="/complaints" element={<CardWrapper element={<ComplaintsPage />} />} />                     
                       </Routes>
                     </Col>
                   </Row>

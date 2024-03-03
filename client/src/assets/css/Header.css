@@ -29,13 +29,16 @@
     border-color:  rgb(49, 152, 175) !important ;
     border-width: 2px !important;
   }
-
-  .profile-dropdown {
-    color: #3498db !important; /* Dropdown menu text color (light blue) */
+  #basic-nav-dropdown,#language-dropdown{
+    color: #ffffff !important; /* Notification icon color (yellow) */
+    background-color: rgb(49, 152, 175) !important;
+    padding: 10px !important;
+    font-size: larger !important;
   }
-  
-  .profile-dropdown:hover {
-    background-color: #ffffff; /* Background color on hover */
-    color: #3498db !important; /* Change text color on hover */
+  #basic-nav-dropdown:hover{
+    color: rgb(49, 152, 175) !important ;
+    background-color: #fff !important;
+    border-color:  rgb(49, 152, 175) !important ;
+    border-width: 2px !important;
   }
   
