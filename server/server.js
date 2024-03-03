@@ -6,12 +6,17 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 
-//route imports 
+//Admin Dashboard route imports 
 const adminRoutes = require('./Admin/routes/registerRoutes');
 const authRoutes = require('./Admin/routes/authRoutes');
 const sidebarRoutes = require('./Admin/routes/sidebarRoutes');
 const dashboardRoutes = require('./Admin/routes/dashboardRoutes');
 const transportEmployeeRoutes = require('./Admin/routes/transportEmployeeRoutes');
+
+
+//Transport Employee App Routes imports 
+const appAuthRoutes = require('./TransportEmployee/routes/authRoutes');
+
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -46,6 +51,12 @@ app.use('/api/auth', authRoutes); // Login routes
 app.use('/api/sidebar', sidebarRoutes);  //sidebar routes
 app.use('/api/dashboard', dashboardRoutes); //dashboard routes
 app.use('/api/transportEmployee', transportEmployeeRoutes); // transport Employee routes
+
+
+ // transport Employee Mobile App routes
+ app.use('/mobileApp/api/auth', appAuthRoutes);
+ 
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
