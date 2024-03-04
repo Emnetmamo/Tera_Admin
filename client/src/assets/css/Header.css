@@ -29,13 +29,13 @@
     border-color:  rgb(49, 152, 175) !important ;
     border-width: 2px !important;
   }
-  #basic-nav-dropdown,#language-dropdown{
+  #basic-nav-dropdown, #language-dropdown{
     color: #ffffff !important; /* Notification icon color (yellow) */
     background-color: rgb(49, 152, 175) !important;
     padding: 10px !important;
     font-size: larger !important;
   }
-  #basic-nav-dropdown:hover{
+  #basic-nav-dropdown:hover,  #language-dropdown:hover{
     color: rgb(49, 152, 175) !important ;
     background-color: #fff !important;
     border-color:  rgb(49, 152, 175) !important ;

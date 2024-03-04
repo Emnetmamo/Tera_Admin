@@ -1,5 +1,4 @@
-//models/TransportEmployee.js
-
+// models/TransportEmployee.js
 const mongoose = require('mongoose');
 
 const transportEmployeeSchema = new mongoose.Schema({
@@ -15,9 +14,9 @@ const transportEmployeeSchema = new mongoose.Schema({
   password: String, // randomly generated on the server side
   photoUpload: { type: String, default: '' }, //to be filled by the supervisor later on
   assignedDrivers: { type: [String], default: [] }, // to be assigned by the admin 
-  isActive: { type: Boolean, 
-    default: true },
-  
+  isActive: { type: Boolean, default: true },
+  status: { type: String, default: 'working' },
+  updatedAt: { type: Date, default: Date.now }, // Account creation date later updated based on activation/ deactivation
 });
 
 const TransportEmployee = mongoose.model('TransportEmployee', transportEmployeeSchema);

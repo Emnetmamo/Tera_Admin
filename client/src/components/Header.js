@@ -37,7 +37,7 @@ const Header = () => {
             <NavDropdown.Item href="#help"><BsQuestionSquare /> Help</NavDropdown.Item>
             <NavDropdown.Item><BsBell /> Notifications</NavDropdown.Item>
           </NavDropdown>
-          <NavDropdown title={<><BsGlobe /> Language</>} id="language-dropdown">
+          <NavDropdown title={<><BsGlobe /> Language</>} id="language-dropdown" >
             <NavDropdown.Item>Amharic</NavDropdown.Item>
             <NavDropdown.Item>English</NavDropdown.Item>
           </NavDropdown>

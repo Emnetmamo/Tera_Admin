@@ -22,47 +22,6 @@ const generateRandomString = (length) => {
   return result;
 };
 
-// Activate a transport employee account
-const activateTransportEmployee = async (req, res) => {
-  try {
-    const transportEmployee = await TransportEmployee.findByIdAndUpdate(req.params.id, { isActive: true });
-    res.json({ message: 'Transport employee account activated successfully' });
-  } catch (error) {
-    console.error('Error activating transport employee account:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-// Deactivate a transport employee account
-const deactivateTransportEmployee = async (req, res) => {
-  try {
-    const transportEmployee = await TransportEmployee.findByIdAndUpdate(req.params.id, { isActive: false });
-    res.json({ message: 'Transport employee account deactivated successfully' });
-  } catch (error) {
-    console.error('Error deactivating transport employee account:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-const getActiveAccounts = async (req, res) => {
-  try {
-    const activeAccounts = await TransportEmployee.find({ isActive: true });
-    res.json(activeAccounts);
-  } catch (error) {
-    console.error('Error fetching active accounts:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-// Controller to get deactivated transport employee accounts
-const getDeactivatedAccounts = async (req, res) => {
-  try {
-    const deactivatedAccounts = await TransportEmployee.find({ isActive: false });
-    res.json(deactivatedAccounts);
-  } catch (error) {
-    console.error('Error fetching deactivated accounts:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
 
 const registerTransportEmployees = async (req, res) => {
   try {
@@ -135,4 +94,4 @@ const sendCredentialsEmail = (email, fullName, username, password) => {
   });
 };
 
-module.exports = { registerTransportEmployees, activateTransportEmployee, deactivateTransportEmployee ,getActiveAccounts, getDeactivatedAccounts};
+module.exports = { registerTransportEmployees};

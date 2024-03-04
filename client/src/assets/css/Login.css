@@ -4,7 +4,7 @@
   display: flex;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   margin: 20px;
-  height: 900px;
+  height: 630px;
   width: 1200px;
   overflow: hidden;
   margin-top: 70px;
@@ -32,13 +32,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  /* background: linear-gradient(to right, #f2f5f7, #d1d5f7); */
 }
 
 .modern-form {
   width:400px; /* Occupy the entire width of the login-form-section */
   padding: 20px;
-  /* background: linear-gradient(to right, #f2f5f7, #9da7ff); */
-  color: #3097d7; /* Text color for better contrast */
+  color: #0b9ca1; /* Text color for better contrast */
 }
 
 .login-form {
@@ -46,7 +46,7 @@
 }
 
 .login-logo {
-  width: 200px;
+  width: 400px;
   height: 300px;
   margin-top: -90px;
   margin-bottom: -30px;
