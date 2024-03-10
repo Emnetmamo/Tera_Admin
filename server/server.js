@@ -13,9 +13,14 @@ const sidebarRoutes = require('./Admin/routes/sidebarRoutes');
 const dashboardRoutes = require('./Admin/routes/dashboardRoutes');
 const transportEmployeeRoutes = require('./Admin/routes/transportEmployeeRoutes');
 const transportEmployeeAccountsRoutes = require('./Admin/routes/accountsRoutes');
+const driverRoutes = require('./Driver/routes/authroute');
 
 //Transport Employee App Routes imports 
 const appAuthRoutes = require('./TransportEmployee/routes/authRoutes');
+const { Server } = require('http');
+
+//Driver App Routes imports
+
 
 
 dotenv.config(); // Load environment variables from .env file
@@ -28,6 +33,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 // Connect to MongoDB
@@ -52,12 +58,11 @@ app.use('/api/sidebar', sidebarRoutes);  //sidebar routes
 app.use('/api/dashboard', dashboardRoutes); //dashboard routes
 app.use('/api/transportEmployee', transportEmployeeRoutes); // transport Employee Registration routes
 app.use('/api/transportEmployee/accounts', transportEmployeeAccountsRoutes); // transport Employee Account routes
-
+app.use('/api/driver', driverRoutes); // Driver Registration routes
 
  // transport Employee Mobile App routes
  app.use('/mobileApp/api/auth', appAuthRoutes);
  
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
