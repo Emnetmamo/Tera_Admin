@@ -16,7 +16,7 @@ const transportEmployeeAccountsRoutes = require('./Admin/routes/accountsRoutes')
 
 //Transport Employee App Routes imports 
 const appAuthRoutes = require('./TransportEmployee/routes/authRoutes');
-
+const profileRoutes = require('./TransportEmployee/routes/profileRoutes')
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -54,9 +54,15 @@ app.use('/api/transportEmployee', transportEmployeeRoutes); // transport Employe
 app.use('/api/transportEmployee/accounts', transportEmployeeAccountsRoutes); // transport Employee Account routes
 
 
+
+//Transport Employee Mobilee app
+
+//Set up static files  directory
+app.use('/TransportEmployee/uploads', express.static(path.join(__dirname, 'TransportEmployee/uploads')));
+
  // transport Employee Mobile App routes
- app.use('/mobileApp/api/auth', appAuthRoutes);
- 
+ app.use('/mobileApp/api/auth', appAuthRoutes); // Login routes
+ app.use('/mobileApp/api/profile', profileRoutes) // profile related routes 
 
 
 app.listen(PORT, () => {
