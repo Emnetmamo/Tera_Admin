@@ -18,7 +18,12 @@ const driverSchema = new Schema({
     },
     phone: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    license: String,
+    Code:String,
+    licenseplate: String,
+    licensenumber:{type: String, required: true},
+    Assignedroute: {type:String, required: true},
+    District: {type: String, required:true},
+    Address:String,
 }, { timestamps: true });
 
 driverSchema.plugin(uniqueValidator);
