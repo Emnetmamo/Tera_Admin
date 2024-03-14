@@ -1,6 +1,5 @@
 // controllers/accountsController.js
 
-const { body } = require('express-validator');
 const TransportEmployee = require('../models/TransportEmployee');
 
 // Activate a transport employee account

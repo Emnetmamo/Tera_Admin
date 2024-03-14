@@ -1,20 +1,46 @@
-// src/components/TaxiDrivers/AllDrivers.js
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
+import axios from 'axios';
+import '../../assets/css/AllDrivers.css'; // Import CSS file for styling
 
-const AllDriversPage = () => {
-  const driversData = [
-    { fullName: 'Driver 1', email: 'driver1@example.com', licenseNumber: 'ABC123', licensePlate: 'XYZ789', code: 'D1', assignedRoute: 'Route 1', assignedEmployee: 'Emp1' },
-    { fullName: 'Driver 2', email: 'driver2@example.com', licenseNumber: 'DEF456', licensePlate: 'UVW123', code: 'D2', assignedRoute: 'Route 2', assignedEmployee: 'Emp2' },
-  ];
+const AllDriversPage = ({ searchTerm }) => {
+  const [driversData, setDriversData] = useState([]);
+
+  useEffect(() => {
+    // Fetch driver details logic
+    const fetchDriversData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/driver/TaxiDriverData/getTaxiDriversData');
+
+        if (response.status === 200) {
+          setDriversData(response.data);
+        } else {
+          console.error('Failed to fetch driver details:', response.data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching driver details:', error.message);
+      }
+    };
+
+    fetchDriversData();
+  }, []);
+
+  const filteredDriversData = driversData.filter((driver) => {
+    // Filter based on search term (Name or license plate or license number or code)
+    const searchTermLowerCase = searchTerm.toLowerCase();
+    return (
+      (driver.firstName && driver.firstName.toLowerCase().includes(searchTermLowerCase)) ||
+      (driver.licenseplate && driver.licenseplate.toLowerCase().includes(searchTermLowerCase)) ||
+      (driver.licensenumber && driver.licensenumber.toLowerCase().includes(searchTermLowerCase)) ||
+      (driver.Code && driver.Code.toLowerCase().includes(searchTermLowerCase))
+    );
+  });
 
   return (
-    <Table striped bordered hover className="drivers-table">
+    <Table striped bordered hover responsive className="drivers-table">
       <thead>
         <tr>
           <th>Full Name</th>
-          <th>Email</th>
           <th>License Number</th>
           <th>License Plate</th>
           <th>Code</th>
@@ -23,15 +49,14 @@ const AllDriversPage = () => {
         </tr>
       </thead>
       <tbody>
-        {driversData.map((driver, index) => (
+        {filteredDriversData.map((driver, index) => (
           <tr key={index}>
-            <td>{driver.fullName}</td>
-            <td>{driver.email}</td>
-            <td>{driver.licenseNumber}</td>
-            <td>{driver.licensePlate}</td>
-            <td>{driver.code}</td>
-            <td>{driver.assignedRoute}</td>
-            <td>{driver.assignedEmployee}</td>
+            <td>{driver.firstName} {driver.lastName}</td>
+            <td>{driver.licensenumber}</td>
+            <td>{driver.licenseplate}</td>
+            <td>{driver.Code}</td>
+            <td>{driver.Assignedroute}</td>
+            <td>{driver.AssignedTransportEmployee}</td>
           </tr>
         ))}
       </tbody>

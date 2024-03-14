@@ -2,16 +2,13 @@
 
 .sidebar {
     background: linear-gradient(white, rgba(49, 152, 175,0.9));
-    color: #f6f2f2 !important; /* Text color (white) */
+    color: #f6f2f2 !important; 
     padding-top: 20px;
     padding-bottom: 20px;
     padding-right: 15px;
     margin-left: -15px;
     font-size: large;
     height: 900px;
- 
-    /* margin-top: 50px; */
-    /* border-radius: 15px; */
 }
 
 .user-info {
@@ -22,7 +19,11 @@
 }
 
 .user-photo {
-    margin-left: 70px;
+    margin-left: 80px;
+    width: 150px;
+    height: 150px;
+    border-radius: 30px;
+    object-fit: cover;
 }
 
 .user-details {
@@ -44,15 +45,14 @@
 }
 
 .nav-link {
-    color: #113535 !important;  /* Text color for each link (white) */
+    color: #113535 !important;  
     border-radius: 10px;
     border: black;
     margin-left: 15px;
     margin-bottom: 10px;
     padding: 5px !important; 
-    /* font-weight: bold !important; */
     background-color: #fff !important ;
-    display: inline-block; /* Ensures padding works correctly */
+    display: inline-block; 
 }
 
 .nav-link:hover  {

@@ -6,7 +6,7 @@ import { BsHouseDoorFill, BsPersonPlus, BsBusFront, BsCardList, BsBoxArrowUpRigh
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../assets/css/Sidebar.css';
-import profileImg from "../assets/images/profileImg.jpg"; // user's photo
+import profileImg from "../assets/images/profileImg.png"; // default user profile photo
 
 const Sidebar = () => {
   const { userId } = useParams();
@@ -42,10 +42,7 @@ const Sidebar = () => {
   return (
     <Nav className="flex-column sidebar">
       <div className="user-info">
-        {/* <Image className="user-photo" src={userInfo.photoUpload || profileImg} roundedCircle width="100" height="100" /> */}
-        <Image className="user-photo" src={`http://localhost:5000/${userInfo.photoUpload}` || profileImg} roundedCircle width="100" height="100" alt="Admin Photo"/>
-
-
+        <Image className="user-photo" src={`http://localhost:5000/${userInfo.photoUpload}` || profileImg}   alt="Admin Photo"/>
         <div className="user-details">
           <p className="user-name">{`${userInfo.firstName} ${userInfo.fatherName}`}</p>
         </div>

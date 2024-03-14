@@ -18,13 +18,15 @@ const driverSchema = new Schema({
     },
     phone: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    Code:String,
+    Code: String,
     licenseplate: String,
     licensenumber:{type: String, required: true},
     Assignedroute: {type:String, required: true},
-    District: {type: String, required:true},
+    cityDistrict: {type: String, required:true}, //named same as the one in the employee model
     Address:String,
+    AssignedTransportEmployee: {type: String, default: "Not Assigned"},
 }, { timestamps: true });
+
 
 driverSchema.plugin(uniqueValidator);
 

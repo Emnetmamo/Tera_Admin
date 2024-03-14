@@ -1,41 +1,38 @@
 // src/pages/NewDriversDataPage.js
 
 import React, { useState } from 'react';
-import { Tab, Tabs } from 'react-bootstrap';
+import { FormControl, Tab, Tabs } from 'react-bootstrap';
 import AllDrivers from '../../components/TaxiDrivers/AllDrivers';
-import OldTaxiDrivers from '../../components/TaxiDrivers/OldTaxiDrivers';
 import NewTaxiDrivers from '../../components/TaxiDrivers/NewTaxiDrivers';
 import { BiSearch } from 'react-icons/bi'; 
-import '../../assets/css/TaxiDrivers.css'; // Import the CSS file for styling
+import '../../assets/css/TaxiDrivers.css'; 
 
 const TaxiDriversDataPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [search, setSearch] = useState('');
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+    
   };
 
   return (
     <div className="drivers-data-page">
-      <h2>Taxi Drivers Data</h2>
+      <h2 className='text-center mb-4'>Taxi Drivers Data</h2>
       <div className="search-bar">
-        <input
+        <FormControl
           type="text"
-          placeholder="Search drivers..."
-          value={searchQuery}
-          onChange={handleSearchChange}
+          placeholder="Search drivers by Name/ License Number/ License Number/ Code..."
+          value={search}
+          onChange={handleSearch}
         />
         <BiSearch className="search-icon" />
       </div>
       <Tabs defaultActiveKey="allDrivers" id="drivers-tabs">
         <Tab eventKey="allDrivers" title="All Drivers">
-          <AllDrivers searchQuery={searchQuery} />
-        </Tab>
-        <Tab eventKey="oldTaxiDrivers" title="Old Taxi Drivers">
-          <OldTaxiDrivers searchQuery={searchQuery} />
+          <AllDrivers searchTerm={search} />
         </Tab>
         <Tab eventKey="newTaxiDrivers" title="New Taxi Drivers">
-          <NewTaxiDrivers searchQuery={searchQuery} />
+          <NewTaxiDrivers searchTerm={search} />
         </Tab>
       </Tabs>
     </div>

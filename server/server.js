@@ -13,15 +13,20 @@ const sidebarRoutes = require('./Admin/routes/sidebarRoutes');
 const dashboardRoutes = require('./Admin/routes/dashboardRoutes');
 const transportEmployeeRoutes = require('./Admin/routes/transportEmployeeRoutes');
 const transportEmployeeAccountsRoutes = require('./Admin/routes/accountsRoutes');
-const driverRoutes = require('./Driver/routes/authroute');
+const driverDataRoutes = require('./Admin/routes/driversDataRoutes');
+const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes')
+
 
 //Transport Employee App Routes imports 
 const appAuthRoutes = require('./TransportEmployee/routes/authRoutes');
-const { Server } = require('http');
-
-//Driver App Routes imports
-
 const profileRoutes = require('./TransportEmployee/routes/profileRoutes')
+
+
+
+//Taxi Driver App Routes imports
+const { Server } = require('http');
+const driverRoutes = require('./Driver/routes/authroute');
+
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -47,28 +52,43 @@ db.once('open', () => {
 });
 
 
-// Set up static directory for uploads
+ ////////    Admin Routes     /////
+
+// Set up static directory for uploads for Admin
 app.use('/uploads', express.static('uploads'));
 
-
- //Admin Routes 
 app.use('/api/admin', adminRoutes); // Register routes 
 app.use('/api/auth', authRoutes); // Login routes
 app.use('/api/sidebar', sidebarRoutes);  //sidebar routes
 app.use('/api/dashboard', dashboardRoutes); //dashboard routes
 app.use('/api/transportEmployee', transportEmployeeRoutes); // transport Employee Registration routes
 app.use('/api/transportEmployee/accounts', transportEmployeeAccountsRoutes); // transport Employee Account routes
-app.use('/api/driver', driverRoutes); // Driver Registration routes
+app.use('/api/driver/TaxiDriverData', driverDataRoutes); // Driver data fetch to admin routes
+app.use('/api/assignTransportEmployee', assignEmployeeRoutes);// Assign Transport Employee to Taxi Drivers Routes
 
 
-//Transport Employee Mobilee app
+
+
+///////    Transport Employee Mobilee app Routes    //////
 
 //Set up static files  directory
 app.use('/TransportEmployee/uploads', express.static(path.join(__dirname, 'TransportEmployee/uploads')));
 
- // transport Employee Mobile App routes
  app.use('/mobileApp/api/auth', appAuthRoutes); // Login routes
  app.use('/mobileApp/api/profile', profileRoutes) // profile related routes 
+
+
+
+
+
+ /////////   Taxi Drivers Mobile App Routes   ////////////
+
+ app.use('/api/driver', driverRoutes); // Driver Registration routes
+
+
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -20,6 +20,7 @@ const getDashboardData = async (req, res) => {
       department: user.department,
       city: user.city,
       email: user.email,
+      username: user.username,
       phoneNumber: user.phoneNumber,
       profileImage: user.photoUpload, 
     });

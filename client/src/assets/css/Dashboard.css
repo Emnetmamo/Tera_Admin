@@ -1,10 +1,39 @@
 /* src/assets/css/Dashboard.css */
 
+/* Styling for the dashboard card */
 .dashboard-card {
-    box-shadow: 0 4px 6px rgba(85, 255, 255, 0.8); /* Shadow for the card */
-    border-radius: 15px;
-    margin: 20px;
-    margin-top: 30px;
-    padding: 20px;
-  }
-  
+  box-shadow: 0 4px 6px rgba(80, 255, 255, 0.8);  /* Shadow for the card */
+  border-radius: 15px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+}
+.welcomeText{
+  text-align: center;
+  margin-bottom: 30px;
+}
+.dashboard-cards {
+  box-shadow: 0 4px 6px rgba(139, 189, 189, 0.8);  /* Shadow for the card */
+  background-color: rgba(223, 235, 243, 0.8); ;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: rgb(76, 94, 107);
+}
+
+/* Colored icons */
+.dashboard-icon {
+  font-size: 2rem;
+  margin-right: 20px; 
+  color: rgb(45, 106, 132);
+}
+
+
+.dashboard-text {
+  font-size: 1.5rem;
+}

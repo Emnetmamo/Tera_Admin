@@ -1,21 +1,51 @@
 // src/components/TaxiDrivers/NewTaxiDriversPage.js
 
 
-import React from 'react';
+import React, { useState , useEffect} from 'react';
 import { Table } from 'react-bootstrap';
+import axios from 'axios';
 
-const NewTaxiDriversPage = () => {
-  const newDriversData = [
-    { fullName: 'New Driver 1', email: 'newdriver1@example.com', licenseNumber: 'NEW123', licensePlate: 'NEW789', code: 'ND1', assignedRoute: 'Route New 1', assignedEmployee: 'EmpNew1' },
-    { fullName: 'New Driver 2', email: 'newdriver2@example.com', licenseNumber: 'NEW456', licensePlate: 'NEWUVW', code: 'ND2', assignedRoute: 'Route New 2', assignedEmployee: 'EmpNew2' },
-  ];
+const NewTaxiDriversPage = ({searchTerm}) => {
+  const [newDriversData, setnewDriversData] = useState([]);
+    
+  useEffect(() => {
+    // Fetch driver details logic
+    const fetchdriversData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/driver/TaxiDriverData/getNewTaxiDriversData');
+
+        if (response.status === 200) {
+          setnewDriversData(response.data);
+        } else {
+          console.error('Failed to fetch user details:', response.data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching user details:', error.message);
+      }
+    };
+
+    fetchdriversData();
+  }, []); 
+
+
+  const driversDatas = newDriversData
+  .filter((newDriversData) => {
+    // Filter based on search term (Name or licenseplate or license Number or Code)
+    const searchTermLowerCase = searchTerm.toLowerCase();
+    return (
+      (newDriversData.firstName && newDriversData.firstName.toLowerCase().includes(searchTermLowerCase)) ||
+      (newDriversData.licenseplate && newDriversData.licenseplate.toLowerCase().includes(searchTermLowerCase))||
+      (newDriversData.licensenumber && newDriversData.licensenumber.toLowerCase().includes(searchTermLowerCase))||
+      (newDriversData.Code && newDriversData.Code.toLowerCase().includes(searchTermLowerCase))
+
+    );
+  });
 
   return (
     <Table striped bordered hover className="drivers-table">
       <thead>
         <tr>
           <th>Full Name</th>
-          <th>Email</th>
           <th>License Number</th>
           <th>License Plate</th>
           <th>Code</th>
@@ -24,15 +54,14 @@ const NewTaxiDriversPage = () => {
         </tr>
       </thead>
       <tbody>
-        {newDriversData.map((driver, index) => (
+        {driversDatas.map((driver, index) => (
           <tr key={index}>
-            <td>{driver.fullName}</td>
-            <td>{driver.email}</td>
-            <td>{driver.licenseNumber}</td>
-            <td>{driver.licensePlate}</td>
-            <td>{driver.code}</td>
-            <td>{driver.assignedRoute}</td>
-            <td>{driver.assignedEmployee}</td>
+             <td>{driver.firstName} {driver.lastName}</td>
+            <td>{driver.licensenumber}</td>
+            <td>{driver.licenseplate}</td>
+            <td>{driver.Code}</td>
+            <td>{driver.Assignedroute}</td>
+            <td>{driver.AssignedTransportEmployee}</td>
           </tr>
         ))}
       </tbody>

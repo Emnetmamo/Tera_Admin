@@ -1,6 +1,5 @@
 // controllers/transportEmployeeController.js
 
-const { body } = require('express-validator');
 const TransportEmployee = require('../models/TransportEmployee');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');

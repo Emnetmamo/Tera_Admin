@@ -1,14 +1,18 @@
+// src/pages/DashboardPage.js
+
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Image } from 'react-bootstrap';
-import { BsPerson, BsBriefcase, BsGeoAlt, BsEnvelope, BsPhone } from 'react-icons/bs';
-import profileImg from '../../assets/images/profileImg.jpg';
+import { Row, Col } from 'react-bootstrap';
+import { BsPerson, BsBriefcase, BsGeoAlt, BsEnvelope, BsPhone, BsPersonCircle } from 'react-icons/bs';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import '../../assets/css/Dashboard.css'; 
 
 const DashboardPage = () => {
-  const { userId } = useParams(); // Use useParams to get userId
+  const { userId } = useParams();
   const [dashboardData, setDashboardData] = useState({});
 
+
+  // fetch admin's data logic
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,58 +29,57 @@ const DashboardPage = () => {
     };
 
     fetchData();
-  }, [userId]); // Include userId in the dependency array to re-fetch data when userId changes
+  }, [userId]);
 
+  console.log(dashboardData);
+  
   return (
-    <Row>
-      <Col md={3}>
-        <Image  src={`http://localhost:5000/${dashboardData.profileImage }` || profileImg} alt="Profile" fluid />
-       
-      </Col>
-      <Col md={9}>
-        <h2>Welcome to Admin's Dashboard</h2>
-        <Row className="mb-3">
-          <Col xs={1}>
-            <BsPerson />
-          </Col>
-          <Col>
-            <p>{`${dashboardData.firstName} ${dashboardData.lastName}`}</p>
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col xs={1}>
-            <BsBriefcase />
-          </Col>
-          <Col>
-            <p>{dashboardData.department} department</p>
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col xs={1}>
-            <BsGeoAlt />
-          </Col>
-          <Col>
-            <p>{dashboardData.city}</p>
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col xs={1}>
-            <BsEnvelope />
-          </Col>
-          <Col>
-            <p>{dashboardData.email}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={1}>
-            <BsPhone />
-          </Col>
-          <Col>
-            <p>{dashboardData.phoneNumber}</p>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+    <div className="container">
+      <h2 className='welcomeText'>Welcome to Admin's Dashboard</h2>
+      {/* Grid for user info */}
+      <Row>
+        <Col>
+          <div className="dashboard-cards">
+            <BsPerson className="dashboard-icon" />
+            <p className="dashboard-text">{`${dashboardData.firstName} ${dashboardData.lastName}`}</p>
+          </div>
+        </Col>
+        <Col>
+          <div className="dashboard-cards">
+            <BsEnvelope className="dashboard-icon" />
+            <p className="dashboard-text">{dashboardData.email}</p>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div className="dashboard-cards">
+            <BsPersonCircle className="dashboard-icon" />
+            <p className="dashboard-text">username: {dashboardData.username}</p>
+          </div>
+        </Col>
+        <Col>
+          <div className="dashboard-cards">
+            <BsBriefcase className="dashboard-icon" />
+            <p className="dashboard-text">{dashboardData.department} department</p>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div className="dashboard-cards">
+            <BsPhone className="dashboard-icon" />
+            <p className="dashboard-text">{dashboardData.phoneNumber}</p>
+          </div>
+        </Col>
+        <Col>
+          <div className="dashboard-cards">
+            <BsGeoAlt className="dashboard-icon" />
+            <p className="dashboard-text">{dashboardData.city}</p>
+          </div>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
