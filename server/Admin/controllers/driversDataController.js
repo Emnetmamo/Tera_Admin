@@ -26,4 +26,16 @@ const getNewDrivers = async (req, res) => {
 };
 
 
-module.exports = { getDrivers ,getNewDrivers};
+// For the table of AssignedList page
+// fetching employee assigned drivers 
+const getAssignedDrivers = async (req, res) => {
+  try {
+    const AssignedDrivers = await TaxiDrivers.find({ "AssignedTransportEmployee.fullName": { $ne: "Not Assigned" } });
+    res.json(AssignedDrivers);
+  } catch (error) {
+    console.error('Error fetching New Taxi Drivers Datas:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+module.exports = { getDrivers , getNewDrivers , getAssignedDrivers};

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, FormControl } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/fa';
+import { BiSearch } from 'react-icons/bi';
 import ActiveAccountsTab from '../../components/accounts/ActiveAccountsTab';
 import DeactivatedAccountsTab from '../../components/accounts/DeactivatedAccountsTab';
 import axios from 'axios';
@@ -18,7 +18,7 @@ const ActivateDeactivateAccountsPage = () => {
     fetchActiveAccounts();
     fetchDeactivatedAccounts();
   }, [forceUpdate, key]);
-
+//fetch data of Employee Accounts that are activated
   const fetchActiveAccounts = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/transportEmployee/accounts/active');
@@ -27,7 +27,7 @@ const ActivateDeactivateAccountsPage = () => {
       console.error('Error fetching active accounts:', error);
     }
   };
-
+//fetch data of Employee Accounts that are deactivated
   const fetchDeactivatedAccounts = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/transportEmployee/accounts/deactivated');
@@ -36,11 +36,11 @@ const ActivateDeactivateAccountsPage = () => {
       console.error('Error fetching deactivated accounts:', error);
     }
   };
-
+// for updating automatically with out reloading 
   const handleForceUpdate = () => {
     setForceUpdate((prevState) => !prevState);
   };
-
+// Keeps track of the selected tab 
   const handleTabSelect = (selectedKey) => {
     setKey(selectedKey);
   };
@@ -49,7 +49,7 @@ const ActivateDeactivateAccountsPage = () => {
     <div className='activate-deactivate'>
       <h2 className='text-center mb-5'>Activate or Deactivate Accounts </h2>
       <div className='container'>
-      <div className="search-bar">
+      <div className="search-bar" >
           
           <FormControl
             placeholder='Search by Name or Employee ID'
@@ -58,10 +58,10 @@ const ActivateDeactivateAccountsPage = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             
           />
-          <FaSearch className="search-icon" />
+          <BiSearch className="search-icon" />
         </div>
       
-        <Tabs activeKey={key} onSelect={handleTabSelect} id='activate_deactivate-tabs'>
+        <Tabs activeKey={key} onSelect={handleTabSelect} id='activate_deactivate-tabs' style={{marginBottom:"20px"}}>
           <Tab eventKey='ActivatedAccounts' title='Activated Accounts'>
             <ActiveAccountsTab
               key={forceUpdate}

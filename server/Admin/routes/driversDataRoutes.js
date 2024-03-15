@@ -7,5 +7,7 @@ const driversDataController = require('../controllers/driversDataController');
 router.get('/getTaxiDriversData', driversDataController.getDrivers);
 // path to get new drivers with no assigned employee
 router.get('/getNewTaxiDriversData', driversDataController.getNewDrivers);
+// path to get  drivers with  assigned employee
+router.get('/getAssignedDrivers', driversDataController.getAssignedDrivers);
 
 module.exports = router;

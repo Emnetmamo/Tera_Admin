@@ -1,33 +1,85 @@
 /* src/assets/css/AssignTransportEmployees.css */
 
+/* Table styles */
 .assign-transport-employees-page {
-    padding: 20px;
-  }
-  
-  .unassigned-list,
-  .assigned-list {
-    margin-top: 20px;
-  }
+  padding: 20px;
+  font-size: 15px !important;
+}
+.title{
+  margin-bottom: 50px;
+  text-align: center;
+}
+.unassigned-list,
+.assigned-list {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 
-   
-  .search-bar {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-  }
-  
-  .search-bar input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
-  }
-  
-  .search-icon {
-    font-size: 20px;
-    cursor: pointer;
-  }
-  
-  
-  
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  border-radius: 20px;
+}
+
+.search-bar input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.search-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #22d3f3 !important;
+}
+
+th {
+  background-color: #d3f0a1 !important;
+  font-weight: bold;
+}
+
+tbody tr:nth-of-type(odd) {
+  background-color: #f3f8fd;
+}
+
+tbody tr:hover {
+  background-color: #e3eaf1;
+}
+
+th:first-child,
+td:first-child {
+  border-left: none;
+}
+
+th:last-child,
+td:last-child {
+  border-right: none;
+}
+/* in the UnassignedList page */
+.btn-assign{
+  background-color: rgb(10, 80, 48) !important;
+  border: none !important;
+}
+/* in the AssignedList page */
+.btn-change{
+  background-color: rgb(165, 94, 13) !important;
+  border: none !important;
+}

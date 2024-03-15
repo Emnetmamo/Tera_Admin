@@ -12,6 +12,11 @@ const loginTransportEmployee = async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
+    // Check if the account is active
+    if (!transportEmployee.isActive) {
+      return res.status(401).json({ message: 'Your account is not active. Please contact the administrator.' });
+    }
+
     // Check if the password is correct
     const passwordMatch = await bcrypt.compare(password, transportEmployee.password);
 
