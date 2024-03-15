@@ -1,23 +1,24 @@
-// src/components/AssignTransportEmployee/UnassignedList.js
-
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import '../../assets/css/AssignTransportEmployees.css'; // Import the CSS file for styling
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Select from 'react-select';
+import '../../assets/css/AssignTransportEmployees.css';
 
 const UnassignedList = ({ searchQuery }) => {
+
   const [unassignedListData, setUnassignedListData] = useState([]);
   const [selectedDriver, setSelectedDriver] = useState(null);
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [employeeList, setEmployeeList] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
+  // Fetching drivers data
   useEffect(() => {
-    // Fetch unassigned drivers data
     const fetchDriversData = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/driver/TaxiDriverData/getNewTaxiDriversData');
-
         if (response.status === 200) {
           setUnassignedListData(response.data);
         } else {
@@ -27,16 +28,16 @@ const UnassignedList = ({ searchQuery }) => {
         console.error('Error fetching unassigned drivers:', error.message);
       }
     };
-
     fetchDriversData();
   }, []);
 
+  // Fetching employees data based on selected driver's city district
   useEffect(() => {
-    // Fetch transport employees data for modal
     const fetchEmployeesData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/assignTransportEmployee/TransportEmployeeData');
-
+        const response = await axios.get('http://localhost:5000/api/assignTransportEmployee/TransportEmployeeData', {
+          params: { cityDistrict: selectedDriver.cityDistrict }
+        });
         if (response.status === 200) {
           setEmployeeList(response.data);
         } else {
@@ -46,70 +47,86 @@ const UnassignedList = ({ searchQuery }) => {
         console.error('Error fetching transport employees:', error.message);
       }
     };
+    if (selectedDriver) {
+      fetchEmployeesData();
+    }
+  }, [selectedDriver]);
 
-    fetchEmployeesData();
-  }, []);
-
-  
+  // Handler for opening assign employee modal
   const handleAssignEmployee = (driver) => {
     setSelectedDriver(driver);
     setShowAssignModal(true);
   };
 
+  // Handler for closing modal
   const handleModalClose = () => {
     setSelectedDriver(null);
     setSelectedEmployee(null);
     setShowAssignModal(false);
   };
 
+  // Handler for selecting an employee from dropdown
   const handleEmployeeSelection = (employee) => {
     setSelectedEmployee(employee);
   };
 
+  // Handler for assigning employee to driver
   const handleEmployeeAssignment = async () => {
+    if (!selectedDriver || !selectedEmployee) {
+      console.error('Driver or employee not selected');
+      toast.error('Driver or employee not selected');
+      return;
+    }
+  
     try {
-      const response = await axios.post('http://localhost:5000/api/driver/TaxiDriverData/assignTransportEmployee', {
+      const response = await axios.post('http://localhost:5000/api/assignTransportEmployee/assign', {
         driverId: selectedDriver._id,
         employeeId: selectedEmployee._id,
+        fullName: selectedEmployee.fullName,
+        workId: selectedEmployee.employeeId,
+        cityDistrict: selectedEmployee.cityDistrict,
+        assignedRoute: selectedEmployee.assignedRoute,
       });
-     
+  
       if (response.status === 200) {
-        console.log('Employee assigned successfully');
+        const updatedDriverList = unassignedListData.filter(driver => driver._id !== selectedDriver._id);
+        setUnassignedListData(updatedDriverList);
+        toast.success('An Employee has been assigned. The driver is now added to the Assigned list.');
         handleModalClose();
       } else {
         console.error('Failed to assign employee:', response.data.message);
+        toast.error('Failed to assign employee');
       }
     } catch (error) {
       console.error('Error assigning employee:', error.message);
+      toast.error('Error assigning employee');
     }
   };
-
-
+  
   return (
     <div className="unassigned-list">
+      <ToastContainer />
       <Table striped bordered hover responsive>
-        {/* Table header */}
         <thead>
           <tr>
             <th>Full Name</th>
             <th>License Number</th>
             <th>License Plate</th>
-            <th>Code</th>
+            <th>City District</th>
             <th>Assigned Route</th>
             <th>Assigned Transport Employee</th>
             <th>Action</th>
           </tr>
         </thead>
-        {/* Table body */}
         <tbody>
           {unassignedListData.map((driver, index) => (
             <tr key={index}>
               <td>{driver.firstName} {driver.lastName}</td>
               <td>{driver.licensenumber}</td>
               <td>{driver.licenseplate}</td>
-              <td>{driver.Code}</td>
+              <td>{driver.cityDistrict}</td>
               <td>{driver.Assignedroute}</td>
-              <td>{driver.AssignedTransportEmployee}</td>
+              <td>{driver.AssignedTransportEmployee ? driver.AssignedTransportEmployee.fullName : "Not Assigned"}</td>
               <td>
                 <Button variant="primary" onClick={() => handleAssignEmployee(driver)}>
                   Assign Employee
@@ -119,24 +136,24 @@ const UnassignedList = ({ searchQuery }) => {
           ))}
         </tbody>
       </Table>
-
-      {/* Modal for employee assignment */}
       <Modal show={showAssignModal} onHide={handleModalClose}>
         <Modal.Header closeButton>
           <Modal.Title>Assign Transport Employee</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        <h6>{selectedDriver && `${selectedDriver.cityDistrict} Transport Employees`}</h6>
           <Form>
             <Form.Group controlId="employeeName">
-              <Form.Label>Select Employee</Form.Label>
-              <Form.Control as="select" onChange={(e) => handleEmployeeSelection(JSON.parse(e.target.value))}>
-                <option value="">Select Employee</option>
-                {employeeList.map((employee) => (
-                  <option key={employee._id} value={JSON.stringify(employee)}>
-                    {employee.fullName} - {employee.assignedRoute}
-                  </option>
-                ))}
-              </Form.Control>
+              <Form.Label>Select an Employee</Form.Label>
+              <Select
+                options={employeeList.map(employee => ({
+                  value: employee,
+                  label: `${employee.fullName} - ${employee.employeeId}`
+                }))}
+                onChange={selectedOption => handleEmployeeSelection(selectedOption.value)}
+                placeholder="Search employee..."
+                isClearable
+              />
             </Form.Group>
           </Form>
         </Modal.Body>

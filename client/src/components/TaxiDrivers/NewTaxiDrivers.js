@@ -61,7 +61,7 @@ const NewTaxiDriversPage = ({searchTerm}) => {
             <td>{driver.licenseplate}</td>
             <td>{driver.Code}</td>
             <td>{driver.Assignedroute}</td>
-            <td>{driver.AssignedTransportEmployee}</td>
+            <td>{driver.AssignedTransportEmployee.fullName}</td>
           </tr>
         ))}
       </tbody>

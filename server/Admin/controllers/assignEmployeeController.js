@@ -1,9 +1,14 @@
+// controllers/assignEmployeeController.js
+
 const TaxiDrivers = require('../../Driver/model/drivermodel');
 const TransportEmployees = require('../models/TransportEmployee');
 
-const getTransportEmployees = async (req, res) => {
+    // Fetch  employee by their city district 
+const getTransportEmployeesByCityDistrict = async (req, res) => {
+  const { cityDistrict } = req.query;
+
   try {
-    const transportEmployees = await TransportEmployees.find();
+    const transportEmployees = await TransportEmployees.find({ cityDistrict });
     res.status(200).json(transportEmployees);
   } catch (error) {
     console.error('Error fetching transport employees:', error);
@@ -11,33 +16,50 @@ const getTransportEmployees = async (req, res) => {
   }
 };
 
-//// still In workings progress
 const assignTransportEmployee = async (req, res) => {
   try {
-    const { driverId, employeeId } = req.body;
+    const { driverId, employeeId, fullName, workId, cityDistrict, assignedRoute } = req.body;
 
-    // Fetch driver and employee details
+    // Fetch driver and employee using  models
     const driver = await TaxiDrivers.findById(driverId);
     const employee = await TransportEmployees.findById(employeeId);
 
-    // Check if both driver and employee exist
+
+    // Check if the driver and employee exist
     if (!driver || !employee) {
       return res.status(404).json({ message: 'Driver or employee not found' });
     }
 
-    // Assign employee to driver and vice versa
-    driver.AssignedTransportEmployee = employee.fullName;
-    employee.assignedDrivers = `${driver.firstName} ${driver.lastName}`;
+    // Update driver's assigned transport employee details
+    
+    driver.AssignedTransportEmployee = {
+      _id: employeeId,
+      fullName: fullName,
+      employeeId: workId,
+      cityDistrict: cityDistrict,
+      assignedRoute: assignedRoute
+    };
 
-    // Save changes to database
+    // Update employee's assigned drivers list
+    const driverData = {
+      _id: driverId,
+      fullName: `${driver.firstName} ${driver.lastName}`,
+      licensePlate: driver.licenseplate,
+      licenseNumber: driver.licensenumber,
+      cityDistrict: driver.cityDistrict,
+      assignedRoute: driver.Assignedroute
+    };
+    employee.assignedDrivers.push(driverData);
+
+    // Save changes to the database
     await driver.save();
     await employee.save();
 
-    res.status(200).json({ message: 'Employee assigned to driver successfully' });
+    res.status(200).json({ message: 'Driver assigned to employee successfully' });
   } catch (error) {
-    console.error('Error assigning employee to driver:', error);
+    console.error('Error assigning driver to employee:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-module.exports = { assignTransportEmployee, getTransportEmployees };
+module.exports = { assignTransportEmployee, getTransportEmployeesByCityDistrict };

@@ -23,8 +23,22 @@ const driverSchema = new Schema({
     licensenumber:{type: String, required: true},
     Assignedroute: {type:String, required: true},
     cityDistrict: {type: String, required:true}, //named same as the one in the employee model
-    Address:String,
-    AssignedTransportEmployee: {type: String, default: "Not Assigned"},
+    Address: String,
+    AssignedTransportEmployee: { // data of the assigned Employee
+        type: {
+            _id: String, 
+            fullName: String, 
+            employeeId: String, 
+            cityDistrict: String, 
+            assignedRoute: String 
+        },
+        default: {
+            fullName: "Not Assigned",
+            employeeId: "",
+            cityDistrict: "",
+            assignedRoute: ""
+        }
+    },
 }, { timestamps: true });
 
 
