@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import '../../assets/css/NotificationsPage.css';
 
 const NotificationsPage = () => {
@@ -13,8 +14,21 @@ const NotificationsPage = () => {
     setNotificationMessage(event.target.value);
   };
 
-  const handleSendNotification = () => {
-    alert(`Notification sent to ${notificationType} with message: "${notificationMessage}"`);
+  const handleSendNotification = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/notifications/sendNotification', {
+        notificationType: notificationType,
+        message: notificationMessage
+      });
+      console.log('Notification sent successfully:', response.data);
+      // Reset form fields after successful notification sending
+      setNotificationType('all');
+      setNotificationMessage('');
+      alert('Notification sent successfully!');
+    } catch (error) {
+      console.error('Error sending notification:', error);
+      alert('Failed to send notification. Please try again later.');
+    }
   };
 
   return (
@@ -24,7 +38,6 @@ const NotificationsPage = () => {
         <label htmlFor="notificationType" className="label">Select Recipients:</label>
         <select id="notificationType" value={notificationType} onChange={handleNotificationTypeChange} className="select">
           <option value="all">All</option>
-          <option value="supervisors">Supervisors</option>
           <option value="drivers">Drivers</option>
           <option value="transportEmployees">Transport Employees</option>
         </select>

@@ -16,7 +16,7 @@ const EmployeeDataRoutes = require ('./Admin/routes/employeeDataRoutes')
 const transportEmployeeAccountsRoutes = require('./Admin/routes/accountsRoutes');
 const driverDataRoutes = require('./Admin/routes/driversDataRoutes');
 const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes')
-
+const notificationroute=require('./Admin/routes/notificationRoutes')
 
 //Transport Employee App Routes imports 
 const appAuthRoutes = require('./TransportEmployee/routes/authRoutes');
@@ -67,6 +67,7 @@ app.use('/api/transportEmployee/Datas',EmployeeDataRoutes); // transport Employe
 app.use('/api/transportEmployee/accounts', transportEmployeeAccountsRoutes); // transport Employee Account routes
 app.use('/api/driver/TaxiDriverData', driverDataRoutes); // Driver data fetch to admin routes
 app.use('/api/assignTransportEmployee', assignEmployeeRoutes);// Assign Transport Employee to Taxi Drivers Routes
+app.use('/api/notifications',notificationroute);
 
 
 
