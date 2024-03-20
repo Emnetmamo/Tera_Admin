@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Nav, Image } from 'react-bootstrap';
-import { BsHouseDoorFill, BsPersonPlus, BsBusFront, BsCardList, BsBoxArrowUpRight, BsBell, BsCreditCard, BsFileText, BsChatSquareDots } from 'react-icons/bs';
+import { BsHouseDoorFill, BsPersonPlus, BsCardList, BsBoxArrowUpRight, BsBell, BsCreditCard, BsFileText, BsChatSquareDots, BsTaxiFront, BsPersonWorkspace } from 'react-icons/bs';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../assets/css/Sidebar.css';
@@ -53,8 +53,11 @@ const Sidebar = () => {
       <Link to={`${baseRoute}/register-transport-employees`} className={`nav-link ${selectedMenuItem === 'register-transport-employees' ? 'active' : ''}`} onClick={() => handleItemClick('register-transport-employees')}>
         <BsPersonPlus /> Register Transport Employees
       </Link>
+      <Link to={`${baseRoute}/transport-employee-data`} className={`nav-link ${selectedMenuItem === 'transport-employee-data' ? 'active' : ''}`} onClick={() => handleItemClick('transport-employee-data')}>
+        <BsPersonWorkspace /> Transport Employees Data
+      </Link>
       <Link to={`${baseRoute}/taxi-drivers-data`} className={`nav-link ${selectedMenuItem === 'taxi-drivers-data' ? 'active' : ''}`} onClick={() => handleItemClick('taxi-drivers-data')}>
-        <BsBusFront /> Taxi Drivers Data
+        <BsTaxiFront /> Taxi Drivers Data
       </Link>
       <Link to={`${baseRoute}/assign-employees`} className={`nav-link ${selectedMenuItem === 'assign-employees' ? 'active' : ''}`} onClick={() => handleItemClick('assign-employees')}>
         <BsBoxArrowUpRight /> Assign Transport Employees

@@ -9,6 +9,7 @@ import LoginPage from './pages/Login';
 import RegistrationPage from './pages/Register';
 import DashboardPage from './pages/sidebarPages/Dashboard';
 import RegisterTransportEmployeesPage from './pages/sidebarPages/RegisterTransportEmployees';
+import TransportEmployeeDataPage from './pages/sidebarPages/TransportEmployeeData';
 import TaxiDriversDataPage from './pages/sidebarPages/TaxiDriversData';
 import AssignEmployeesPage from './pages/sidebarPages/AssignEmployees';
 import ActivateDeactivateAccountsPage from './pages/sidebarPages/ActivateDeactivateAccounts';
@@ -17,6 +18,7 @@ import NotificationsPage from './pages/sidebarPages/Notifications';
 import VerifyPaymentsPage from './pages/sidebarPages/VerifyPayments';
 import WeeklyReportsPage from './pages/sidebarPages/Reports';
 import ComplaintsPage from './pages/sidebarPages/Complaints';
+
 
 const CardWrapper = ({ element }) => (
   <Card className="dashboard-card">
@@ -47,6 +49,7 @@ function App() {
                       <Routes>
                         <Route index element={<CardWrapper element={<DashboardPage />} />} />
                         <Route path="/register-transport-employees" element={<CardWrapper element={<RegisterTransportEmployeesPage />} />} />
+                        <Route path="/transport-employee-data" element={<CardWrapper element={<TransportEmployeeDataPage />} />} />
                         <Route path="/taxi-drivers-data" element={<CardWrapper element={<TaxiDriversDataPage />} />} />
                         <Route path="/assign-employees" element={<CardWrapper element={<AssignEmployeesPage />} />} />
                         <Route path="/activate-deactivate-accounts" element={<CardWrapper element={<ActivateDeactivateAccountsPage />} />} />

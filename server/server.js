@@ -12,6 +12,7 @@ const authRoutes = require('./Admin/routes/authRoutes');
 const sidebarRoutes = require('./Admin/routes/sidebarRoutes');
 const dashboardRoutes = require('./Admin/routes/dashboardRoutes');
 const transportEmployeeRoutes = require('./Admin/routes/transportEmployeeRoutes');
+const EmployeeDataRoutes = require ('./Admin/routes/employeeDataRoutes')
 const transportEmployeeAccountsRoutes = require('./Admin/routes/accountsRoutes');
 const driverDataRoutes = require('./Admin/routes/driversDataRoutes');
 const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes')
@@ -19,8 +20,8 @@ const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes')
 
 //Transport Employee App Routes imports 
 const appAuthRoutes = require('./TransportEmployee/routes/authRoutes');
-const profileRoutes = require('./TransportEmployee/routes/profileRoutes')
-
+const profileRoutes = require('./TransportEmployee/routes/profileRoutes');
+const attendanceRoutes = require('./TransportEmployee/routes/attendanceRoutes');
 
 
 //Taxi Driver App Routes imports
@@ -62,6 +63,7 @@ app.use('/api/auth', authRoutes); // Login routes
 app.use('/api/sidebar', sidebarRoutes);  //sidebar routes
 app.use('/api/dashboard', dashboardRoutes); //dashboard routes
 app.use('/api/transportEmployee', transportEmployeeRoutes); // transport Employee Registration routes
+app.use('/api/transportEmployee/Datas',EmployeeDataRoutes); // transport Employee data routes
 app.use('/api/transportEmployee/accounts', transportEmployeeAccountsRoutes); // transport Employee Account routes
 app.use('/api/driver/TaxiDriverData', driverDataRoutes); // Driver data fetch to admin routes
 app.use('/api/assignTransportEmployee', assignEmployeeRoutes);// Assign Transport Employee to Taxi Drivers Routes
@@ -76,7 +78,7 @@ app.use('/TransportEmployee/uploads', express.static(path.join(__dirname, 'Trans
 
  app.use('/mobileApp/api/auth', appAuthRoutes); // Login routes
  app.use('/mobileApp/api/profile', profileRoutes) // profile related routes 
-
+ app.use('/mobileApp/api/attendance',attendanceRoutes); // Attendance related routes
 
 
 

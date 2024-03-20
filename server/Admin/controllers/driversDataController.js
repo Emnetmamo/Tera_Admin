@@ -27,7 +27,7 @@ const getNewDrivers = async (req, res) => {
 
 
 // For the table of AssignedList page
-// fetching employee assigned drivers 
+// fetching employee data from assigned drivers 
 const getAssignedDrivers = async (req, res) => {
   try {
     const AssignedDrivers = await TaxiDrivers.find({ "AssignedTransportEmployee.fullName": { $ne: "Not Assigned" } });
