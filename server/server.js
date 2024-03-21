@@ -22,6 +22,7 @@ const notificationroute=require('./Admin/routes/notificationRoutes')
 const appAuthRoutes = require('./TransportEmployee/routes/authRoutes');
 const profileRoutes = require('./TransportEmployee/routes/profileRoutes');
 const attendanceRoutes = require('./TransportEmployee/routes/attendanceRoutes');
+const punishmentRoutes = require('./TransportEmployee/routes/punishmentRoutes');
 
 
 //Taxi Driver App Routes imports
@@ -80,7 +81,7 @@ app.use('/TransportEmployee/uploads', express.static(path.join(__dirname, 'Trans
  app.use('/mobileApp/api/auth', appAuthRoutes); // Login routes
  app.use('/mobileApp/api/profile', profileRoutes) // profile related routes 
  app.use('/mobileApp/api/attendance',attendanceRoutes); // Attendance related routes
-
+ app.use('/mobileApp/api/punishment',punishmentRoutes) // Punishment related routes
 
 
 
