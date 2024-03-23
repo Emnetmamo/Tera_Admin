@@ -8,21 +8,16 @@ const driverSchema = new Schema({
     lastName: { type: String, required: true },
     email: {
         type: String,
-        lowercase: true,
         unique: true,
-        required: [true, "Email is required"],
-        match: [
-            /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
-            "Email format is not correct",
-        ],
+        required: true
     },
     phone: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    Code: String,
-    licenseplate: String,
+    code: { type: String, required: true },
+    licenseplate: { type: String, required: true },
     licensenumber:{type: String, required: true},
     Assignedroute: {type:String, required: true},
-    cityDistrict: {type: String, required:true}, //named same as the one in the employee model
+    cityDistrict: {type:String, required: true}, 
     Address: String,
     AssignedTransportEmployee: { // data of the assigned Employee
         type: {
