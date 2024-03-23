@@ -21,7 +21,6 @@ const NotificationsPage = () => {
         message: notificationMessage
       });
       console.log('Notification sent successfully:', response.data);
-      // Reset form fields after successful notification sending
       setNotificationType('all');
       setNotificationMessage('');
       alert('Notification sent successfully!');
