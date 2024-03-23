@@ -53,7 +53,7 @@ const registerTransportEmployees = async (req, res) => {
 
 const sendCredentialsEmail = (email, fullName, username, password) => {
   // Logic to send email with username and password using nodemailer
-  // Send email notification
+ // Send email notification
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     port : 465,
