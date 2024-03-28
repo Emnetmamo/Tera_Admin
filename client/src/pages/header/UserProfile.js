@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // Import useParams
 import { Card, Form, Button, Row, Col, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import '../../assets/css/UserProfile.css';
 
 const UserProfile = () => {
+  const { userId } = useParams(); // Get userId from URL
+
   const [userData, setUserData] = useState({
     firstName: '',
     fatherName: '',
@@ -15,17 +18,30 @@ const UserProfile = () => {
     city: '',
     address: '',
     department: '',
+    photoupload: '',
   });
   const [loading, setLoading] = useState(true);
   const notifySuccess = (message) => toast.success(message);
   const notifyError = (message) => toast.error(message);
+  const updatedData = () => {
+    const formData = new FormData();
+    Object.entries(userData).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    return formData;
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/transportEmployee/active');
-        setUserData(response.data);
-        setLoading(false);
+        const response = await axios.get(`http://localhost:5000/api/admin/update/adminData/${userId}`);
+        if (response.status ===200){
+          setUserData(response.data);
+          setLoading(false);
+        } else {
+          console.error('Failed to fetch user data:', response.data.message);
+          setLoading(false);
+        }
       } catch (error) {
         console.error('Error fetching user data:', error);
         setLoading(false);
@@ -33,7 +49,7 @@ const UserProfile = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, [userId]); // Add userId to dependency array
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,13 +58,26 @@ const UserProfile = () => {
 
   const handleUpdateProfile = async () => {
     try {
-      await axios.put('http://localhost:5000/api/transportEmployee/profile', userData);
-      notifySuccess('Profile update successful!');
+      const formData = updatedData(); // Update this line to use the function
+      const response = await axios.put(`http://localhost:5000/api/admin/update/profile/${userId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      
+      if (response.status === 200) {
+        notifySuccess('Profile updated successfully!');
+        setUserData(response.data);
+      } else {
+        notifyError('Failed to update profile. Please try again.');
+      }
     } catch (error) {
       console.error('Error updating profile:', error);
-      notifyError('Coud not update profile! please refresh your webpage!');
+      notifyError('Could not update profile! Please refresh your webpage.');
     }
   };
+  
+  
 
   if (loading) {
     return <Spinner animation="border" role="status"><span className="sr-only">Loading...</span></Spinner>;
@@ -162,7 +191,14 @@ const UserProfile = () => {
               onChange={handleInputChange}
             />
           </Form.Group>
-
+          <Form.Group controlId="photoUpload">
+            <Form.Label>Photo</Form.Label>
+            <Form.Control
+              type="file"
+              name="photoUpload"
+              onChange={handleInputChange}
+            />
+          </Form.Group>
           <Button type="button" className="update-btn" onClick={handleUpdateProfile}>
             Update Profile
           </Button>
