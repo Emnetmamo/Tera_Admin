@@ -7,7 +7,6 @@ import '../../assets/css/UserProfile.css';
 
 const UserProfile = () => {
   const { userId } = useParams(); // Get userId from URL
-
   const [userData, setUserData] = useState({
     firstName: '',
     fatherName: '',
@@ -34,7 +33,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/admin/update/adminData/${userId}`);
+        const response = await axios.get(`http://localhost:5000/api/admin/update/adminData/:userId`);
         if (response.status ===200){
           setUserData(response.data);
           setLoading(false);
@@ -59,7 +58,7 @@ const UserProfile = () => {
   const handleUpdateProfile = async () => {
     try {
       const formData = updatedData(); // Update this line to use the function
-      const response = await axios.put(`http://localhost:5000/api/admin/update/profile/${userId}`, formData, {
+      const response = await axios.put(`http://localhost:5000/api/admin/update/profile/:userId`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

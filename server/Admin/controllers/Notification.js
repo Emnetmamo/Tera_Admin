@@ -22,6 +22,16 @@ const storeNotificationData = async (notificationType, message) => {
   }
 };
 
+const getNotifications = async () => {
+  try {
+    const notifications = await Notification.find({ type: { $in: ['all', 'drivers'] } }).sort({ createdAt: -1 });
+    return notifications;
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+    throw error;
+  }
+};
+
 const sendNotification = async (req, res) => {
   try {
     const { notificationType, message } = req.body;
@@ -33,4 +43,13 @@ const sendNotification = async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
-module.exports = { sendNotification };
+const fetchNotifications = async (req, res) => {
+  try {
+    const notifications = await getNotifications();
+    res.status(200).json({ success: true, notifications });
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+module.exports = { sendNotification, fetchNotifications};

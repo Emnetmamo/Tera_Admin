@@ -1,6 +1,5 @@
 const UserModel = require("../model/drivermodel");
 const jwt = require("jsonwebtoken");
-
 class UserServices {
     static async registerUser(email, password, phone, firstName, lastName,code,licenseplate, licensenumber, Assignedroute,cityDistrict,Address) {
         try {
@@ -28,12 +27,10 @@ class UserServices {
         }
     }
 
-    static async generateAccessToken(tokenData, JWTSecret_Key, JWT_EXPIRE = "1h") {
-        try {
+    static async generateAccessToken(tokenData, JWTSecret_Key, JWT_EXPIRE) {
+        
             return jwt.sign(tokenData, JWTSecret_Key, { expiresIn: JWT_EXPIRE });
-        } catch (err) {
-            throw err;
-        }
+        
     }
 }
 

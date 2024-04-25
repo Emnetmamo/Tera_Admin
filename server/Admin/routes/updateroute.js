@@ -15,13 +15,15 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-
-router.put('/profile/:userId', upload.single('photoUpload'),updateProfile);
-
 // API endpoint for checking existing users
 
 router.get('/adminData/:userId',getAdminData); // Change endpoint to match frontend
 
 router.get('/check-existing', checkExistingUser);
+
+router.put('/profile/:userId', upload.single('photoUpload'),updateProfile);
+
+
+
+
 module.exports = router;

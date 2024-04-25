@@ -4,5 +4,6 @@ const notificationController = require('../controllers/Notification');
 
 // Route to send notifications
 router.post('/sendNotification', notificationController.sendNotification);
+router.get('/getnotifications', notificationController.fetchNotifications);
 
 module.exports = router;

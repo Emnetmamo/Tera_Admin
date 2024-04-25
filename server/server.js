@@ -29,7 +29,8 @@ const punishmentRoutes = require('./TransportEmployee/routes/punishmentRoutes');
 //Taxi Driver App Routes imports
 const { Server } = require('http');
 const driverRoutes = require('./Driver/routes/authroute');
-
+const driverupdateRoutes = require('./Driver/routes/dprofileRoutes');
+const paymentRoutes = require('./Driver/routes/paymentroute');
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -85,11 +86,11 @@ app.use('/TransportEmployee/uploads', express.static(path.join(__dirname, 'Trans
 
 
 
- /////////   Taxi Drivers Mobile App Routes   ////////////
+/////////   Taxi Drivers Mobile App Routes   ////////////
 
- app.use('/api/driver', driverRoutes); // Driver Registration routes
-
-
+app.use('/api/driver', driverRoutes); // Driver Registration routes
+app.use('/api/driver/update', driverupdateRoutes); // Driver Profile Update routes
+app.use('/api/driver/payment', paymentRoutes); // Payment routes
 
 
 
