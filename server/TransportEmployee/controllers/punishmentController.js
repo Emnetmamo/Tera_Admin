@@ -51,8 +51,12 @@ const issuePunishment = async (req, res) => {
 
 const getpunishments=async (req, res) => {
   try {
-    const punishments = await Punishment.find();
-    return res.status(200).json({punishments,});
+    const  driverId  = req.params.driverId;
+    const punishments = await Punishment.find({ driverId: driverId});
+    if (!punishments) {
+      return res.status(404).json({ message: 'No punishments found for this driver' });
+    }
+    return res.status(200).json({punishments});
   } catch (error) {
     console.error('Error fetching punishments:', error.message);
     return res.status(500).json({ message: 'Internal server error' });

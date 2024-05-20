@@ -12,4 +12,5 @@ router.put('/UpdateProfileData/:userId', profileController.upload.single('photoU
 // Change Password route
 router.put('/changePassword/:userId', profileController.changePassword);
 
+
 module.exports = router;

@@ -3,16 +3,16 @@ const punishmentCollection = require('../../TransportEmployee/model/punishment')
 const paymentcollection = require('../model/paymentmodel');
 const crypto=require('crypto');
 
-const createPunishment = async (req, res) => {
+const createPayment = async (req, res) => {
   try {
-    const { punishmentId } = req.body;
+    const driverId  = req.body;
     if (!punishmentId) {
       return res.status(400).json({
         msg: "punishmentId is required",
       });
     }
     // fetching the product from our database
-    const punishment = await punishmentCollection.findOne({ _id: punishmentId });
+    const punishment = await punishmentCollection.findOne({ driverId: driverId });
     
     if (!punishment) {
       return res.status(404).json({
@@ -22,7 +22,7 @@ const createPunishment = async (req, res) => {
     // txRef is a unique identifier that will be sent to chapa and later get used to verify the payment transaction
     const txRef = require('nanoid')();
     const order = {
-      punishmentId: punishment._id,
+      punishmentId: punishment.driverId,
       punishmentName: punishment.punishmentType,
       punishmentPrice: punishment.fine,
       txRef: txRef,
@@ -127,4 +127,4 @@ const verifyPayment = async (req, res) => {
     }
   };
 
-  module.exports ={createPunishment, verifyPayment};
+  module.exports ={createPayment, verifyPayment};

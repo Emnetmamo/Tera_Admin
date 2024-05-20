@@ -4,7 +4,7 @@ const paymentSchema = mongoose.Schema(
   {
     punishmentId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
+      ref: "Punishment",
       required: true,
     },
     punishmentName: { type: String, required: true },

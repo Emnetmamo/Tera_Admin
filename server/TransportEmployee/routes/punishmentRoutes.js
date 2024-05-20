@@ -9,6 +9,6 @@ router.get('/DriversData/:userId', punishmentController.getDriversData);
 // Route to post the punishment form to be sent as a reciet 
 router.post('/punishmentForm', punishmentController.issuePunishment);
 // Route to get all punishments
-router.get('/punishments', punishmentController.getpunishments);
+router.get('/punishments/:driverId', punishmentController.getpunishments);
 
 module.exports =router;
