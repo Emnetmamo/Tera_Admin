@@ -15,6 +15,11 @@ const transportEmployeeRoutes = require('./Admin/routes/transportEmployeeRoutes'
 const EmployeeDataRoutes = require ('./Admin/routes/employeeDataRoutes')
 const transportEmployeeAccountsRoutes = require('./Admin/routes/accountsRoutes');
 const driverDataRoutes = require('./Admin/routes/driversDataRoutes');
+const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes');
+const notificationroute=require('./Admin/routes/notificationRoutes');
+const ComplaintsReplyRoutes = require('./Admin/routes/complaintReplyRoutes');
+
+
 const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes')
 const notificationroute=require('./Admin/routes/notificationRoutes')
 const updateroute = require('./Admin/routes/updateroute');
@@ -24,7 +29,9 @@ const appAuthRoutes = require('./TransportEmployee/routes/authRoutes');
 const profileRoutes = require('./TransportEmployee/routes/profileRoutes');
 const attendanceRoutes = require('./TransportEmployee/routes/attendanceRoutes');
 const punishmentRoutes = require('./TransportEmployee/routes/punishmentRoutes');
-
+const complaintsRoutes = require ('./TransportEmployee/routes/complaintRoutes');
+const warningRoutes = require('./TransportEmployee/routes/warningRoutes');
+const dailyReportRoutes = require('./TransportEmployee/routes/dailyReportRoutes')
 
 //Taxi Driver App Routes imports
 const { Server } = require('http');
@@ -71,6 +78,9 @@ app.use('/api/transportEmployee/accounts', transportEmployeeAccountsRoutes); // 
 app.use('/api/driver/TaxiDriverData', driverDataRoutes); // Driver data fetch to admin routes
 app.use('/api/assignTransportEmployee', assignEmployeeRoutes);// Assign Transport Employee to Taxi Drivers Routes
 app.use('/api/notifications',notificationroute);
+app.use('/api/complaints', ComplaintsReplyRoutes); // Give reply to the complaints of rivers and Employees Routes
+
+
 app.use('/api/admin/update',updateroute);
 
 
@@ -86,7 +96,7 @@ app.use('/TransportEmployee/uploads', express.static(path.join(__dirname, 'Trans
 
 
 
-/////////   Taxi Drivers Mobile App Routes   ////////////
+ /////////   Taxi Drivers Mobile App Routes   ////////////
 
 app.use('/api/driver', driverRoutes); // Driver Registration routes
 app.use('/api/driver/update', driverupdateRoutes); // Driver Profile Update routes

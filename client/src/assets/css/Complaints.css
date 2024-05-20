@@ -1,0 +1,59 @@
+/* src/assets/css/Complaints.css */
+
+/* Container styling */
+.complaints-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  
+}
+
+/* Tab styling */
+#complaints-tabs {
+  margin-top: 20px;
+}
+
+/* Add space between tabs and complaints */
+.tab-content {
+  margin-top: 20px;
+}
+
+/* Card styling */
+.complaint-card {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.complaint-card .card-body {
+  padding: 20px;
+}
+
+/* Form styling */
+.complaint-card form {
+  margin-top: 10px;
+}
+
+.complaint-card form .form-group {
+  margin-bottom: 10px;
+}
+
+/* Reply box height */
+.complaint-card form .form-control {
+  min-height: 100px;
+}
+
+/* Button styling */
+.complaint-card button[type="submit"] {
+  width: auto;
+  float: right;
+  margin-top: 10px;
+  background-color: #1a6d70; 
+  border-color: #fff;
+}
+
+.complaint-card button[type="submit"]:hover {
+  background-color: #0f8091; 
+  border-color: #dce441;
+}
