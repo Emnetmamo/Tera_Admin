@@ -3,6 +3,7 @@
 const Warning = require('../model/warning');
 const DriversAttendance = require('../model/driversAttendance');
 const { startOfWeek, endOfWeek } = require('date-fns');
+const jwt = require('jsonwebtoken');
 
 const sendWarning = async (req, res) => {
   try {
@@ -50,7 +51,26 @@ const getDriversToBeWarned = async (req, res) => {
   }
 };
 
-module.exports = { sendWarning, getDriversToBeWarned };
+const getWarnings = async (req, res) => {
+  try {
+    const driverId = req.params.driverId; // Extract driverId from request parameters
+
+    const userWarnings = await Warning.find({ driverId: driverId });
+
+    if (!userWarnings) {
+      return res.status(404).json({ error: 'No warnings found for this driver' });
+    }
+
+    return res.status(200).json(userWarnings);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
+module.exports = { sendWarning, getDriversToBeWarned, getWarnings};
 
 
 

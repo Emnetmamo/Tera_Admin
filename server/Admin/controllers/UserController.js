@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const updateProfile = async (req, res) => {
   try {
     const userId = req.params.userId || req.body.userId; // Handle both cases
+    console.log("userId : " + userId)
     if (!userId) {
       return res.status(400).json({ message: "Missing user ID" });
     }

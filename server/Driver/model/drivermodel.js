@@ -63,5 +63,5 @@ driverSchema.methods.comparePassword = async function (candidatePassword) {
         throw error;
     }
 };
-
-module.exports = mongoose.model('Driver', driverSchema);
+const Driver = mongoose.model('Driver', driverSchema);
+module.exports = Driver;

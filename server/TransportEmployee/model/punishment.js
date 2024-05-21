@@ -39,7 +39,9 @@ const punishmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-});
+},
+  {timestamps: true}
+);
 
 const Punishment = mongoose.model('Punishment', punishmentSchema);
 
