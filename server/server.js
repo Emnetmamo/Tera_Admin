@@ -83,6 +83,7 @@ app.use('/api/transportEmployee/accounts', transportEmployeeAccountsRoutes); // 
 app.use('/api/driver/TaxiDriverData', driverDataRoutes); // Driver data fetch to admin routes
 app.use('/api/assignTransportEmployee', assignEmployeeRoutes);// Assign Transport Employee to Taxi Drivers Routes
 app.use('/api/notifications',notificationroute);
+app.use('/api/complaints', ComplaintsReplyRoutes); // Give reply to the complaints of rivers and Employees Routes
 app.use('/api/admin/update',updateroute);
 
 
