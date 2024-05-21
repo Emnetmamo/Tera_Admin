@@ -3,6 +3,22 @@
 const TransportEmployee = require('../../Admin/models/TransportEmployee');
 const DriversAttendance = require('../model/driversAttendance');
 
+// Get Employee Terminal info
+ const getEmployeeTerminal = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const employee = await TransportEmployee.findOne({ _id: userId });
+    if (!employee) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+    res.status(200).json({ terminal: employee.Terminal });
+  } catch (error) {
+    console.error('Error fetching employee terminal:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 // Get assigned drivers for a specific employee
 const getAssignedDrivers = async (req, res) => {
   try {
@@ -91,10 +107,11 @@ const postDriversAttendance = async (req, res) => {
 };
 
 // Update driver's attendance data
+// Update driver's attendance data
 const updateDriversAttendance = async (req, res) => {
   try {
     const { driverId } = req.params; // Extract driverId from params
-    const { roundIndex, postRoundIndex } = req.body; // Extract roundIndex and postRoundIndex from the request body
+    const { roundIndex } = req.body; // Extract roundIndex from the request body
 
     // Find the attendance record for the driver and the current date
     const currentDate = new Date();
@@ -106,14 +123,26 @@ const updateDriversAttendance = async (req, res) => {
       return res.status(404).json({ error: 'Attendance record not found' });
     }
 
-    // Check if the roundIndex is greater than the postRoundIndex
-    if (roundIndex <= postRoundIndex) {
-      return res.status(400).json({ error: 'Cannot update this round, the time is already up!' });
+    // Check if the round has already been marked as complete
+    if (attendance.rounds[roundIndex].status === 'Complete') {
+      return res.status(400).json({ error: 'This round has already been completed' });
+    }
+
+    // Check the time difference between the current round and the last completed round
+    const lastCompletedRound = attendance.rounds.reduce((last, round, index) => {
+      if (round.status === 'Complete') return { ...last, index, time: new Date(round.time) };
+      return last;
+    }, { index: -1, time: null });
+
+    const now = new Date();
+
+    if (lastCompletedRound.time && ((now - lastCompletedRound.time) / (1000 * 60)) < 45) {
+      return res.status(400).json({ error: 'You must wait at least 45 minutes between marking rounds' });
     }
 
     // Update the status and time of the clicked round
     attendance.rounds[roundIndex].status = 'Complete';
-    attendance.rounds[roundIndex].time = new Date().toISOString();
+    attendance.rounds[roundIndex].time = now.toISOString();
 
     // Update overall status
     const allRoundsComplete = attendance.rounds.every(round => round.status === 'Complete');
@@ -129,8 +158,8 @@ const updateDriversAttendance = async (req, res) => {
   }
 };
 
-
 module.exports = {
+  getEmployeeTerminal,
   getAssignedDrivers,
   getAttendanceData,
   postDriversAttendance,

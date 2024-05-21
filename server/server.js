@@ -20,8 +20,8 @@ const notificationroute=require('./Admin/routes/notificationRoutes');
 const ComplaintsReplyRoutes = require('./Admin/routes/complaintReplyRoutes');
 
 
-const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes')
-const notificationroute=require('./Admin/routes/notificationRoutes')
+// const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes')
+// const notificationroute=require('./Admin/routes/notificationRoutes')
 const updateroute = require('./Admin/routes/updateroute');
 
 //Transport Employee App Routes imports 
@@ -31,7 +31,8 @@ const attendanceRoutes = require('./TransportEmployee/routes/attendanceRoutes');
 const punishmentRoutes = require('./TransportEmployee/routes/punishmentRoutes');
 const complaintsRoutes = require ('./TransportEmployee/routes/complaintRoutes');
 const warningRoutes = require('./TransportEmployee/routes/warningRoutes');
-const dailyReportRoutes = require('./TransportEmployee/routes/dailyReportRoutes')
+const dailyReportRoutes = require('./TransportEmployee/routes/dailyReportRoutes');
+const notificationRoutes = require('./TransportEmployee/routes/notificationRoutes');
 
 //Taxi Driver App Routes imports
 const { Server } = require('http');
@@ -95,7 +96,7 @@ app.use('/TransportEmployee/uploads', express.static(path.join(__dirname, 'Trans
  app.use('/mobileApp/api/complaint',complaintsRoutes) // complaint related routes
  app.use('/mobileApp/api/warning',warningRoutes) // warning related routes
  app.use('/mobileApp/api/dailyReport',dailyReportRoutes) // daily Report related routes
- 
+ app.use('/mobileApp/api/notifications',notificationRoutes) // Notification related routes 
  
  /////////   Taxi Drivers Mobile App Routes   ////////////
 

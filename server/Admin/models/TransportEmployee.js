@@ -9,7 +9,7 @@ const transportEmployeeSchema = new mongoose.Schema({
   employeeId: { type: String, unique: true },
   address: String,
   cityDistrict: String,
-  assignedRoute: String,
+  Terminal: String,
   username: { type: String, unique: true }, // randomly generated on the server side 
   password: String, // randomly generated on the server side
   photoUpload: { type: String, default: '' }, //to be filled by the supervisor later on

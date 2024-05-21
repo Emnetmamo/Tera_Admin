@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const attendanceController = require('../controllers/attendanceController');
 
+// Route to get Employee Terminal info
+router.get('/employeeTerminal/:userId', attendanceController.getEmployeeTerminal);
 // Route to get assigned drivers form an employee
 router.get('/assignedDrivers/:userId', attendanceController.getAssignedDrivers);
 // Route to get drivers with an attendance data of the current day
