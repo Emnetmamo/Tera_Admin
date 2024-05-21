@@ -22,8 +22,8 @@ const ComplaintsReplyRoutes = require('./Admin/routes/complaintReplyRoutes');
 
 // const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes')
 // const notificationroute=require('./Admin/routes/notificationRoutes')
-const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes')
-const notificationroute=require('./Admin/routes/notificationRoutes')
+// const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes')
+// const notificationroute=require('./Admin/routes/notificationRoutes')
 const updateroute = require('./Admin/routes/updateroute');
 
 //Transport Employee App Routes imports 
@@ -42,7 +42,7 @@ const { Server } = require('http');
 const driverRoutes = require('./Driver/routes/authroute');
 const driverupdateRoutes = require('./Driver/routes/dprofileRoutes');
 const paymentRoutes = require('./Driver/routes/paymentroute');
-const warningRoutes = require('./TransportEmployee/routes/warningRoutes');
+// const warningRoutes = require('./TransportEmployee/routes/warningRoutes');
 const complaintroutes = require('./Driver/routes/complaintroute');
 dotenv.config(); // Load environment variables from .env file
 
@@ -100,11 +100,9 @@ app.use('/TransportEmployee/uploads', express.static(path.join(__dirname, 'Trans
  app.use('/mobileApp/api/dailyReport',dailyReportRoutes) // daily Report related routes
  app.use('/mobileApp/api/notifications',notificationRoutes) // Notification related routes 
  
+ 
+ 
  /////////   Taxi Drivers Mobile App Routes   ////////////
-
-
-
-/////////   Taxi Drivers Mobile App Routes   ////////////
 
 app.use('/api/driver', driverRoutes); // Driver Registration routes
 app.use('/api/driver/update', driverupdateRoutes); // Driver Profile Update routes
