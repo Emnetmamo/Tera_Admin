@@ -2,6 +2,8 @@
 const User = require('../models/Admin'); 
 const multer = require('multer');
 const bcrypt = require('bcrypt');
+
+
 const updateProfile = async (req, res) => {
   try {
     const userId = req.params.userId || req.body.userId; // Handle both cases

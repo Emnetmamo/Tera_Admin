@@ -19,6 +19,7 @@ const driverSchema = new Schema({
     Assignedroute: {type:String, required: true},
     cityDistrict: {type:String, required: true}, 
     Address: String,
+    qrCode: { type: String, required: true },
     AssignedTransportEmployee: { // data of the assigned Employee
         type: {
             _id: String, 

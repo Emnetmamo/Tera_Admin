@@ -4,18 +4,19 @@ const UserServices = require('../services/driver.service');
 exports.register = async (req, res, next) => {
     try {
         console.log("---req body---", req.body);
-        const { email, password, phone, firstName, lastName,code,licenseplate, licensenumber, Assignedroute,cityDistrict,Address} = req.body;
+        const { email, password, phone, firstName, lastName, code, licenseplate, licensenumber, Assignedroute, cityDistrict, Address, qrCode } = req.body;
         const duplicate = await UserServices.getUserByEmail(email);
         if (duplicate) {
             return res.status(400).json({ success: false, message: `User with email ${email} already exists` });
         }
-        await UserServices.registerUser(email, password, phone, firstName, lastName,code, licenseplate, licensenumber, Assignedroute,cityDistrict,Address);
+        await UserServices.registerUser(email, password, phone, firstName, lastName, code, licenseplate, licensenumber, Assignedroute, cityDistrict, Address, qrCode);
         res.status(201).json({ success: true, message: 'User registered successfully' });
     } catch (err) {
         console.log("---> err -->", err);
         res.status(500).json({ success: false, message: err.message || 'Internal server error' });
     }
-}
+};
+
 
 exports.login = async (req, res, next) => {
     try {

@@ -12,4 +12,6 @@ router.post('/assign', assignEmployeeController.assignTransportEmployee);
 
 router.get('/getEmployeeExceptCurrent', assignEmployeeController.getEmployeeExceptCurrent);
 router.post('/changeEmployee', assignEmployeeController.changeAssignedEmployee);
+router.post('/changeroute',assignEmployeeController.changeAssignedRoute);
+
 module.exports = router;

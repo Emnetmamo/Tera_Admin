@@ -11,7 +11,6 @@ const DashboardPage = () => {
   const { userId } = useParams();
   const [dashboardData, setDashboardData] = useState({});
 
-
   // fetch admin's data logic
   useEffect(() => {
     const fetchData = async () => {

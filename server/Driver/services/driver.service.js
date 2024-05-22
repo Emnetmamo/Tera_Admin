@@ -1,10 +1,24 @@
 const UserModel = require("../model/drivermodel");
 const jwt = require("jsonwebtoken");
+
 class UserServices {
-    static async registerUser(email, password, phone, firstName, lastName,code,licenseplate, licensenumber, Assignedroute,cityDistrict,Address) {
+    static async registerUser(email, password, phone, firstName, lastName, code, licenseplate, licensenumber, Assignedroute, cityDistrict, Address, qrCode) {
         try {
             console.log("-----Email --- Password-----", email, password);
-            const createUser = new UserModel({ email, password, phone, firstName, lastName,code,licenseplate, licensenumber, Assignedroute,cityDistrict,Address });
+            const createUser = new UserModel({ 
+                email, 
+                password, 
+                phone, 
+                firstName, 
+                lastName, 
+                code, 
+                licenseplate, 
+                licensenumber, 
+                Assignedroute, 
+                cityDistrict, 
+                Address, 
+                qrCode // Add the qrCode field here
+            });
             return await createUser.save();
         } catch (err) {
             throw err;
@@ -28,9 +42,7 @@ class UserServices {
     }
 
     static async generateAccessToken(tokenData, JWTSecret_Key, JWT_EXPIRE) {
-        
-            return jwt.sign(tokenData, JWTSecret_Key, { expiresIn: JWT_EXPIRE });
-        
+        return jwt.sign(tokenData, JWTSecret_Key, { expiresIn: JWT_EXPIRE });
     }
 }
 
