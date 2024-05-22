@@ -33,7 +33,27 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegistrationPage />} />
-          <Route path="/profile/:userId" element={<UserProfile />} />
+      
+          <Route 
+          path="/profile/:userId" 
+          element={
+            <>
+            <Header />
+            <Container fluid>
+              <Row>
+                <Col sm={3}>
+                  <Sidebar />
+                </Col>
+
+                <Col sm={9} className="main-content">
+                <Routes>
+                <Route index element={<CardWrapper element={ <UserProfile />} />} />
+                </Routes>
+                </Col>
+                  </Row>
+                </Container>
+                </>
+            } />  
           <Route
             path="/dashboard/:userId/*"
             element={
@@ -57,7 +77,8 @@ function App() {
                         <Route path="/notifications" element={<CardWrapper element={<NotificationsPage />} />} />
                         <Route path="/verify-payments" element={<CardWrapper element={<VerifyPaymentsPage />} />} />
                         <Route path="/weekly-reports" element={<CardWrapper element={<WeeklyReportsPage />} />} />
-                        <Route path="/complaints" element={<CardWrapper element={<ComplaintsPage />} />} />                     
+                        <Route path="/complaints" element={<CardWrapper element={<ComplaintsPage />} />} /> 
+                                        
                       </Routes>
                     </Col>
                   </Row>

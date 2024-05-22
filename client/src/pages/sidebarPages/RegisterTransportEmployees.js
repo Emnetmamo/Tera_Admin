@@ -14,6 +14,9 @@ const RegisterTransportEmployeesPage = () => {
     "District1": ["Route1", "Route2", "Route3"],
     "District2": ["RouteA", "RouteB", "RouteC"],
     // Add more districts and routes as needed
+
+
+    
   };
 
   const [districts, setDistricts] = useState([]);
@@ -166,7 +169,7 @@ const RegisterTransportEmployeesPage = () => {
 
         <Form.Group controlId="assignedRoute">
           <Form.Label>
-            <BsGeoAlt /> Assigned Route
+            <BsGeoAlt /> Terminal
           </Form.Label>
           <Form.Control
             as="select"
