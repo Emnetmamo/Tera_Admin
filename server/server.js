@@ -35,6 +35,7 @@ const complaintsRoutes = require ('./TransportEmployee/routes/complaintRoutes');
 const warningRoutes = require('./TransportEmployee/routes/warningRoutes');
 const dailyReportRoutes = require('./TransportEmployee/routes/dailyReportRoutes');
 const notificationRoutes = require('./TransportEmployee/routes/notificationRoutes');
+const employeeCommRoutes = require('./TransportEmployee/routes/employeeComRoutes');
 
 
 //Taxi Driver App Routes imports
@@ -100,8 +101,9 @@ app.use('/TransportEmployee/uploads', express.static(path.join(__dirname, 'Trans
  app.use('/mobileApp/api/warning',warningRoutes) // warning related routes
  app.use('/mobileApp/api/dailyReport',dailyReportRoutes) // daily Report related routes
  app.use('/mobileApp/api/notifications',notificationRoutes) // Notification related routes 
+ app.use('/mobileApp/api/employeeComm',employeeCommRoutes) // Employee Comm related routes 
  
- 
+
  
  /////////   Taxi Drivers Mobile App Routes   ////////////
 
