@@ -36,7 +36,7 @@ const getUserProfile = async (req, res) => {
 // Update the profile data 
 const updateProfile = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId =  req.params.userId || req.body.userId;
 
     // Construct the update object based on chnaged fields in the request body
     const updateObject = {};

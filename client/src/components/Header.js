@@ -2,19 +2,21 @@ import React from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { BsFillPersonFill, BsGlobe, BsGear, BsQuestionSquare, BsBell, BsBoxArrowRight } from 'react-icons/bs';
 import demoLogo from "../assets/images/logoo.png";
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, useParams } from 'react-router-dom'; 
+import axios from 'axios'; // Import axios
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/css/Header.css';
 
 const Header = () => {
   const navigate = useNavigate();
+  const { userId } = useParams();
 
   const handleLogout = () => {
     navigate('/'); // Redirect to the Login page
   };
 
   const handleProfileClick = () => {
-    navigate('/profile'); // Redirect to the UserProfile page
+    navigate(`/profile/${userId}`); // Redirect to the UserProfile page
   };
 
   return (
@@ -33,10 +35,6 @@ const Header = () => {
           <Nav.Link onClick={handleProfileClick} className="notification-icon"><BsFillPersonFill /> Profile</Nav.Link>
         </Nav>
         <Nav>
-          <NavDropdown title={<><BsGear /> Settings</>} id="basic-nav-dropdown">
-            <NavDropdown.Item href="#help"><BsQuestionSquare /> Help</NavDropdown.Item>
-            <NavDropdown.Item><BsBell /> Notifications</NavDropdown.Item>
-          </NavDropdown>
           <NavDropdown title={<><BsGlobe /> Language</>} id="language-dropdown" >
             <NavDropdown.Item>Amharic</NavDropdown.Item>
             <NavDropdown.Item>English</NavDropdown.Item>
