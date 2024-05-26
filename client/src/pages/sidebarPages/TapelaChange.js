@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, FormControl, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { BiSearch } from 'react-icons/bi';
+import '../../assets/css/TapelaChangePage.css';
+import { BiSearch } from 'react-icons/bi'; 
+import '../../assets/css/TaxiDrivers.css'; 
 
 const TapelaChangePage = () => {
   const [search, setSearch] = useState('');
@@ -9,8 +11,7 @@ const TapelaChangePage = () => {
   const [selectedDriver, setSelectedDriver] = useState(null);
   const [showChangeModal, setShowChangeModal] = useState(false);
   const [newRoute, setNewRoute] = useState('');
-  const [newSupervisor, setNewSupervisor] = useState('');
-  const [changeOption, setChangeOption] = useState('route');
+  const [newDistrict, setNewDistrict] = useState('');
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
@@ -19,7 +20,7 @@ const TapelaChangePage = () => {
   useEffect(() => {
     const fetchDriversData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/driver/TaxiDriverData/getAssignedDrivers');
+        const response = await axios.get('http://localhost:5000/api/tapelachange/getData');
         if (response.status === 200) {
           setDriversData(response.data);
         } else {
@@ -41,46 +42,41 @@ const TapelaChangePage = () => {
     setSelectedDriver(null);
     setShowChangeModal(false);
     setNewRoute('');
-    setNewSupervisor('');
-    setChangeOption('route');
+    setNewDistrict('');
   };
 
   const handleRouteChange = async () => {
-    if (!selectedDriver || (!newRoute && !newSupervisor)) {
-      console.error('Driver or new route/supervisor not specified');
+    if (!selectedDriver || !newRoute || !newDistrict) {
+      console.error('Driver, new route, or new district not specified');
       return;
     }
 
     try {
-      const formData = new FormData();
-      formData.append('driverId', selectedDriver._id);
-      formData.append('changeOption', changeOption);
-      formData.append(changeOption === 'route' ? 'newRoute' : 'newSupervisor', changeOption === 'route' ? newRoute : newSupervisor);
-
-      const response = await axios.post('http://localhost:5000/api/assignTransportEmployee/change', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const response = await axios.post('http://localhost:5000/api/tapelachange/updateRouteAndDistrict', {
+        driverId: selectedDriver._id,
+        newRoute: newRoute,
+        newDistrict: newDistrict
       });
 
       if (response.status === 200) {
         const updatedDriversData = driversData.map(driver => {
           if (driver._id === selectedDriver._id) {
-            if (changeOption === 'route') {
-              return { ...driver, Assignedroute: newRoute };
-            } else {
-              return { ...driver, AssignedTransportEmployee: { fullName: newSupervisor } };
-            }
+            return { ...driver, Assignedroute: newRoute, cityDistrict: newDistrict, AssignedTransportEmployee: {
+              fullName: "Not Assigned",
+              employeeId: "",
+              cityDistrict: "",
+              assignedRoute: ""
+            }};
           }
           return driver;
         });
         setDriversData(updatedDriversData);
         setShowChangeModal(false);
       } else {
-        console.error('Failed to change route/supervisor:', response.data.message);
+        console.error('Failed to change route:', response.data.message);
       }
     } catch (error) {
-      console.error('Error changing route/supervisor:', error.message);
+      console.error('Error changing route:', error.message);
     }
   };
 
@@ -136,45 +132,28 @@ const TapelaChangePage = () => {
 
       <Modal show={showChangeModal} onHide={handleModalClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{`Change ${changeOption === 'route' ? 'Route' : 'Supervisor'}`}</Modal.Title>
+          <Modal.Title>Change Route and District</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="changeOption">
-              <Form.Check
-                type="radio"
-                label="Change Route"
-                checked={changeOption === 'route'}
-                onChange={() => setChangeOption('route')}
-              />
-              <Form.Check
-                type="radio"
-                label="Change Supervisor"
-                checked={changeOption === 'supervisor'}
-                onChange={() => setChangeOption('supervisor')}
+            <Form.Group controlId="newRoute">
+              <Form.Label>New Route</Form.Label>
+              <FormControl
+                type="text"
+                value={newRoute}
+                onChange={(e) => setNewRoute(e.target.value)}
+                placeholder="Enter new route"
               />
             </Form.Group>
-            {changeOption === 'route' ? (
-              <Form.Group controlId="newRoute">
-                <Form.Label>New Route</Form.Label>
-                <FormControl
-                  type="text"
-                  value={newRoute}
-                  onChange={(e) => setNewRoute(e.target.value)}
-                  placeholder="Enter new route"
-                />
-              </Form.Group>
-            ) : (
-              <Form.Group controlId="newSupervisor">
-                <Form.Label>New Supervisor</Form.Label>
-                <FormControl
-                  type="text"
-                  value={newSupervisor}
-                  onChange={(e) => setNewSupervisor(e.target.value)}
-                  placeholder="Enter new supervisor"
-                />
-              </Form.Group>
-            )}
+            <Form.Group controlId="newDistrict">
+              <Form.Label>New District</Form.Label>
+              <FormControl
+                type="text"
+                value={newDistrict}
+                onChange={(e) => setNewDistrict(e.target.value)}
+                placeholder="Enter new district"
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>

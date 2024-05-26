@@ -1,7 +1,5 @@
 // controllers/driversDataController.js
-
 const TaxiDrivers = require('../../Driver/model/drivermodel');
-
 
 // fetching all taxi drivers 
 const getDrivers = async (req, res) => {
