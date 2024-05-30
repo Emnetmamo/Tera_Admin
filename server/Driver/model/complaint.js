@@ -6,7 +6,8 @@ const { Schema } = mongoose;
 const ComplaintSchema = new Schema({
     userId:{
         type: Schema.Types.ObjectId,
-        ref: UserModel.modelName
+        ref: UserModel.modelName,
+        required: true
     },
     title: {
         type: String,
