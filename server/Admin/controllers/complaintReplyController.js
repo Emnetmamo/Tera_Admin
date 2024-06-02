@@ -1,8 +1,6 @@
 // controllers/complaintReplyController.js
-
 const TransportEmployeeComplaint = require('../../TransportEmployee/model/complaint');
 const PassengerComplaint = require('../../Passenger/models/passengerComplaint');
-
 // fetching all compalints of Employees
 const getAllComplaints = async (req, res) => {
   try {
