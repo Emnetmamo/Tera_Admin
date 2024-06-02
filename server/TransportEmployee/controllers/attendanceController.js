@@ -1,10 +1,8 @@
-// controllers/attendanceController.js
-
-const TransportEmployee = require('../../Admin/models/TransportEmployee');
 const DriversAttendance = require('../model/driversAttendance');
+const TransportEmployee = require('../../Admin/models/TransportEmployee');
 
 // Get Employee Terminal info
- const getEmployeeTerminal = async (req, res) => {
+const getEmployeeTerminal = async (req, res) => {
   try {
     const { userId } = req.params;
     const employee = await TransportEmployee.findOne({ _id: userId });
@@ -17,7 +15,6 @@ const DriversAttendance = require('../model/driversAttendance');
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
 
 // Get assigned drivers for a specific employee
 const getAssignedDrivers = async (req, res) => {
@@ -36,7 +33,6 @@ const getAssignedDrivers = async (req, res) => {
 };
 
 // Get attendance data for the current day
-
 const getAttendanceData = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -59,12 +55,10 @@ const getAttendanceData = async (req, res) => {
   }
 };
 
-
-// Post driver's attendance data
 const postDriversAttendance = async (req, res) => {
   try {
     // Extract necessary data from request body
-    const { driverId, driverName, licenseNumber, licensePlate, employeeId, rounds } = req.body;
+    const { driverId, employeeId, qrCodes } = req.body;
 
     // Check if attendance data already exists for the driver for the current day
     const currentDate = new Date();
@@ -80,20 +74,21 @@ const postDriversAttendance = async (req, res) => {
       return res.status(400).json({ error: 'Attendance already marked for this driver today' });
     }
 
-    // Find employee by employeeId
-    const employee = await TransportEmployee.findById(employeeId);
+    // Create new attendance document with QR codes
+    const rounds = Array.from({ length: 8 }, (_, index) => ({
+      roundNumber: index + 1,
+      status: 'Incomplete',
+      time: null,
+      qrCode: qrCodes[index], // Set the QR code from the request body
+    }));
 
     // Create new attendance document
     const attendance = new DriversAttendance({
       driverId,
-      driverName,
-      licenseNumber,
-      licensePlate,
+      employeeId,
       date: new Date(),
       rounds,
       overallStatus: 'Incomplete',
-      employeeId,
-      employeeFullName: employee.fullName,
     });
 
     // Save the new attendance record
@@ -106,7 +101,6 @@ const postDriversAttendance = async (req, res) => {
   }
 };
 
-// Update driver's attendance data
 // Update driver's attendance data
 const updateDriversAttendance = async (req, res) => {
   try {
@@ -136,8 +130,8 @@ const updateDriversAttendance = async (req, res) => {
 
     const now = new Date();
 
-    if (lastCompletedRound.time && ((now - lastCompletedRound.time) / (1000 * 60)) < 45) {
-      return res.status(400).json({ error: 'You must wait at least 45 minutes between marking rounds' });
+    if (lastCompletedRound.time && ((now - lastCompletedRound.time) / (1000 * 60)) < 1) {
+      return res.status(400).json({ error: 'You must wait at least 1 minute between marking rounds' });
     }
 
     // Update the status and time of the clicked round
@@ -158,10 +152,13 @@ const updateDriversAttendance = async (req, res) => {
   }
 };
 
+
 module.exports = {
   getEmployeeTerminal,
   getAssignedDrivers,
   getAttendanceData,
   postDriversAttendance,
   updateDriversAttendance,
+
 };
+

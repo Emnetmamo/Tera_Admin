@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import logo from '../assets/images/logoo.png';
+import logo from '../assets/images/semerit.png';
 import '../assets/css/Login.css';
 import LogVid from "../assets/videos/AdminLogin.mp4";
 
@@ -66,9 +66,10 @@ const LoginPage = () => {
           </Col>
           <Col xs={6} className="login-form-section">
             <Card.Body className="modern-form">
-              <Card.Img src={logo} alt="Logo" className="login-logo" />
+              <Card.Img src={logo} alt="Logo" className="login-logo" style={{marginLeft: "90px"}} />
+              <h2 style={{ textAlign: "center", marginTop: "-30px", color: "#000", marginBottom:"30px" }}>SEMERIT</h2>
               <Form className="login-form">
-                <h1 style={{ textAlign: "center", marginBottom: "30px" }}>Admin Login</h1>
+                <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Admin Login</h1>
                 <Form.Group controlId="username" style={{ marginBottom: "10px" }}>
                   <Form.Label>
                     <BsPerson /> Username

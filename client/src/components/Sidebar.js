@@ -1,5 +1,3 @@
-// src/components/Sidebar.js
-
 import React, { useState, useEffect } from 'react';
 import { Nav, Image } from 'react-bootstrap';
 import { BsHouseDoorFill, BsPersonPlus, BsCardList, BsBoxArrowUpRight, BsBell, BsCreditCard, BsFileText, BsChatSquareDots, BsTaxiFront, BsPersonWorkspace } from 'react-icons/bs';
@@ -42,7 +40,11 @@ const Sidebar = () => {
   return (
     <Nav className="flex-column sidebar">
       <div className="user-info">
-        <Image className="user-photo" src={`http://localhost:5000/${userInfo.photoUpload}` || profileImg}   alt="Admin Photo"/>
+        <Image 
+          className="user-photo" 
+          src={userInfo.photoUpload ? `http://localhost:5000/${userInfo.photoUpload}?timestamp=${new Date().getTime()}` : profileImg} 
+          alt="Admin Photo" 
+        />
         <div className="user-details">
           <p className="user-name">{`${userInfo.firstName} ${userInfo.fatherName}`}</p>
         </div>
@@ -75,7 +77,7 @@ const Sidebar = () => {
         <BsCreditCard /> Verify Payments
       </Link>
       <Link to={`${baseRoute}/weekly-reports`} className={`nav-link ${selectedMenuItem === 'weekly-reports' ? 'active' : ''}`} onClick={() => handleItemClick('weekly-reports')}>
-        <BsFileText /> Review Weekly Reports
+        <BsFileText /> Review Reports
       </Link>
       <Link to={`${baseRoute}/complaints`} className={`nav-link ${selectedMenuItem === 'complaints' ? 'active' : ''}`} onClick={() => handleItemClick('complaints')}>
         <BsChatSquareDots /> View Complaints

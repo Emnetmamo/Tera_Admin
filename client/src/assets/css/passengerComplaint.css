@@ -1,0 +1,45 @@
+.complaint-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .flagged-card {
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+  }
+  
+  .plate-number {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .complaint-count {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .flag-icon {
+    color: #d9534f;
+    margin-right: 8px;
+  }
+   .car-icon {
+    color: #214591;
+    margin-right: 8px;
+  }
+  
+  .reply-separator {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .reply-text {
+    font-size: 1rem;
+  }
+  
+  .reply-time {
+    font-size: 0.8rem;
+    color: gray;
+  }
+  

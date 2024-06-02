@@ -12,6 +12,8 @@ const storeNotificationData = async (notificationType, message) => {
       case 'transportEmployees':
         await Notification.create({ type: 'transportEmployees', message: message });
         break;
+      case 'passengers':
+          await Notification.create({ type: 'passengers', message: message });
       default:
         break;
     }

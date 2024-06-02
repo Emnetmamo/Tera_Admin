@@ -20,10 +20,13 @@ const transportEmployeeComplaintSchema = new Schema({
   reply: {
     type: String,
     default: 'No reply has been sent!'
+  },
+  replyDateTime: {
+    type: Date,
+    default: null
   }
 });
 
 const TransportEmployeeComplaint = mongoose.model('TransportEmployeeComplaint', transportEmployeeComplaintSchema);
 
 module.exports = TransportEmployeeComplaint;
-
