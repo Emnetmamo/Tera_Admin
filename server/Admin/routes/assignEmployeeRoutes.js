@@ -5,7 +5,7 @@ const router = express.Router();
 const assignEmployeeController = require('../controllers/assignEmployeeController');
 
 // For Unassigned Drivers
-router.get('/TransportEmployeeData', assignEmployeeController.getTransportEmployeesByCityDistrict);
+router.get('/TransportEmployeeData', assignEmployeeController.getTransportEmployeesByCityDistrictAndTerminal);
 router.post('/assign', assignEmployeeController.assignTransportEmployee);
 
 // For Assigned Drivers

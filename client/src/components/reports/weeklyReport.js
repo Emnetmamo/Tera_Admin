@@ -15,6 +15,7 @@ const WeeklyReport = () => {
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [showGraph, setShowGraph] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [modalKey, setModalKey] = useState(0);
 
   const reports = [
     {
@@ -88,7 +89,7 @@ const WeeklyReport = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     setShowGraph(false); // Close graph when closing modal
-    window.location.reload();
+    setModalKey((prevKey) => prevKey + 1);
   };
 
   const filteredReports = reports.filter(
@@ -247,7 +248,7 @@ See Weekly Report On Graph
 ))}
 </tbody>
 </Table>
-<Modal show={showModal} onHide={handleCloseModal} size="lg">
+<Modal key={modalKey} show={showModal} onHide={handleCloseModal} size="lg">
 <Modal.Header closeButton>
 <Modal.Title>Report Graph</Modal.Title>
 </Modal.Header>

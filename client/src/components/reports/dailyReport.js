@@ -1,31 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Modal } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import Select from 'react-select';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import Chart from 'chart.js/auto'; // Import Chart.js
 import { Bar } from 'react-chartjs-2';
 import domtoimage from 'dom-to-image-more';
-
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+// Sample data for reports
+const sampleReports = [
+  {
+    id: 1,
+    date: '2024-06-01',
+    driver: 'John Doe',
+    licensePlate: 'ABC123',
+    terminal: 'Terminal A',
+    cityDistrict: 'District X',
+    reportedBy: 'Jane Smith',
+    timeReported: '09:00 AM',
+    attendance: 'Present',
+    warning: 'No',
+    punishment: 'None',
+  },
+  {
+    id: 2,
+    date: '2024-06-01',
+    driver: 'Alice Johnson',
+    licensePlate: 'XYZ789',
+    terminal: 'Terminal B',
+    cityDistrict: 'District Y',
+    reportedBy: 'Bob Brown',
+    timeReported: '10:30 AM',
+    attendance: 'Absent',
+    warning: 'Yes',
+    punishment: 'Fine',
+  },
+  {
+    id: 3,
+    date: '2024-06-02',
+    driver: 'Eva Lee',
+    licensePlate: 'DEF456',
+    terminal: 'Terminal C',
+    cityDistrict: 'District Z',
+    reportedBy: 'Sam Wilson',
+    timeReported: '11:45 AM',
+    attendance: 'Present',
+    warning: 'No',
+    punishment: 'None',
+  },
+];
 
 const DailyReport = () => {
   const [selectedDay, setSelectedDay] = useState(new Date());
@@ -33,75 +58,19 @@ const DailyReport = () => {
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [showGraph, setShowGraph] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [modalKey, setModalKey] = useState(0);
+  const [reports, setReports] = useState([]);
 
-  const reports = [
-    {
-      id: 1,
-      driver: 'John Doe',
-      licensePlate: 'ABC1234',
-      terminal: 'Terminal 1',
-      cityDistrict: 'District A',
-      reportedBy: 'Alice Johnson',
-      timeReported: '08:30 AM',
-      attendance: 'Present',
-      warning: 'No',
-      punishment: 'None',
-      date: '2024-05-01',
-    },
-    {
-      id: 2,
-      driver: 'Jane Smith',
-      licensePlate: 'XYZ5678',
-      terminal: 'Terminal 2',
-      cityDistrict: 'District B',
-      reportedBy: 'Bob Brown',
-      timeReported: '09:15 AM',
-      attendance: 'Absent',
-      warning: 'Yes',
-      punishment: 'Warning Letter',
-      date: '2024-05-01',
-    },
-    {
-      id: 3,
-      driver: 'Alice Johnson',
-      licensePlate: 'DEF9876',
-      terminal: 'Terminal 3',
-      cityDistrict: 'District C',
-      reportedBy: 'Charlie Brown',
-      timeReported: '10:00 AM',
-      attendance: 'Present',
-      warning: 'No',
-      punishment: 'None',
-      date: '2024-05-01',
-    },
-    // Add more report entries as needed
-  ];
+  useEffect(() => {
+    // Simulating fetching reports from API
+    setReports(sampleReports);
+  }, []);
 
   // Organize terminals by district
-  const districtTerminalMap = {
-    'District A': {
-      'Terminal 1': ['Route 1', 'Route 2', 'Route 3'],
-      'Terminal 2': ['Route A', 'Route B', 'Route C'],
-    },
-    'District B': {
-      'Terminal 3': ['Route X', 'Route Y', 'Route Z'],
-      'Terminal 4': ['Route M', 'Route N', 'Route O'],
-    },
-    'District C': {
-      'Terminal 5': ['Route P', 'Route Q', 'Route R'],
-      'Terminal 6': ['Route S', 'Route T', 'Route U'],
-    },
-  };
+  const districtTerminalMap = {};
 
   // Extract unique districts and terminals
   const uniqueDistricts = Object.keys(districtTerminalMap);
-  const uniqueTerminals = uniqueDistricts.reduce(
-    (acc, district) => [
-      ...acc,
-      ...Object.keys(districtTerminalMap[district]),
-    ],
-    []
-  );
 
   const handleDayChange = (date) => {
     setSelectedDay(date);
@@ -127,7 +96,7 @@ const DailyReport = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     setShowGraph(false); // Close graph when closing modal
-    window.location.reload(); // Reload the page
+    setModalKey((prevKey) => prevKey + 1);
   };
 
   const filteredReports = reports.filter(
@@ -173,7 +142,7 @@ const DailyReport = () => {
       const title = document.createElement('h4');
       const district = selectedDistrict ? selectedDistrict.label : 'All Districts';
       const terminal = selectedTerminal ? selectedTerminal.label : 'All Terminals';
-      title.textContent = `Daily report of ${district} and ${terminal} - ${selectedDay.toLocaleDateString()}`;
+      title.textContent =       `${district} and ${terminal} - ${selectedDay.toLocaleDateString()}`
       node.insertBefore(title, node.firstChild);
 
       domtoimage
@@ -209,7 +178,6 @@ const DailyReport = () => {
           <label>Select City District:</label>
           <Select
             value={selectedDistrict}
-           
             onChange={handleDistrictChange}
             options={uniqueDistricts.map((district) => ({
               value: district,
@@ -224,7 +192,7 @@ const DailyReport = () => {
             onChange={handleTerminalChange}
             options={
               selectedDistrict
-                ? Object.keys(districtTerminalMap[selectedDistrict.value]).map(
+                ? Object.keys(districtTerminalMap[selectedDistrict.value] || {}).map(
                     (terminal) => ({
                       value: terminal,
                       label: terminal,
@@ -236,10 +204,9 @@ const DailyReport = () => {
         </div>
       </div>
       <div style={{ textAlign: 'right' }}>
-      <Button  onClick={handleShowGraph} 
-      style={{ backgroundColor: 'rgb(165, 94, 13)' , borderColor: "#fff", fontSize: 17}}>
-        See Daily Report On Graph
-      </Button>
+        <Button onClick={handleShowGraph} style={{ backgroundColor: 'rgb(165, 94, 13)', borderColor: "#fff", fontSize: 17 }}>
+          See Daily Report On Graph
+        </Button>
       </div>
       <Table striped bordered hover style={{ marginTop: '20px' }}>
         <thead>
@@ -271,7 +238,7 @@ const DailyReport = () => {
           ))}
         </tbody>
       </Table>
-      <Modal show={showModal} onHide={handleCloseModal} size="lg">
+      <Modal key={modalKey} show={showModal} onHide={handleCloseModal} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Report Graph</Modal.Title>
         </Modal.Header>
@@ -285,7 +252,7 @@ const DailyReport = () => {
           </h4>
           {showGraph && (
             <div id="daily-report-graph">
-              <Bar data={data} />
+              <canvas id="myChart" width="400" height="400"></canvas> {/* Place canvas element for the chart */}
             </div>
           )}
         </Modal.Body>
@@ -303,3 +270,4 @@ const DailyReport = () => {
 };
 
 export default DailyReport;
+

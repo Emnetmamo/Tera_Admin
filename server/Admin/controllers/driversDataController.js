@@ -1,10 +1,10 @@
 // controllers/driversDataController.js
 const TaxiDrivers = require('../../Driver/model/drivermodel');
 
-// fetching all taxi drivers 
+// Fetch all taxi drivers
 const getDrivers = async (req, res) => {
   try {
-    const TaxiDriversData = await TaxiDrivers.find(); 
+    const TaxiDriversData = await TaxiDrivers.find().populate('AssignedTransportEmployee');
     res.json(TaxiDriversData);
   } catch (error) {
     console.error('Error fetching Taxi Drivers Datas:', error);
@@ -12,10 +12,10 @@ const getDrivers = async (req, res) => {
   }
 };
 
-// fetching New drivers with no assigned Employee yet
+// Fetch new drivers with no assigned employee yet
 const getNewDrivers = async (req, res) => {
   try {
-    const NewTaxiDriversData = await TaxiDrivers.find({ "AssignedTransportEmployee.fullName": "Not Assigned" });
+    const NewTaxiDriversData = await TaxiDrivers.find({ AssignedTransportEmployee: null }).populate('AssignedTransportEmployee');
     res.json(NewTaxiDriversData);
   } catch (error) {
     console.error('Error fetching New Taxi Drivers Datas:', error);
@@ -28,12 +28,13 @@ const getNewDrivers = async (req, res) => {
 // fetching employee data from assigned drivers 
 const getAssignedDrivers = async (req, res) => {
   try {
-    const AssignedDrivers = await TaxiDrivers.find({ "AssignedTransportEmployee.fullName": { $ne: "Not Assigned" } });
-    res.json(AssignedDrivers);
+    const drivers = await TaxiDrivers.find({ AssignedTransportEmployee: { $ne: null } }).populate('AssignedTransportEmployee');
+    res.json(drivers);
   } catch (error) {
-    console.error('Error fetching New Taxi Drivers Datas:', error);
+    console.error('Error fetching Taxi Drivers Datas:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 module.exports = { getDrivers , getNewDrivers , getAssignedDrivers};

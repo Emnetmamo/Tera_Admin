@@ -1,3 +1,5 @@
+// src/pages/AllDriversPage.js
+
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import axios from 'axios';
@@ -32,11 +34,16 @@ const AllDriversPage = ({ searchTerm }) => {
       (driver.firstName && driver.firstName.toLowerCase().includes(searchTermLowerCase)) ||
       (driver.licenseplate && driver.licenseplate.toLowerCase().includes(searchTermLowerCase)) ||
       (driver.licensenumber && driver.licensenumber.toLowerCase().includes(searchTermLowerCase)) ||
-      (driver.Code && driver.Code.toLowerCase().includes(searchTermLowerCase))
+      (driver.code && driver.code.toLowerCase().includes(searchTermLowerCase))
     );
   });
 
   return (
+
+    <div>
+        {filteredDriversData.length === 0 ? (
+        <div>No data matches your search.</div>
+      ) : (
     <Table striped bordered hover responsive className="drivers-table">
       <thead>
         <tr>
@@ -56,11 +63,13 @@ const AllDriversPage = ({ searchTerm }) => {
             <td>{driver.licenseplate}</td>
             <td>{driver.Code}</td>
             <td>{driver.Assignedroute}</td>
-            <td>{driver.AssignedTransportEmployee.fullName}</td>
+            <td>{driver.AssignedTransportEmployee ? driver.AssignedTransportEmployee.fullName : 'N/A'}</td>
           </tr>
         ))}
       </tbody>
     </Table>
+  )}
+    </div>
   );
 };
 

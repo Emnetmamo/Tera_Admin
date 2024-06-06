@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Tapelacontroller = require('../controllers/TapelaChangeController');
+const TapelaController = require('../controllers/TapelaChangeController');
 
-router.get('/getData',Tapelacontroller.getDrivers);
-router.post('/updateRouteAndDistrict', Tapelacontroller.updateDriverRouteAndDistrict);
+router.get('/getData', TapelaController.getDrivers);
+router.post('/updateRouteAndDistrict', TapelaController.updateDriverTerminalAndRoute);
+router.get('/employees', TapelaController.getEmployeesByTerminal);
 
-module.exports =router;
+module.exports = router;
