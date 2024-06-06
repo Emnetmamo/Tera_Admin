@@ -1,4 +1,3 @@
-// ./components/accounts/DeactivatedAccountsTab.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
@@ -7,6 +6,7 @@ const DeactivatedAccountsTab = ({ deactivatedAccounts, fetchDeactivatedAccounts,
   const [showModal, setShowModal] = useState(false);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [reactivationReason, setReactivationReason] = useState('');
+  const [modalKey, setModalKey] = useState(0); // Key for the modal component
 
   const openModal = (accountId) => {
     setSelectedAccountId(accountId);
@@ -15,7 +15,9 @@ const DeactivatedAccountsTab = ({ deactivatedAccounts, fetchDeactivatedAccounts,
 
   const closeModal = () => {
     setShowModal(false);
-    setReactivationReason('');
+    setSelectedAccountId(null); // Reset selected account ID
+    setReactivationReason(''); // Reset reactivation reason
+    setModalKey((prevKey) => prevKey + 1); // Increment the key to force update the modal
   };
 
   const activateAccount = async () => {
@@ -25,7 +27,7 @@ const DeactivatedAccountsTab = ({ deactivatedAccounts, fetchDeactivatedAccounts,
       });
       fetchDeactivatedAccounts();
       handleForceUpdate();
-      closeModal();
+      closeModal(); // Close the modal after activating the account
     } catch (error) {
       console.error('Error activating account:', error);
     }
@@ -33,50 +35,59 @@ const DeactivatedAccountsTab = ({ deactivatedAccounts, fetchDeactivatedAccounts,
 
   // Sort deactivatedAccounts by updatedAt in descending order
   const sortedDeactivatedAccounts = deactivatedAccounts
-    .filter((account) => {
-      // Filter based on search term (name or employee ID)
-      const searchTermLowerCase = searchTerm.toLowerCase();
-      return (
-        account.fullName.toLowerCase().includes(searchTermLowerCase) ||
-        account.employeeId.toLowerCase().includes(searchTermLowerCase)
-      );
-    })
-    .slice()
-    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    ? deactivatedAccounts
+        .filter((account) => {
+          if (!account) return false; // Skip if account is null or undefined
+          // Filter based on search term (name or employee ID)
+          const searchTermLowerCase = searchTerm.toLowerCase();
+          return (
+            account.fullName.toLowerCase().includes(searchTermLowerCase) ||
+            account.employeeId.toLowerCase().includes(searchTermLowerCase)
+          );
+        })
+        .slice()
+        .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+    : [];
 
   return (
     <div>
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Sex</th>
-            <th>Employee Id</th>
-            <th>City District</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedDeactivatedAccounts.map((account) => (
-            <tr key={account._id}>
-              <td>{account.fullName}</td>
-              <td>{account.sex}</td>
-              <td>{account.employeeId}</td>
-              <td>{account.cityDistrict}</td>
-              <td>{account.status}</td>
-              <td>
-                <button className='btn btn-success' onClick={() => openModal(account._id)}>
-                  Activate
-                </button>
-              </td>
+      {sortedDeactivatedAccounts.length === 0 ? (
+        <div>No data matches your search.</div>
+      ) : (
+        <table className='table'>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Sex</th>
+              <th>Employee Id</th>
+              <th>City District</th>
+              <th>Terminal</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sortedDeactivatedAccounts.map((account) => (
+              <tr key={account._id}>
+                <td>{account.fullName}</td>
+                <td>{account.sex}</td>
+                <td>{account.employeeId}</td>
+                <td>{account.cityDistrict}</td>
+                <td>{account.Terminal}</td>
+                <td>{account.status}</td>
+                <td>
+                  <button className='btn btn-success' onClick={() => openModal(account._id)}>
+                    Activate
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
 
       {/* Modal for Reactivation */}
-      <Modal show={showModal} onHide={closeModal}>
+      <Modal key={modalKey} show={showModal} onHide={closeModal}>
         <Modal.Header closeButton>
           <Modal.Title>Update Status</Modal.Title>
         </Modal.Header>

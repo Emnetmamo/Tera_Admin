@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../../assets/css/NotificationsPage.css';
+import { toast, ToastContainer } from 'react-toastify';
 
 const NotificationsPage = () => {
   const [notificationType, setNotificationType] = useState('all');
@@ -23,10 +24,10 @@ const NotificationsPage = () => {
       console.log('Notification sent successfully:', response.data);
       setNotificationType('all');
       setNotificationMessage('');
-      alert('Notification sent successfully!');
+      toast.success('Notification sent successfully!', { autoClose: 3000 });
     } catch (error) {
       console.error('Error sending notification:', error);
-      alert('Failed to send notification. Please try again later.');
+      toast.error('Failed to send notification. Please try again later.', { autoClose: 3000 });
     }
   };
 
@@ -37,8 +38,9 @@ const NotificationsPage = () => {
         <label htmlFor="notificationType" className="label">Select Recipients:</label>
         <select id="notificationType" value={notificationType} onChange={handleNotificationTypeChange} className="select">
           <option value="all">All</option>
-          <option value="drivers">Drivers</option>
           <option value="transportEmployees">Transport Employees</option>
+          <option value="drivers">Drivers</option>
+          <option value="passengers">Passengers</option>
         </select>
       </div>
       <div className="input-section">
@@ -46,6 +48,7 @@ const NotificationsPage = () => {
         <textarea id="notificationMessage" value={notificationMessage} onChange={handleNotificationMessageChange} className="textarea"></textarea>
       </div>
       <button onClick={handleSendNotification} className="send-button">Send Notification</button>
+      <ToastContainer />
     </div>
   );
 };

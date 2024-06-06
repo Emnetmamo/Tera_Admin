@@ -60,6 +60,9 @@ const TransportEmployeeDataPage = () => {
         />
         <BiSearch className="search-icon" />
       </div>
+      {filteredTransportEmployeeData.length === 0 ? (
+        <div>No data matches your search.</div>
+      ) : (
       <Table striped bordered hover responsive className="drivers-table">
       <thead>
         <tr>
@@ -72,23 +75,25 @@ const TransportEmployeeDataPage = () => {
         </tr>
       </thead>
       <tbody>
-        {filteredTransportEmployeeData.map((employee, index) => (
-          <tr key={index}>
-            <td>{employee.fullName}</td>
-            <td>{employee.email}</td>
-            <td>{employee.employeeId}</td>
-            <td>{employee.cityDistrict}</td>
-            <td>{employee.assignedRoute}</td>
-            <td>{employee.assignedDrivers.map((driver, index) => (
-                <div key={index}>
-                    <p>{driver.fullName} - {driver.licensePlate}</p>
-                </div>
-                ))}
-            </td>
-          </tr>
+      {filteredTransportEmployeeData.map((employee, index) => (
+      <tr key={index}>
+        <td>{employee.fullName}</td>
+        <td>{employee.email}</td>
+        <td>{employee.employeeId}</td>
+        <td>{employee.cityDistrict}</td>
+        <td>{employee.assignedRoute}</td>
+        <td>
+          {employee.assignedDrivers && employee.assignedDrivers.map((driver, index) => (
+            <div key={index}>
+              <p>{driver.firstName} {driver.lastName} - {driver.licenseplate}</p>
+            </div>
+          ))}
+        </td>
+      </tr>
         ))}
       </tbody>
     </Table>
+        )}
     </div>
 
         

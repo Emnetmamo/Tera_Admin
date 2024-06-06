@@ -4,25 +4,17 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col,Spinner } from 'react-bootstrap';
 import { BsPerson, BsEnvelope, BsGenderAmbiguous, BsFillPersonFill, BsPhone, BsHouse, BsGeoAlt } from 'react-icons/bs';
 import '../../assets/css/RegisterTransportEmployees.css';
+import districtData from '../../data/data';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterTransportEmployeesPage = () => {
-  // Sample data for city administration districts and routes
-  const sampleData = {
-    "District1": ["Route1", "Route2", "Route3"],
-    "District2": ["RouteA", "RouteB", "RouteC"],
-    // Add more districts and routes as needed
-
-
-    
-  };
-
+  
   const [districts, setDistricts] = useState([]);
   const [selectedDistrict, setSelectedDistrict] = useState("Choose District");
   const [routes, setRoutes] = useState([]);
-  const [selectedRoute, setSelectedRoute] = useState("Choose Route");
+  const [selectedTerminal, setselectedTerminal] = useState("Choose Termianl");
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -34,15 +26,20 @@ const RegisterTransportEmployeesPage = () => {
   });
   const [isRegistering, setIsRegistering] = useState(false);
 
-  useEffect(() => {
-    // Update routes based on the selected district
-    setRoutes(sampleData[selectedDistrict] || []);
-  }, [selectedDistrict]);
-
-  useEffect(() => {
-    // Update the list of districts
-    setDistricts(["Choose District", ...Object.keys(sampleData)]);
+   // Use useEffect to set the initial state from the imported JSON data
+   useEffect(() => {
+    const districtNames = districtData.District_Datas.map(district => district.District.name.en);
+    setDistricts(["Choose District", ...districtNames]);
   }, []);
+
+ // Update routes based on the selected district
+ useEffect(() => {
+  const selectedDistrictData = districtData.District_Datas.find(district => district.District.name.en === selectedDistrict);
+  if (selectedDistrictData) {
+    const terminalNames = selectedDistrictData.District.terminals.map(terminal => terminal.name.en);
+    setRoutes(terminalNames || []);
+  }
+}, [selectedDistrict]);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -63,7 +60,7 @@ const RegisterTransportEmployeesPage = () => {
       employeeId: formData.employeeId,
       address: formData.address,
       cityDistrict: selectedDistrict,
-      assignedRoute: selectedRoute,
+      Terminal: selectedTerminal,
     };
   
     try {
@@ -80,7 +77,7 @@ const RegisterTransportEmployeesPage = () => {
         address: '',
       });
       setSelectedDistrict('Choose District');
-      setSelectedRoute('Choose Route');
+      setselectedTerminal('Choose Terminal');
 
   } catch (error) {
     toast.error('Failed to register transport Employee. Please try again.', { autoClose: 3000 });
@@ -167,16 +164,16 @@ const RegisterTransportEmployeesPage = () => {
           </Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="assignedRoute">
+        <Form.Group controlId="Terminal">
           <Form.Label>
             <BsGeoAlt /> Terminal
           </Form.Label>
           <Form.Control
             as="select"
-            value={selectedRoute}
-            onChange={(e) => setSelectedRoute(e.target.value)}
+            value={selectedTerminal}
+            onChange={(e) => setselectedTerminal(e.target.value)}
           >
-            <option disabled>Choose...</option>
+            <option >Choose Terminal...</option>
             {routes.map((route, index) => (
               <option key={index}>{route}</option>
             ))}

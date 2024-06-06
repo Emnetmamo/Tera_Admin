@@ -1,4 +1,3 @@
-// ./components/accounts/ActiveAccountsTab.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
@@ -7,6 +6,7 @@ const ActiveAccountsTab = ({ activeAccounts, fetchActiveAccounts, handleForceUpd
   const [showModal, setShowModal] = useState(false);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [deactivationReason, setDeactivationReason] = useState('');
+  const [modalKey, setModalKey] = useState(0); // Key for the modal component
 
   const openModal = (accountId) => {
     setSelectedAccountId(accountId);
@@ -16,6 +16,7 @@ const ActiveAccountsTab = ({ activeAccounts, fetchActiveAccounts, handleForceUpd
   const closeModal = () => {
     setShowModal(false);
     setDeactivationReason('');
+    setModalKey((prevKey) => prevKey + 1); // Increment the key to force update the modal
   };
 
   const deactivateAccount = async () => {
@@ -25,7 +26,7 @@ const ActiveAccountsTab = ({ activeAccounts, fetchActiveAccounts, handleForceUpd
       });
       fetchActiveAccounts();
       handleForceUpdate();
-      closeModal();
+      closeModal(); // Close the modal after deactivating the account
     } catch (error) {
       console.error('Error deactivating account:', error);
     }
@@ -33,50 +34,60 @@ const ActiveAccountsTab = ({ activeAccounts, fetchActiveAccounts, handleForceUpd
 
   // Sort activeAccounts by updatedAt in descending order
   const sortedActiveAccounts = activeAccounts
-    .filter((account) => {
-      // Filter based on search term (name or employee ID)
-      const searchTermLowerCase = searchTerm.toLowerCase();
-      return (
-        account.fullName.toLowerCase().includes(searchTermLowerCase) ||
-        account.employeeId.toLowerCase().includes(searchTermLowerCase)
-      );
-    })
-    .slice()
-    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    ? activeAccounts
+        .filter((account) => {
+          // Check if account is not null or undefined
+          if (!account) return false;
+          // Filter based on search term (name or employee ID)
+          const searchTermLowerCase = searchTerm.toLowerCase();
+          return (
+            (account.fullName?.toLowerCase().includes(searchTermLowerCase) || false) ||
+            (account.employeeId?.toLowerCase().includes(searchTermLowerCase) || false)
+          );
+        })
+        .slice()
+        .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+    : [];
 
   return (
     <div>
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Sex</th>
-            <th>Employee Id</th>
-            <th>City District</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedActiveAccounts.map((account) => (
-            <tr key={account._id}>
-              <td>{account.fullName}</td>
-              <td>{account.sex}</td>
-              <td>{account.employeeId}</td>
-              <td>{account.cityDistrict}</td>
-              <td>{account.status}</td>
-              <td>
-                <button className='btn btn-danger' onClick={() => openModal(account._id)}>
-                  Deactivate
-                </button>
-              </td>
+      {sortedActiveAccounts.length === 0 ? (
+        <div>No data matches your search.</div>
+      ) : (
+        <table className='table'>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Sex</th>
+              <th>Employee Id</th>
+              <th>City District</th>
+              <th>Terminal</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sortedActiveAccounts.map((account) => (
+              <tr key={account._id}>
+                <td>{account.fullName}</td>
+                <td>{account.sex}</td>
+                <td>{account.employeeId}</td>
+                <td>{account.cityDistrict}</td>
+                <td>{account.Terminal}</td>
+                <td>{account.status}</td>
+                <td>
+                  <button className='btn btn-danger' onClick={() => openModal(account._id)}>
+                    Deactivate
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
 
       {/* Modal for deactivation */}
-      <Modal show={showModal} onHide={closeModal}>
+      <Modal key={modalKey} show={showModal} onHide={closeModal}>
         <Modal.Header closeButton>
           <Modal.Title>Update Status</Modal.Title>
         </Modal.Header>

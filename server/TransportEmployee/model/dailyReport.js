@@ -6,6 +6,11 @@ const dailyReportSchema = new mongoose.Schema({
     ref: 'Driver',
     required: true,
   },
+  ReportedBy: { 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'TransportEmployee',
+    required: true,
+  },
   attendanceStatus: {
     type: String,
     required: true,

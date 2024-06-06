@@ -1,20 +1,24 @@
-
 const mongoose = require('mongoose');
 
 const driversAttendanceSchema = new mongoose.Schema({
-  driverId: { type: String, required: true },
-  driverName: { type: String, required: true }, // Add driver's name field
-  licenseNumber: { type: String, required: true }, // Add driver's license number field
-  licensePlate: { type: String, required: true }, // Add driver's license plate field
+  driverId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Driver',
+    required: true,
+  },
+  employeeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'TransportEmployee',
+    required: true,
+  },
   date: { type: Date, required: true },
   rounds: [{
     roundNumber: { type: Number, required: true },
     status: { type: String, enum: ['Complete', 'Incomplete'], required: true },
-    time: { type: Date},
+    time: { type: Date },
+    qrCode: { type: String, default: '' }, // Default value of an empty string for qrCode
   }],
   overallStatus: { type: String, enum: ['Completed', 'Incomplete'], required: true },
-  employeeId: { type: String, required: true },
-  employeeFullName: { type: String, required: true }, // Add employee's full name field
 });
 
 const DriversAttendance = mongoose.model('DriversAttendance', driversAttendanceSchema);

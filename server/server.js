@@ -46,8 +46,23 @@ const driverupdateRoutes = require('./Driver/routes/dprofileRoutes');
 const paymentRoutes = require('./Driver/routes/paymentroute');
 // const warningRoutes = require('./TransportEmployee/routes/warningRoutes');
 const complaintroutes = require('./Driver/routes/complaintroute');
-dotenv.config(); // Load environment variables from .env file
 
+
+
+// Passenger App Routes imports
+const passengerRoutes = require('./Passenger/routes/registerRoute');
+const passengerAuthRoutes= require('./Passenger/routes/loginRoutes');
+const passengerProfileRoutes = require('./Passenger/routes/profileRoutes');
+const passengerComplaintRoutes = require('./Passenger/routes/PassengerComplaintRoutes');
+const passengerNotificationRoutes = require('./Passenger/routes/notificationRoutes');
+
+
+
+// ESP32 route imports
+
+const ESP32Routes = require('./ESP32/routes/QrRoutes');
+
+dotenv.config(); // Load environment variables from .env file
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -115,6 +130,22 @@ app.use('/api/driver/warning', warningRoutes); // Warning routes
 app.use('/api/driver/complaint', complaintroutes); // Complaint routes
 
 
+
+/// Passenger Mobile App  Routes //////
+
+
+app.use('/Passenger/uploads', express.static(path.join(__dirname, 'Passenger/uploads')));
+
+app.use('/api/Passenger', passengerRoutes); // Passenger Registration routes
+app.use('/api/Passenger/auth', passengerAuthRoutes); // Passenger Login routes
+app.use('/api/Passenger/Profile', passengerProfileRoutes);  // Passenger Profile routes
+app.use('/api/Passenger/complaints', passengerComplaintRoutes); // Passenger Complaints routes
+app.use('/api/Passenger/notification', passengerNotificationRoutes); // Passenger Notification routes
+
+
+
+// ESP32 Connection 
+app.use('/api/ESP32', ESP32Routes); // ESP32 routes
 
 
 app.listen(PORT, () => {

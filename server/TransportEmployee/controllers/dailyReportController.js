@@ -69,12 +69,14 @@ const getWarningsSent = async (req, res) => {
   }
 };
 
-// Route to submit a daily report
 const submitDailyReport = async (req, res) => {
   try {
-    const { driverId, attendanceStatus, punishmentsGiven, warningsSent } = req.body;
-    
-    const currentDate = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));
+    const { driverId, userId, attendanceStatus, punishmentsGiven, warningsSent } = req.body;
+
+    // Log the received data to ensure everything is received correctly
+    console.log('Received userId:', userId);
+
+    const currentDate = new Date(); 
     const existingReport = await DailyReport.findOne({ driverId, date: currentDate });
     if (existingReport) {
       return res.status(400).json({ message: 'Report for today already submitted' });
@@ -82,11 +84,15 @@ const submitDailyReport = async (req, res) => {
 
     const newReport = new DailyReport({
       driverId,
+      ReportedBy: userId,  // Correct assignment here
       attendanceStatus,
       punishmentsGiven,
       warningsSent,
       date: currentDate
     });
+
+    console.log('New report object:', newReport);  // Log the new report object before saving
+
     await newReport.save();
 
     res.status(200).json({ message: 'Report submitted successfully' });
@@ -95,6 +101,8 @@ const submitDailyReport = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+
 
 // Check if there is a report sent for the day so there wont be duplicates later on
 const checkReportExistence = async (req, res) => {

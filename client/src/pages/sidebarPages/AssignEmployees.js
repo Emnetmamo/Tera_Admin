@@ -1,7 +1,5 @@
-// src/pages/AssignTransportEmployeesPage.js
-
 import React, { useState } from 'react';
-import { FormControl,Tab, Tabs } from 'react-bootstrap';
+import { FormControl, Tab, Tabs } from 'react-bootstrap';
 import UnassignedList from '../../components/AssignTransportEmployee/UnassignedList';
 import AssignedList from '../../components/AssignTransportEmployee/AssignedList';
 import '../../assets/css/AssignTransportEmployees.css'; 

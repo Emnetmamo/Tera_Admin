@@ -1,49 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import '../../assets/css/WeeklyReportsPage.css'; 
+import { Container, Tab, Tabs } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import DailyReport from '../../components/reports/dailyReport';
+import WeeklyReport from '../../components/reports/weeklyReport';
+import MonthlyReport from '../../components/reports/monthlyReport';
 
+function Report() {
+  const [selectedTab, setSelectedTab] = useState('daily'); // Default tab is 'daily'
 
-const ReportsPage = () => {
-  const [reports, setReports] = useState([]);
-  const [selectedReport, setSelectedReport] = useState(null);
+  // useEffect to check local storage for previously selected tab
   useEffect(() => {
-    fetchReports();
+    const storedTab = localStorage.getItem('selectedTab');
+    if (storedTab) {
+      setSelectedTab(storedTab);
+    }
   }, []);
 
-  const fetchReports = async () => {
-    try {
-      const response = await fetch('your-backend-api-endpoint');
-      const data = await response.json();
-      setReports(data.reports);
-    } catch (error) {
-      console.error('Error fetching reports:', error);
-    }
-  };
-
-  // Function to handle click on a report
-  const handleReportClick = (report) => {
-    setSelectedReport(report);
+  // Event handler for tab selection
+  const handleTabSelect = (tabKey) => {
+    setSelectedTab(tabKey);
+    localStorage.setItem('selectedTab', tabKey); // Store selected tab in local storage
   };
 
   return (
-    <div className="reports-container">
-      <h2>Reports of Transport Employees</h2>
-      <ul>
-        {reports.map((report, index) => (
-          <li key={index} onClick={() => handleReportClick(report)}>
-            {report.title}
-          </li>
-        ))}
-      </ul>
-      {/* Display selected report description */}
-      {selectedReport && (
-        <div className="selected-report">
-          <h3>Selected Report</h3>
-          <p>Title: {selectedReport.title}</p>
-          <p>Description: {selectedReport.description}</p>
-        </div>
-      )}
+    <div>
+      <Container className="mt-4">
+        <h1 className='text-center'>Reports</h1>
+        <Tabs
+          id="report-tabs"
+          activeKey={selectedTab}
+          onSelect={handleTabSelect}
+        >
+          <Tab eventKey="daily" title="Daily">
+            <DailyReport />
+          </Tab>
+          <Tab eventKey="weekly" title="Weekly">
+            <WeeklyReport />
+          </Tab>
+          <Tab eventKey="monthly" title="Monthly">
+            <MonthlyReport />
+          </Tab>
+        </Tabs>
+      </Container>
     </div>
   );
-};
+}
 
-export default ReportsPage;
+export default Report;

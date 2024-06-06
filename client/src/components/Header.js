@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { BsFillPersonFill, BsGlobe, BsGear, BsQuestionSquare, BsBell, BsBoxArrowRight } from 'react-icons/bs';
-import demoLogo from "../assets/images/logoo.png";
+import demoLogo from "../assets/images/semerit.png";
 import { useNavigate, useParams } from 'react-router-dom'; 
 import axios from 'axios'; // Import axios
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -25,10 +25,11 @@ const Header = () => {
         <img
           alt=""
           src={demoLogo}  
-          width="90"
-          height="90"
+          width="50"
+          height="50"
           className="d-inline-block align-top"
         />
+        <h5 style={{marginTop: "-10px", fontWeight: "bold"}}>SEMERIT</h5>
       </Navbar.Brand>
       <Navbar.Collapse className="justify-content-end">
         <Nav className="mr-auto">
