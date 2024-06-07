@@ -6,7 +6,7 @@ const profileController = require('../controller/dprofileController');
 router.get('/profileData/:userId', profileController.getDriverProfile);
 
 // Update Profile data route with multer middleware for image upload
-router.put('/UpdateProfileData/:userId', profileController.upload.single('photoUpload'), profileController.update6Profile);
+router.put('/UpdateProfileData/:userId', profileController.upload.single('photoUpload'), profileController.updateProfile);
 
 // Change Password route
 router.put('/changePassword/:userId', profileController.changePassword);

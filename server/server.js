@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
-
+const http = require('http'); // Added for WebSocket integration
+const WebSocket = require('ws'); // Added for WebSocket integration
 
 //Admin Dashboard route imports 
 const adminRoutes = require('./Admin/routes/registerRoutes');
@@ -131,7 +132,6 @@ app.use('/api/driver/warning', warningRoutes); // Warning routes
 app.use('/api/driver/complaint', complaintroutes); // Complaint routes
 
 
-
 /// Passenger Mobile App  Routes //////
 
 
@@ -148,7 +148,26 @@ app.use('/api/Passenger/notification', passengerNotificationRoutes); // Passenge
 // ESP32 Connection 
 app.use('/api/ESP32', ESP32Routes); // ESP32 routes
 
+// WebSocket integration
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
-app.listen(PORT, () => {
+wss.on('connection', (ws) => {
+  console.log('Client connected');
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
+});
+
+function broadcast(data) {
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(data));
+    }
+  });
+}
+module.exports = { broadcast };
+
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

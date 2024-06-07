@@ -1,5 +1,6 @@
 const DriversAttendance = require('../model/driversAttendance');
 const TransportEmployee = require('../../Admin/models/TransportEmployee');
+const { broadcast } = require('../../server');
 
 // Get Employee Terminal info
 const getEmployeeTerminal = async (req, res) => {
@@ -59,7 +60,6 @@ const postDriversAttendance = async (req, res) => {
   try {
     // Extract necessary data from request body
     const { driverId, employeeId, qrCodes } = req.body;
-
     // Check if attendance data already exists for the driver for the current day
     const currentDate = new Date();
     const startOfToday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
@@ -100,7 +100,7 @@ const postDriversAttendance = async (req, res) => {
     res.status(500).json({ error: 'Failed to mark attendance' });
   }
 };
-// Update driver's attendance data
+
 const updateDriversAttendance = async (req, res) => {
   try {
     const { driverId } = req.params; // Extract driverId from params
@@ -121,21 +121,9 @@ const updateDriversAttendance = async (req, res) => {
       return res.status(400).json({ error: 'This round has already been completed' });
     }
 
-    // Check the time difference between the current round and the last completed round
-    const lastCompletedRound = attendance.rounds.reduce((last, round, index) => {
-      if (round.status === 'Complete') return { ...last, index, time: new Date(round.time) };
-      return last;
-    }, { index: -1, time: null });
-
-    const now = new Date();
-
-    if (lastCompletedRound.time && ((now - lastCompletedRound.time) / (1000 * 60)) < 1) {
-      return res.status(400).json({ error: 'You must wait at least 1 minute between marking rounds' });
-    }
-
     // Update the status and time of the clicked round
     attendance.rounds[roundIndex].status = 'Complete';
-    attendance.rounds[roundIndex].time = now.toISOString();
+    attendance.rounds[roundIndex].time = new Date().toISOString();
 
     // Update overall status
     const allRoundsComplete = attendance.rounds.every(round => round.status === 'Complete');
@@ -144,6 +132,9 @@ const updateDriversAttendance = async (req, res) => {
     // Save the updated attendance record
     await attendance.save();
 
+    // Broadcast the update to all connected WebSocket clients
+    broadcast({ driverId, roundIndex, status: 'Complete' });
+
     return res.status(200).json({ message: 'Attendance updated successfully' });
   } catch (error) {
     console.error('Error updating attendance:', error.message);
@@ -151,6 +142,16 @@ const updateDriversAttendance = async (req, res) => {
   }
 };
 
+const getDriverAttendanceHistory = async (req, res) => {
+  try {
+    const { driverId } = req.params;
+    const attendanceHistory = await DriversAttendance.find({ driverId }).sort({ date: -1 });
+    res.status(200).json(attendanceHistory);
+  } catch (error) {
+    console.error('Error fetching driver attendance history:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
 module.exports = {
   getEmployeeTerminal,
@@ -158,5 +159,6 @@ module.exports = {
   getAttendanceData,
   postDriversAttendance,
   updateDriversAttendance,
-
+  getDriverAttendanceHistory,
 };
+
