@@ -1,15 +1,14 @@
-const UserModel = require("../model/drivermodel");
-const uniqueValidator = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
-
+const uniqueValidator = require('mongoose-unique-validator');
+const Schema = mongoose.Schema;
+const Driver = require('./drivermodel');
 const ComplaintSchema = new Schema({
-    userId:{
+    userId: {
         type: Schema.Types.ObjectId,
-        ref: UserModel.modelName,
+        ref: Driver.modelName, 
         required: true
     },
-    title: {
+    subject: {
         type: String,
         required: true
     },
@@ -17,9 +16,12 @@ const ComplaintSchema = new Schema({
         type: String,
         required: true
     },
-},{timestamps:true});
+    reply: {
+        type: String
+    }
+}, { timestamps: true });
 
 ComplaintSchema.plugin(uniqueValidator);
 
-const ComplaintModel = mongoose.model('Complaint',ComplaintSchema);
+const ComplaintModel = mongoose.model('Complaint', ComplaintSchema);
 module.exports = ComplaintModel;

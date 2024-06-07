@@ -69,24 +69,58 @@ const changePassword = async (req, res) => {
     const userId = req.params.userId;
     const { oldPassword, newPassword } = req.body;
 
+    // Fetch user from the database 
     const user = await driver.findById(userId);
+
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    const isMatch = await user.comparePassword(oldPassword);
-    if (!isMatch) {
-      return res.status(400).json({ error: 'Old password is incorrect' });
+    // Ensure oldPassword and user.password are defined
+    if (!oldPassword || !user.password) {
+      return res.status(400).json({ error: 'Invalid request. Missing password data' });
     }
 
-    user.password = newPassword;
+    // Verify old password
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Invalid old password' });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update user's password in the database
+    user.password = hashedPassword;
     await user.save();
 
-    return res.status(200).json({ message: 'Password updated successfully' });
+    res.json({ success: true, message: 'Password changed successfully' });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Error changing password:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-module.exports = { getDriverProfile, updateProfile, changePassword, upload };
+
+const uploadProfilePicture = async (req, res) => {
+  const { userId } = req.body;
+  const picture = req.file.path;
+
+  try {
+    const driver = await Driver.findById(userId);
+    if (!driver) {
+      return res.status(404).json({ error: 'Driver not found' }); // Changed to json() method
+    }
+
+    driver.profilePicture = picture;
+    await driver.save();
+
+    return res.status(200).json({ message: 'Profile picture uploaded successfully' }); // Changed to json() method
+  } catch (error) {
+    return res.status(500).json({ error: 'Server error' }); // Changed to json() method
+  }
+};
+
+
+module.exports = { getDriverProfile, updateProfile, changePassword, uploadProfilePicture, upload };

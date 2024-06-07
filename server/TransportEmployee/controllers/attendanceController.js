@@ -100,7 +100,6 @@ const postDriversAttendance = async (req, res) => {
     res.status(500).json({ error: 'Failed to mark attendance' });
   }
 };
-
 // Update driver's attendance data
 const updateDriversAttendance = async (req, res) => {
   try {
@@ -161,4 +160,3 @@ module.exports = {
   updateDriversAttendance,
 
 };
-

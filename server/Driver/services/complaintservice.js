@@ -1,8 +1,8 @@
 const ComplaintModel = require("../model/complaint");
 
 class ComplaintService {
-    static async createComplaint(userId, title, description) {
-        const createComplaint = new ComplaintModel({ userId, title, description });
+    static async createComplaint(userId, subject, description) {
+        const createComplaint = new ComplaintModel({ userId, subject, description });
         return await createComplaint.save();
     }
     static async getComplaint(userId) {
