@@ -16,11 +16,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// fetch Employees Data to display 
 const getUserProfile = async (req, res) => {
   try {
     const userId = req.params.userId; // Extract userId from request parameters
-    const userProfile = await TransportEmployee.findById(userId);
+    const userProfile = await TransportEmployee.findById(userId).populate('assignedDrivers');
 
     if (!userProfile) {
       return res.status(404).json({ error: 'User not found' });

@@ -16,11 +16,12 @@ const getEmployeeTerminal = async (req, res) => {
   }
 };
 
+
 // Get assigned drivers for a specific employee
 const getAssignedDrivers = async (req, res) => {
   try {
     const { userId } = req.params;
-    const employee = await TransportEmployee.findById(userId);
+    const employee = await TransportEmployee.findById(userId).populate('assignedDrivers');
     if (!employee) {
       return res.status(404).json({ message: 'Employee not found' });
     }
@@ -31,6 +32,7 @@ const getAssignedDrivers = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 // Get attendance data for the current day
 const getAttendanceData = async (req, res) => {
@@ -131,7 +133,7 @@ const updateDriversAttendance = async (req, res) => {
     const now = new Date();
 
     if (lastCompletedRound.time && ((now - lastCompletedRound.time) / (1000 * 60)) < 1) {
-      return res.status(400).json({ error: 'You must wait at least 1 minute between marking rounds' });
+      return res.status(429).json({ error: 'You must wait at least 1 minute between marking rounds' });
     }
 
     // Update the status and time of the clicked round
@@ -151,6 +153,7 @@ const updateDriversAttendance = async (req, res) => {
     res.status(500).json({ error: 'Failed to update attendance' });
   }
 };
+
 
 
 module.exports = {

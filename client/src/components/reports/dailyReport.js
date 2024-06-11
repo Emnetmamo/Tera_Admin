@@ -8,49 +8,7 @@ import domtoimage from 'dom-to-image-more';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-// Sample data for reports
-const sampleReports = [
-  {
-    id: 1,
-    date: '2024-06-01',
-    driver: 'John Doe',
-    licensePlate: 'ABC123',
-    terminal: 'Terminal A',
-    cityDistrict: 'District X',
-    reportedBy: 'Jane Smith',
-    timeReported: '09:00 AM',
-    attendance: 'Present',
-    warning: 'No',
-    punishment: 'None',
-  },
-  {
-    id: 2,
-    date: '2024-06-01',
-    driver: 'Alice Johnson',
-    licensePlate: 'XYZ789',
-    terminal: 'Terminal B',
-    cityDistrict: 'District Y',
-    reportedBy: 'Bob Brown',
-    timeReported: '10:30 AM',
-    attendance: 'Absent',
-    warning: 'Yes',
-    punishment: 'Fine',
-  },
-  {
-    id: 3,
-    date: '2024-06-02',
-    driver: 'Eva Lee',
-    licensePlate: 'DEF456',
-    terminal: 'Terminal C',
-    cityDistrict: 'District Z',
-    reportedBy: 'Sam Wilson',
-    timeReported: '11:45 AM',
-    attendance: 'Present',
-    warning: 'No',
-    punishment: 'None',
-  },
-];
+import districtData from '../../data/data';
 
 const DailyReport = () => {
   const [selectedDay, setSelectedDay] = useState(new Date());
@@ -61,13 +19,68 @@ const DailyReport = () => {
   const [modalKey, setModalKey] = useState(0);
   const [reports, setReports] = useState([]);
 
+  // Sample data for reports
+  const sampleReports = [
+    {
+      id: 1,
+      date: '2024-06-01',
+      driver: 'John Doe',
+      licensePlate: 'ABC123',
+      terminal: 'Terminal A',
+      cityDistrict: 'District X',
+      reportedBy: 'Jane Smith',
+      timeReported: '09:00 AM',
+      attendance: 'Present',
+      warning: 'No',
+      punishment: 'None',
+    },
+    {
+      id: 2,
+      date: '2024-06-01',
+      driver: 'Alice Johnson',
+      licensePlate: 'XYZ789',
+      terminal: 'Terminal B',
+      cityDistrict: 'District Y',
+      reportedBy: 'Bob Brown',
+      timeReported: '10:30 AM',
+      attendance: 'Absent',
+      warning: 'Yes',
+      punishment: 'Fine',
+    },
+    {
+      id: 3,
+      date: '2024-06-02',
+      driver: 'Eva Lee',
+      licensePlate: 'DEF456',
+      terminal: 'Megenagna',
+      cityDistrict: 'Bole',
+      reportedBy: 'Sam Wilson',
+      timeReported: '11:45 AM',
+      attendance: 'Present',
+      warning: 'No',
+      punishment: 'None',
+    },
+  ];
+
   useEffect(() => {
-    // Simulating fetching reports from API
+    // Set sample reports initially
     setReports(sampleReports);
   }, []);
 
   // Organize terminals by district
-  const districtTerminalMap = {};
+  const districtTerminalMap = districtData.District_Datas.reduce((acc, district) => {
+    const districtName = district.District.name?.en; // Null check for district name
+    if (districtName) {
+      acc[districtName] = district.District.terminals.reduce((terminalAcc, terminal) => {
+        const terminalName = terminal.name?.en; // Null check for terminal name
+        if (terminalName) {
+          terminalAcc[terminalName] = terminal.routes.map(route => route.name?.en); // Null check for route name
+        }
+        return terminalAcc;
+      }, {});
+    }
+    return acc;
+  }, {});
 
   // Extract unique districts and terminals
   const uniqueDistricts = Object.keys(districtTerminalMap);
@@ -107,30 +120,21 @@ const DailyReport = () => {
   );
 
   const data = {
-    labels: filteredReports.map(
-      (report) =>
-        `${report.licensePlate}\n${report.cityDistrict}\n${report.terminal}\n${report.reportedBy}`
-    ),
+    labels: filteredReports.map((report) => `${report.licensePlate} - ${report.reportedBy}`),
     datasets: [
       {
         label: 'Attendance',
-        data: filteredReports.map((report) =>
-          report.attendance === 'Present' ? 1 : 0
-        ),
+        data: filteredReports.map((report) => (report.attendance === 'Present' ? 1 : 0)),
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
       },
       {
         label: 'Warnings Sent',
-        data: filteredReports.map((report) =>
-          report.warning === 'Yes' ? 1 : 0
-        ),
+        data: filteredReports.map((report) => (report.warning === 'Yes' ? 1 : 0)),
         backgroundColor: 'rgba(255, 205, 86, 0.6)',
       },
       {
         label: 'Punishments',
-        data: filteredReports.map((report) =>
-          report.punishment !== 'None' ? 1 : 0
-        ),
+        data: filteredReports.map((report) => (report.punishment !== 'None' ? 1 : 0)),
         backgroundColor: 'rgba(255, 99, 132, 0.6)',
       },
     ],
@@ -142,7 +146,7 @@ const DailyReport = () => {
       const title = document.createElement('h4');
       const district = selectedDistrict ? selectedDistrict.label : 'All Districts';
       const terminal = selectedTerminal ? selectedTerminal.label : 'All Terminals';
-      title.textContent =       `${district} and ${terminal} - ${selectedDay.toLocaleDateString()}`
+      title.textContent = `Daily report of ${district} and ${terminal} - ${selectedDay.toLocaleDateString()}`;
       node.insertBefore(title, node.firstChild);
 
       domtoimage
@@ -168,11 +172,7 @@ const DailyReport = () => {
         <div style={{ marginRight: '10px', flex: 1 }}>
           <label>Select Day:</label>
           <br />
-          <DatePicker
-            selected={selectedDay}
-            onChange={handleDayChange}
-            dateFormat="yyyy-MM-dd"
-          />
+          <DatePicker selected={selectedDay} onChange={handleDayChange} dateFormat="yyyy-MM-dd" />
         </div>
         <div style={{ marginRight: '10px', flex: 1 }}>
           <label>Select City District:</label>
@@ -193,7 +193,7 @@ const DailyReport = () => {
             options={
               selectedDistrict
                 ? Object.keys(districtTerminalMap[selectedDistrict.value] || {}).map(
-                    (terminal) => ({
+                    (terminal)=> ({
                       value: terminal,
                       label: terminal,
                     })

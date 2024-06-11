@@ -59,7 +59,7 @@ const NewTaxiDriversPage = ({ searchTerm }) => {
             <td>{driver.firstName} {driver.lastName}</td>
             <td>{driver.licensenumber}</td>
             <td>{driver.licenseplate}</td>
-            <td>{driver.Code}</td>
+            <td>{driver.code}</td>
             <td>{driver.Assignedroute}</td>
             <td>{driver.AssignedTransportEmployee ? driver.AssignedTransportEmployee.fullName : 'N/A'}</td>
           </tr>

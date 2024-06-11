@@ -146,8 +146,6 @@ app.use('/api/Passenger/notification', passengerNotificationRoutes); // Passenge
 
 // ESP32 Connection 
 app.use('/api/ESP32', ESP32Routes); // ESP32 routes
-
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
