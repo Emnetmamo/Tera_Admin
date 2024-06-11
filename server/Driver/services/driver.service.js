@@ -42,8 +42,11 @@ class UserServices {
     }
 
     static async generateAccessToken(tokenData, JWTSecret_Key, JWT_EXPIRE) {
-        return jwt.sign(tokenData, JWTSecret_Key, { expiresIn: JWT_EXPIRE });
+        const expirationTime = Math.floor(Date.now() / 1000) + (parseInt(JWT_EXPIRE) * 60 * 60);
+        tokenData.exp = expirationTime;
+        return jwt.sign(tokenData, JWTSecret_Key);
     }
+    
 }
 
 module.exports = UserServices;

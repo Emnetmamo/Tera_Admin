@@ -1,7 +1,7 @@
 const data = {
     "District_Datas": [
 
-      
+    
       ////   Addis Ketema ////
       {
         "District": {

@@ -2,7 +2,7 @@ import React from 'react';
 import '../../assets/css/VerifyPaymentsPage.css';
 
 const VerifyPaymentsPage = () => {
- 
+
   const paymentsData = [
     { driverName: 'Miki', supervisor: 'Supervisor 1', penaltyType: 'Speeding Ticket', amount: 500, isPaid: true },
     { driverName: 'Jelalo', supervisor: 'Supervisor 2', penaltyType: 'Parking Violation', amount: 200, isPaid: false },

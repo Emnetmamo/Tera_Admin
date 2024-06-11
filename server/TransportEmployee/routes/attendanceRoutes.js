@@ -15,4 +15,6 @@ router.put('/driversAttendance/:driverId', attendanceController.updateDriversAtt
 // Route to get QR codes for rounds
 // router.get('/qrCodes/:userId/:driverId/:roundIndex', attendanceController.getQRCode);
 
+router.get('/driverAttendanceHistory/:driverId', attendanceController.getDriverAttendanceHistory);
+
 module.exports = router;

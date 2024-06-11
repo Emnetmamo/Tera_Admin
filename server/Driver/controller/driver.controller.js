@@ -21,18 +21,18 @@ exports.register = async (req, res, next) => {
 exports.login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
+        console.log('Login request body:', req.body); // Log the request body
         if (!email || !password) {
-            throw new Error('Parameter are not correct');
+            throw new Error('Parameters are not correct');
         }
         let user = await UserServices.checkUser(email);
         if (!user) {
             throw new Error('User does not exist');
         }
         const isPasswordCorrect = await user.comparePassword(password);
-        if (isPasswordCorrect === false) {
-            throw new Error(`Username or Password does not match`);
+        if (!isPasswordCorrect) {
+            throw new Error('Username or Password does not match');
         }
-        // Creating Token
         let tokenData;
         tokenData = { _id: user._id, email: user.email };
     
@@ -40,7 +40,6 @@ exports.login = async (req, res, next) => {
         res.status(200).json({ status: true, success: "sendData", token: token });
     } catch (error) {
         console.log(error, 'err---->');
-        next(error);
+        res.status(400).json({ status: false, message: error.message });
     }
 }
-
