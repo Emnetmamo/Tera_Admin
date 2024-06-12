@@ -84,7 +84,7 @@ const submitDailyReport = async (req, res) => {
 
     const newReport = new DailyReport({
       driverId,
-      ReportedBy: userId,  // Correct assignment here
+      reportedBy: userId,  // Correct assignment here
       attendanceStatus,
       punishmentsGiven,
       warningsSent,

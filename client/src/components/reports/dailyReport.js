@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Modal } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import Select from 'react-select';
-import Chart from 'chart.js/auto'; // Import Chart.js
 import { Bar } from 'react-chartjs-2';
-import domtoimage from 'dom-to-image-more';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
+import domtoimage from 'dom-to-image-more';
 import districtData from '../../data/data';
+import Chart from 'chart.js/auto'; // Importing Chart object from chart.js/auto
 
 const DailyReport = () => {
   const [selectedDay, setSelectedDay] = useState(new Date());
@@ -18,63 +19,45 @@ const DailyReport = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalKey, setModalKey] = useState(0);
   const [reports, setReports] = useState([]);
-
-  // Sample data for reports
-  const sampleReports = [
-    {
-      id: 1,
-      date: '2024-06-01',
-      driver: 'John Doe',
-      licensePlate: 'ABC123',
-      terminal: 'Terminal A',
-      cityDistrict: 'District X',
-      reportedBy: 'Jane Smith',
-      timeReported: '09:00 AM',
-      attendance: 'Present',
-      warning: 'No',
-      punishment: 'None',
-    },
-    {
-      id: 2,
-      date: '2024-06-01',
-      driver: 'Alice Johnson',
-      licensePlate: 'XYZ789',
-      terminal: 'Terminal B',
-      cityDistrict: 'District Y',
-      reportedBy: 'Bob Brown',
-      timeReported: '10:30 AM',
-      attendance: 'Absent',
-      warning: 'Yes',
-      punishment: 'Fine',
-    },
-    {
-      id: 3,
-      date: '2024-06-02',
-      driver: 'Eva Lee',
-      licensePlate: 'DEF456',
-      terminal: 'Megenagna',
-      cityDistrict: 'Bole',
-      reportedBy: 'Sam Wilson',
-      timeReported: '11:45 AM',
-      attendance: 'Present',
-      warning: 'No',
-      punishment: 'None',
-    },
-  ];
+  const [filteredReports, setFilteredReports] = useState([]);
 
   useEffect(() => {
-    // Set sample reports initially
-    setReports(sampleReports);
+    fetchReports();
   }, []);
 
-  // Organize terminals by district
+  useEffect(() => {
+    filterReports();
+  }, [selectedDay, selectedTerminal, selectedDistrict, reports]);
+
+  const fetchReports = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/reports/allDailyReports');
+      setReports(response.data);
+    } catch (error) {
+      console.error('Error fetching reports:', error.message);
+    }
+  };
+
+  const filterReports = () => {
+    const selectedDate = selectedDay.toISOString().split('T')[0];
+
+    const filtered = reports.filter((report) => {
+      const dateMatch = report.date.split('T')[0] === selectedDate;
+      const terminalMatch = !selectedTerminal || report.driverId.Terminal === selectedTerminal.value;
+      const districtMatch = !selectedDistrict || report.driverId.cityDistrict === selectedDistrict.value;
+      return dateMatch && terminalMatch && districtMatch;
+    });
+
+    setFilteredReports(filtered);
+  };
+
   const districtTerminalMap = districtData.District_Datas.reduce((acc, district) => {
-    const districtName = district.District.name?.en; // Null check for district name
+    const districtName = district.District.name?.en; 
     if (districtName) {
       acc[districtName] = district.District.terminals.reduce((terminalAcc, terminal) => {
-        const terminalName = terminal.name?.en; // Null check for terminal name
+        const terminalName = terminal.name?.en; 
         if (terminalName) {
-          terminalAcc[terminalName] = terminal.routes.map(route => route.name?.en); // Null check for route name
+          terminalAcc[terminalName] = terminal.routes.map((route) => route.name?.en); 
         }
         return terminalAcc;
       }, {});
@@ -82,7 +65,6 @@ const DailyReport = () => {
     return acc;
   }, {});
 
-  // Extract unique districts and terminals
   const uniqueDistricts = Object.keys(districtTerminalMap);
 
   const handleDayChange = (date) => {
@@ -97,7 +79,7 @@ const DailyReport = () => {
 
   const handleDistrictChange = (selectedOption) => {
     setSelectedDistrict(selectedOption);
-    setSelectedTerminal(null); // Reset selected terminal when district changes
+    setSelectedTerminal(null);
     setShowGraph(false);
   };
 
@@ -108,36 +90,8 @@ const DailyReport = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setShowGraph(false); // Close graph when closing modal
+    setShowGraph(false);
     setModalKey((prevKey) => prevKey + 1);
-  };
-
-  const filteredReports = reports.filter(
-    (report) =>
-      report.date === selectedDay.toISOString().split('T')[0] &&
-      (!selectedTerminal || report.terminal === selectedTerminal.value) &&
-      (!selectedDistrict || report.cityDistrict === selectedDistrict.value)
-  );
-
-  const data = {
-    labels: filteredReports.map((report) => `${report.licensePlate} - ${report.reportedBy}`),
-    datasets: [
-      {
-        label: 'Attendance',
-        data: filteredReports.map((report) => (report.attendance === 'Present' ? 1 : 0)),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-      },
-      {
-        label: 'Warnings Sent',
-        data: filteredReports.map((report) => (report.warning === 'Yes' ? 1 : 0)),
-        backgroundColor: 'rgba(255, 205, 86, 0.6)',
-      },
-      {
-        label: 'Punishments',
-        data: filteredReports.map((report) => (report.punishment !== 'None' ? 1 : 0)),
-        backgroundColor: 'rgba(255, 99, 132, 0.6)',
-      },
-    ],
   };
 
   const handleDownloadGraph = () => {
@@ -156,14 +110,36 @@ const DailyReport = () => {
           link.href = dataUrl;
           link.download = `daily_report_${selectedDay.toISOString()}.jpeg`;
           link.click();
-          node.removeChild(title); // Remove title after download
+          node.removeChild(title); 
         })
         .catch((error) => {
           console.error('Error generating image:', error);
-          // Handle error
-          node.removeChild(title); // Remove title on error
+          node.removeChild(title);
         });
     }
+  };
+
+  const data = {
+    labels: filteredReports.map((report) =>
+      `${report.driverId?.licenseplate}\n${report.driverId?.cityDistrict}\n${report.driverId?.Terminal}\n${report.reportedBy?.fullName}`
+    ),
+    datasets: [
+      {
+        label: 'Attendance Complete',
+        data: filteredReports.map((report) => (report.attendanceStatus === 'Complete' ? 1 : 0)),
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+      },
+      {
+        label: 'Warnings Sent',
+        data: filteredReports.map((report) => (report.warningsSent === 'Yes' ? 1 : 0)),
+        backgroundColor: 'rgba(255, 205, 86, 0.6)',
+      },
+      {
+        label: 'Punishments Given',
+        data: filteredReports.map((report) => (report.punishmentsGiven.length > 0 ? 1 : 0)),
+        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+      },
+    ],
   };
 
   return (
@@ -192,19 +168,20 @@ const DailyReport = () => {
             onChange={handleTerminalChange}
             options={
               selectedDistrict
-                ? Object.keys(districtTerminalMap[selectedDistrict.value] || {}).map(
-                    (terminal)=> ({
-                      value: terminal,
-                      label: terminal,
-                    })
-                  )
+                ? Object.keys(districtTerminalMap[selectedDistrict.value] || {}).map((terminal) => ({
+                    value: terminal,
+                    label: terminal,
+                  }))
                 : []
             }
           />
         </div>
       </div>
       <div style={{ textAlign: 'right' }}>
-        <Button onClick={handleShowGraph} style={{ backgroundColor: 'rgb(165, 94, 13)', borderColor: "#fff", fontSize: 17 }}>
+        <Button
+          onClick={handleShowGraph}
+          style={{ backgroundColor: 'rgb(165, 94, 13)', borderColor: '#fff', fontSize: 17 }}
+        >
           See Daily Report On Graph
         </Button>
       </div>
@@ -224,16 +201,16 @@ const DailyReport = () => {
         </thead>
         <tbody>
           {filteredReports.map((report) => (
-            <tr key={report.id}>
-              <td>{report.driver}</td>
-              <td>{report.licensePlate}</td>
-              <td>{report.terminal}</td>
-              <td>{report.cityDistrict}</td>
-              <td>{report.reportedBy}</td>
-              <td>{report.timeReported}</td>
-              <td>{report.attendance}</td>
-              <td>{report.warning}</td>
-              <td>{report.punishment}</td>
+            <tr key={report._id}>
+              <td>{`${report.driverId?.firstName} ${report.driverId?.lastName}`}</td>
+              <td>{report.driverId?.licenseplate}</td>
+              <td>{report.driverId?.Terminal}</td>
+              <td>{report.driverId?.cityDistrict}</td>
+              <td>{report.reportedBy?.fullName}</td>
+              <td>{new Date(report.date).toLocaleTimeString()}</td>
+              <td>{report.attendanceStatus}</td>
+              <td>{report.warningsSent}</td>
+              <td>{report.punishmentsGiven.join(', ')}</td>
             </tr>
           ))}
         </tbody>
@@ -252,7 +229,7 @@ const DailyReport = () => {
           </h4>
           {showGraph && (
             <div id="daily-report-graph">
-              <canvas id="myChart" width="400" height="400"></canvas> {/* Place canvas element for the chart */}
+              <Bar data={data} />
             </div>
           )}
         </Modal.Body>
