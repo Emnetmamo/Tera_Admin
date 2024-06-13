@@ -2,6 +2,8 @@
 
 const TransportEmployee = require('../../Admin/models/TransportEmployee');
 const Punishment = require('../model/punishment');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Get assigned drivers for a specific employee
 const getDriversData = async (req, res) => {
@@ -23,7 +25,7 @@ const getDriversData = async (req, res) => {
 // Punishment receit to be sent to a sepecific driver
 const issuePunishment = async (req, res) => {
   try {
-    const { driverId, driverName, licenseNumber, licensePlate, punishmentType, numberOfDays, fine,employeeId, employeeName } = req.body;
+    const { driverId, driverName, licenseNumber,email, licensePlate, punishmentType, numberOfDays, fine } = req.body;
 
        // Find employee by employeeId to get name
        const employee = await TransportEmployee.findById(employeeId);
@@ -33,11 +35,11 @@ const issuePunishment = async (req, res) => {
       driverId,
       driverName,
       licenseNumber,
+      email,
       licensePlate,
       punishmentType,
       numberOfDays,
       fine,
-      employeeName: employee.fullName,
     });
 
     await punishment.save();
@@ -52,7 +54,9 @@ const issuePunishment = async (req, res) => {
 const getpunishments=async (req, res) => {
   try {
     const  driverId  = req.params.driverId;
+    console.log("Driver Id: ", driverId);
     const punishments = await Punishment.find({ driverId: driverId});
+    console.log(punishments);
     if (!punishments) {
       return res.status(404).json({ message: 'No punishments found for this driver' });
     }

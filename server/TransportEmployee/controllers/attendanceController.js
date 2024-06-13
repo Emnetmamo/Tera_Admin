@@ -1,6 +1,17 @@
+const WebSocket = require('ws');
+const mongoose = require('mongoose');
 const DriversAttendance = require('../model/driversAttendance');
 const TransportEmployee = require('../../Admin/models/TransportEmployee');
-const { broadcast } = require('../../server');
+
+const wss = new WebSocket.Server({ port: 8080 });
+
+const broadcast = (message) => {
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(message));
+    }
+  });
+};
 
 // Get Employee Terminal info
 const getEmployeeTerminal = async (req, res) => {
@@ -21,7 +32,7 @@ const getEmployeeTerminal = async (req, res) => {
 const getAssignedDrivers = async (req, res) => {
   try {
     const { userId } = req.params;
-    const employee = await TransportEmployee.findById(userId);
+    const employee = await TransportEmployee.findById(userId).populate('assignedDrivers');
     if (!employee) {
       return res.status(404).json({ message: 'Employee not found' });
     }
@@ -59,7 +70,7 @@ const getAttendanceData = async (req, res) => {
 const postDriversAttendance = async (req, res) => {
   try {
     // Extract necessary data from request body
-    const { driverId, employeeId, qrCodes } = req.body;
+    const { driverId, employeeId, qr } = req.body;
     // Check if attendance data already exists for the driver for the current day
     const currentDate = new Date();
     const startOfToday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
@@ -79,7 +90,7 @@ const postDriversAttendance = async (req, res) => {
       roundNumber: index + 1,
       status: 'Incomplete',
       time: null,
-      qrCode: qrCodes[index], // Set the QR code from the request body
+      qr: qr[index], // Set the QR code from the request body
     }));
 
     // Create new attendance document
@@ -90,7 +101,6 @@ const postDriversAttendance = async (req, res) => {
       rounds,
       overallStatus: 'Incomplete',
     });
-
     // Save the new attendance record
     await attendance.save();
     res.status(201).json({ message: 'Attendance marked successfully' });
@@ -119,6 +129,18 @@ const updateDriversAttendance = async (req, res) => {
     // Check if the round has already been marked as complete
     if (attendance.rounds[roundIndex].status === 'Complete') {
       return res.status(400).json({ error: 'This round has already been completed' });
+    }
+
+    // Check the time difference between the current round and the last completed round
+    const lastCompletedRound = attendance.rounds.reduce((last, round, index) => {
+      if (round.status === 'Complete') return { ...last, index, time: new Date(round.time) };
+      return last;
+    }, { index: -1, time: null });
+
+    const now = new Date();
+
+    if (lastCompletedRound.time && ((now - lastCompletedRound.time) / (1000 * 60)) < 1) {
+      return res.status(429).json({ error: 'You must wait at least 1 minute between marking rounds' });
     }
 
     // Update the status and time of the clicked round
@@ -161,4 +183,3 @@ module.exports = {
   updateDriversAttendance,
   getDriverAttendanceHistory,
 };
-

@@ -7,6 +7,7 @@ const driverSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, unique: true, required: true },
+  username: { type: String, unique: true, required: true },
   phone: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   code: { type: String, required: true },
@@ -14,7 +15,7 @@ const driverSchema = new Schema({
   licensenumber: { type: String, required: true },
   Address: String,
   cityDistrict: { type: String, required: true },
-  Terminal: String, 
+  Terminal: { type: String, required: true }, 
   Assignedroute: { type: String, required: true },
   AssignedTransportEmployee: { 
     type: mongoose.Schema.Types.ObjectId, 
