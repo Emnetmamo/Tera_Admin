@@ -23,7 +23,8 @@ const fileComplaint = async (req, res) => {
 
 const getComplaints = async (req, res) => {
   try {
-    const complaints = await PassengerComplaint.find().sort({ createdAt: -1 });
+    const { passengerId } = req.query;
+    const complaints = await PassengerComplaint.find({ passenger: passengerId }).sort({ createdAt: -1 });
     res.json(complaints);
   } catch (error) {
     console.error(error);

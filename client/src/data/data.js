@@ -189,6 +189,71 @@ const data = {
     }
     },
 
+
+    {
+      "District": {
+          "name": {"en": "Gulele", "am": "ጉለሌ"},
+          "terminals": [
+              {
+                  "name": {"en": "Shiro Meda", "am": "ሽሮ ሜዳ"},
+                  "routes": [
+                      {"origin": {"en": "Shiro Meda", "am": "ሽሮ ሜዳ"}, "destination": {"en": "Buna Anasha", "am": "ቡናናሻይ"}, "distance_km": 8},
+                      {"origin": {"en": "Shiro Meda", "am": "ሽሮ ሜዳ"}, "destination": {"en": "Selassie Church", "am": "በስላሴ ቤ/ያን"}, "distance_km": 2},
+                      {"origin": {"en": "Shiro Meda", "am": "ሽሮ ሜዳ"}, "destination": {"en": "Kusquam", "am": "ቁስቃም"}, "distance_km": 9},
+                      {"origin": {"en": "Shiro Meda", "am": "ሽሮ ሜዳ"}, "destination": {"en": "Giyorgis", "am": "ጊዮርጊስ"}, "distance_km": 6},
+                      {"origin": {"en": "Shiro Meda", "am": "ሽሮ ሜዳ"}, "destination": {"en": "Raguel", "am": "ራጉኤል"}, "distance_km": 5},
+                      {"origin": {"en": "Shiro Meda", "am": "ሽሮ ሜዳ"}, "destination": {"en": "Kidist Mariam", "am": "ኪ/ምህረት"}, "distance_km": 3},
+                      {"origin": {"en": "Shiro Meda", "am": "ሽሮ ሜዳ"}, "destination": {"en": "Legehare", "am": "ለገሀር"}, "distance_km": 6.8},
+                      {"origin": {"en": "Shiro Meda", "am": "ሽሮ ሜዳ"}, "destination": {"en": "Piassa", "am": "ፒያሳ"}, "distance_km": 5.9},
+                      {"origin": {"en": "Shiro Meda", "am": "ሽሮ ሜዳ"}, "destination": {"en": "Kebena Stadium", "am": "ስታዲዮም"}, "distance_km": 7}
+                  ]
+              },
+              {
+                  "name": {"en": "Addisu Gebeya", "am": "አዲሱ ገበያ"},
+                  "routes": [
+                      {"origin": {"en": "Addisu Gebeya", "am": "አዲሱ ገበያ"}, "destination": {"en": "Wibget Asco", "am": "በዊብጌት አስኮ"}, "distance_km": 7},
+                      {"origin": {"en": "Addisu Gebeya", "am": "አዲሱ ገበያ"}, "destination": {"en": "Atna Tera", "am": "አጠና ተራ"}, "distance_km": 6.5},
+                      {"origin": {"en": "Addisu Gebeya", "am": "አዲሱ ገበያ"}, "destination": {"en": "Markos Magazine", "am": "በማርቆስ መጋዘን"}, "distance_km": 2},
+                      {"origin": {"en": "Addisu Gebeya", "am": "አዲሱ ገበያ"}, "destination": {"en": "Piassa", "am": "ፒያሳ"}, "distance_km": 5.9},
+                      {"origin": {"en": "Addisu Gebeya", "am": "አዲሱ ገበያ"}, "destination": {"en": "6 Kilo", "am": "6 ኪሎ"}, "distance_km": 4.5},
+                      {"origin": {"en": "Addisu Gebeya", "am": "አዲሱ ገበያ"}, "destination": {"en": "Giorgis", "am": "ጊዮርጊስ"}, "distance_km": 3},
+                      {"origin": {"en": "Addisu Gebeya", "am": "አዲሱ ገበያ"}, "destination": {"en": "Ertirea Hotel", "am": "ኤርትራ ሆቴል"}, "distance_km": 4.9},
+                      {"origin": {"en": "Addisu Gebeya", "am": "አዲሱ ገበያ"}, "destination": {"en": "Qechene", "am": "ቀጨኔ"}, "distance_km": 4.9},
+                      {"origin": {"en": "Addisu Gebeya", "am": "አዲሱ ገበያ"}, "destination": {"en": "Selassie", "am": "ስታዲዮም"}, "distance_km": 4.5}
+                  ]
+              },
+              {
+                  "name": {"en": "Kechene", "am": "ቀጨኔ"},
+                  "routes": [
+                      {"origin": {"en": "Kechene", "am": "ቀጨኔ"}, "destination": {"en": "Yohannes", "am": "ዮሃንስ"}, "distance_km": 5.5},
+                      {"origin": {"en": "Kechene", "am": "ቀጨኔ"}, "destination": {"en": "Selassie", "am": "ስላሴ"}, "distance_km": 4.2},
+                      {"origin": {"en": "Kechene", "am": "ቀጨኔ"}, "destination": {"en": "Stadium", "am": "ስታዲዮም"}, "distance_km": 7},
+                      {"origin": {"en": "Kechene", "am": "ቀጨኔ"}, "destination": {"en": "Kebena", "am": "ቄባና"}, "distance_km": 6},
+                      {"origin": {"en": "Kechene", "am": "ቀጨኔ"}, "destination": {"en": "Giorgis", "am": "ጊዮርጊስ"}, "distance_km": 4},
+                      {"origin": {"en": "Kechene", "am": "ቀጨኔ"}, "destination": {"en": "Piassa", "am": "ፒያሳ"}, "distance_km": 4.5}
+                  ]
+              },
+              {
+                  "name": {"en": "Rufael", "am": "ሩፋኤል"},
+                  "routes": [
+                      {"origin": {"en": "Rufael", "am": "ሩፋኤል"}, "destination": {"en": "Piassa", "am": "ፒያሳ"}, "distance_km": 4},
+                      {"origin": {"en": "Rufael", "am": "ሩፋኤል"}, "destination": {"en": "Diaspora", "am": "ዲያስፖራ"}, "distance_km": 4.9},
+                      {"origin": {"en": "Rufael", "am": "ሩፋኤል"}, "destination": {"en": "Stadium", "am": "ስታዲዮም"}, "distance_km": 6},
+                      {"origin": {"en": "Rufael", "am": "ሩፋኤል"}, "destination": {"en": "Yohannes", "am": "ዮሃንስ"}, "distance_km": 6}
+                  ]
+              },
+              {
+                  "name": {"en": "Delber", "am": "ድልበር"},
+                  "routes": [
+                      {"origin": {"en": "Delber", "am": "ድልበር"}, "destination": {"en": "Piassa", "am": "ፒያሳ"}, "distance_km": 6},
+                      {"origin": {"en": "Delber", "am": "ድልበር"}, "destination": {"en": "Giorgis", "am": "ጊዮርጊስ"}, "distance_km": 8}
+                  ]
+              }
+          ]
+      }
+  },
+  
+    
     //// Kality ///
 
     {

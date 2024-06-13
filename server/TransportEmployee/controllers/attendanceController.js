@@ -1,6 +1,17 @@
+const WebSocket = require('ws');
+const mongoose = require('mongoose');
 const DriversAttendance = require('../model/driversAttendance');
 const TransportEmployee = require('../../Admin/models/TransportEmployee');
-const { broadcast } = require('../../server');
+
+const wss = new WebSocket.Server({ port: 8080 });
+
+const broadcast = (message) => {
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(message));
+    }
+  });
+};
 
 // Get Employee Terminal info
 const getEmployeeTerminal = async (req, res) => {
@@ -17,7 +28,6 @@ const getEmployeeTerminal = async (req, res) => {
   }
 };
 
-
 // Get assigned drivers for a specific employee
 const getAssignedDrivers = async (req, res) => {
   try {
@@ -33,7 +43,6 @@ const getAssignedDrivers = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 
 // Get attendance data for the current day
 const getAttendanceData = async (req, res) => {
@@ -61,7 +70,7 @@ const getAttendanceData = async (req, res) => {
 const postDriversAttendance = async (req, res) => {
   try {
     // Extract necessary data from request body
-    const { driverId, employeeId, qrCodes } = req.body;
+    const { driverId, employeeId, qr } = req.body;
     // Check if attendance data already exists for the driver for the current day
     const currentDate = new Date();
     const startOfToday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
@@ -81,7 +90,7 @@ const postDriversAttendance = async (req, res) => {
       roundNumber: index + 1,
       status: 'Incomplete',
       time: null,
-      qrCode: qrCodes[index], // Set the QR code from the request body
+      qr: qr[index], // Set the QR code from the request body
     }));
 
     // Create new attendance document
@@ -156,7 +165,6 @@ const updateDriversAttendance = async (req, res) => {
   }
 };
 
-
 const getDriverAttendanceHistory = async (req, res) => {
   try {
     const { driverId } = req.params;
@@ -176,4 +184,3 @@ module.exports = {
   updateDriversAttendance,
   getDriverAttendanceHistory,
 };
-

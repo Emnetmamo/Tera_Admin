@@ -29,9 +29,9 @@ const getDriverAttendanceByLicensePlate = async (req, res) => {
     }
 
     // Extract QR codes from rounds
-    const qrCodes = attendanceRecords.flatMap(record => record.rounds.map(round => round.qrCode));
+    const qr = attendanceRecords.flatMap(record => record.rounds.map(round => round.qr));
 
-    res.json({ qrCodes });
+    res.json({ qr });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });

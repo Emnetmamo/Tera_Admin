@@ -7,8 +7,17 @@ const sendTaxi = async (req, res) => {
     try {
         const { userId, licensePlate, district, terminal, route } = req.body;
 
+        // Validate request body
+        if (!userId || !licensePlate || !district || !terminal || !route) {
+            return res.status(400).json({ error: 'All fields are required' });
+        }
+
         // Fetch the TransportEmployee data associated with the userId
         const transportEmployee = await TransportEmployee.findById(userId);
+
+        if (!transportEmployee) {
+            return res.status(404).json({ error: 'TransportEmployee not found' });
+        }
 
         const newRouteChange = new RouteChange({
             SentByEmployee: transportEmployee._id,
@@ -17,10 +26,12 @@ const sendTaxi = async (req, res) => {
             terminal,
             route
         });
+
         const newSavedRoute = await newRouteChange.save();
         res.status(201).json(newSavedRoute);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error in sendTaxi:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
 

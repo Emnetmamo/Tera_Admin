@@ -11,7 +11,7 @@
   flex-direction: row;
 }
 .welcomeText{
-  text-align: center;
+  /* text-align: center; */
   margin-bottom: 30px;
 }
 .dashboard-cards {

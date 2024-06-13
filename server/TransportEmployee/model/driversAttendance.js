@@ -16,7 +16,7 @@ const driversAttendanceSchema = new mongoose.Schema({
     roundNumber: { type: Number, required: true },
     status: { type: String, enum: ['Complete', 'Incomplete'], required: true },
     time: { type: Date },
-    qrCode: { type: String, default: '' }, // Default value of an empty string for qrCode
+    qr: { type: String, default: '' }, // Default value of an empty string for qrCode
   }],
   overallStatus: { type: String, enum: ['Completed', 'Incomplete'], required: true },
 });
