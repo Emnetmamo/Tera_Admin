@@ -63,36 +63,36 @@ const TransportEmployeeDataPage = () => {
       {filteredTransportEmployeeData.length === 0 ? (
         <div>No data matches your search.</div>
       ) : (
-      <Table striped bordered hover responsive className="drivers-table">
-      <thead>
-        <tr>
-          <th>Full Name</th>
-          <th>Email</th>
-          <th>Employee Id</th>
-          <th>City District</th>
-          <th>Assigned Route</th>
-          <th>Assigned Drivers</th>
-        </tr>
-      </thead>
-      <tbody>
-      {filteredTransportEmployeeData.map((employee, index) => (
-      <tr key={index}>
-        <td>{employee.fullName}</td>
-        <td>{employee.email}</td>
-        <td>{employee.employeeId}</td>
-        <td>{employee.cityDistrict}</td>
-        <td>{employee.assignedRoute}</td>
-        <td>
-          {employee.assignedDrivers && employee.assignedDrivers.map((driver, index) => (
-            <div key={index}>
-              <p>{driver.firstName} {driver.lastName} - {driver.licenseplate}</p>
-            </div>
-          ))}
-        </td>
-      </tr>
-        ))}
-      </tbody>
-    </Table>
+        <Table striped bordered hover responsive className="drivers-table">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Employee Id</th>
+              <th>City District</th>
+              <th>Terminal</th>
+              <th>Assigned Drivers</th>
+            </tr>
+          </thead>
+          <tbody>
+          {filteredTransportEmployeeData.map((employee, index) => (
+          <tr key={index}>
+            <td>{employee.fullName}</td>
+            <td>{employee.email}</td>
+            <td>{employee.employeeId}</td>
+            <td>{employee.cityDistrict}</td>
+            <td>{employee.Terminal}</td>
+            <td>
+              {employee.assignedDrivers && employee.assignedDrivers.map((driver, index) => (
+                <div key={index}>
+                  <p>{driver.firstName} {driver.lastName} - {driver.licenseplate}</p>
+                </div>
+              ))}
+            </td>
+          </tr>
+            ))}
+          </tbody>
+        </Table>
         )}
     </div>
 

@@ -20,6 +20,7 @@ const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes');
 const notificationroute=require('./Admin/routes/notificationRoutes');
 const ComplaintsReplyRoutes = require('./Admin/routes/complaintReplyRoutes');
 const tapelaChangeRoutes= require('./Admin/routes/tapelachangeroute');
+const ReportRoutes= require('./Admin/routes/reportRoutes');
 
 
 // const assignEmployeeRoutes = require('./Admin/routes/assignEmployeeRoutes')
@@ -106,6 +107,9 @@ app.use('/api/notifications',notificationroute);
 app.use('/api/complaints', ComplaintsReplyRoutes); // Give reply to the complaints of rivers and Employees Routes
 app.use('/api/admin/update',updateroute);
 app.use('/api/tapelachange',tapelaChangeRoutes);
+app.use('/api/reports', ReportRoutes);
+
+
 
 ///////    Transport Employee Mobilee app Routes    //////
 

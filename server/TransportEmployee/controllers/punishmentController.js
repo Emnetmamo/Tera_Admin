@@ -9,7 +9,7 @@ dotenv.config();
 const getDriversData = async (req, res) => {
   try {
     const { userId } = req.params;
-    const employee = await TransportEmployee.findById(userId);
+    const employee = await TransportEmployee.findById(userId).populate('assignedDrivers');
     if (!employee) {
       return res.status(404).json({ message: 'Employee not found' });
     }

@@ -37,9 +37,9 @@ function Report() {
           <Tab eventKey="weekly" title="Weekly">
             <WeeklyReport />
           </Tab>
-          <Tab eventKey="monthly" title="Monthly">
+          {/* <Tab eventKey="monthly" title="Monthly">
             <MonthlyReport />
-          </Tab>
+          </Tab> */}
         </Tabs>
       </Container>
     </div>

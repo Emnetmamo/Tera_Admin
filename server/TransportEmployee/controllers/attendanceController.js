@@ -28,6 +28,7 @@ const getEmployeeTerminal = async (req, res) => {
   }
 };
 
+
 // Get assigned drivers for a specific employee
 const getAssignedDrivers = async (req, res) => {
   try {
@@ -43,6 +44,7 @@ const getAssignedDrivers = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 // Get attendance data for the current day
 const getAttendanceData = async (req, res) => {
@@ -163,6 +165,7 @@ const updateDriversAttendance = async (req, res) => {
     res.status(500).json({ error: 'Failed to update attendance' });
   }
 };
+
 
 const getDriverAttendanceHistory = async (req, res) => {
   try {

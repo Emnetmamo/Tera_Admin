@@ -6,7 +6,7 @@ const dailyReportSchema = new mongoose.Schema({
     ref: 'Driver',
     required: true,
   },
-  ReportedBy: { 
+  reportedBy: { 
     type: mongoose.Schema.Types.ObjectId,
     ref: 'TransportEmployee',
     required: true,
@@ -24,7 +24,7 @@ const dailyReportSchema = new mongoose.Schema({
     required: true,
   },
   date: {
-    type: Date, 
+    type: Date,
     required: true,
   },
 });
