@@ -101,7 +101,6 @@ const postDriversAttendance = async (req, res) => {
       rounds,
       overallStatus: 'Incomplete',
     });
-
     // Save the new attendance record
     await attendance.save();
     res.status(201).json({ message: 'Attendance marked successfully' });
@@ -184,3 +183,4 @@ module.exports = {
   updateDriversAttendance,
   getDriverAttendanceHistory,
 };
+

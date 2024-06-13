@@ -14,7 +14,6 @@ router.post('/driversAttendance', attendanceController.postDriversAttendance);
 router.put('/driversAttendance/:driverId', attendanceController.updateDriversAttendance);
 // Route to get QR codes for rounds
 // router.get('/qrCodes/:userId/:driverId/:roundIndex', attendanceController.getQRCode);
-
 router.get('/driverAttendanceHistory/:driverId', attendanceController.getDriverAttendanceHistory);
 
 module.exports = router;

@@ -9,6 +9,7 @@ const paymentSchema = mongoose.Schema(
     },
     punishmentName: { type: String, required: true },
     punishmentPrice: { type: Number, required: true },
+    driverName: { type: String },
     txRef: {
       type: String,
       required: true,

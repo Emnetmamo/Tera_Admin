@@ -11,6 +11,10 @@ const punishmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email:{
+    type: String,
+    required: true,
+  },
   licenseNumber: {
     type: String,
     required: true,
@@ -34,11 +38,7 @@ const punishmentSchema = new mongoose.Schema({
   fine: {
     type: Number,
     required: true,
-  },
-  employeeName: {
-    type: String,
-    required: true,
-  },
+  }
 },
   {timestamps: true}
 );
